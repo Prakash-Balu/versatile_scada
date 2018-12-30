@@ -37,56 +37,56 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </script>
   </head>
   <body class="app flex-row align-items-center">
-    <form action="<?= base_url().'login/loginprocess'; ?>" method="post" data-toggle="validator" role="form" autocomplete="off">
-        <div class="container">
+    <div class="container">
+        <form action="<?= base_url().'login/loginprocess'; ?>" method="post" data-toggle="validator" role="form" autocomplete="off">
           <div class="row justify-content-center">
-            <div class="col-md-4">
-              <div class="card-group">
-                <div class="card p-4">
-                  <div class="card-body">
-                    <h1>Login</h1>
-                    <?php
-                        if(!empty($message)){
-                    ?>
-                        <script>
-                            setTimeout(function() {
-                                $("#error_msg").hide();
-                            }, 2000);
-                        </script>
-                        <span id="error_msg" class="error_msg" > <?php echo $message; ?></span>
-                    <?php }?>
-                    <p class="text-muted">Sign In to your account</p>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">
-                          <i class="icon-user"></i>
-                        </span>
-                      </div>
-                      <input class="form-control" type="text" name="username" placeholder="Username">
-                    </div>
-                    <div class="input-group mb-4">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">
-                          <i class="icon-lock"></i>
-                        </span>
-                      </div>
-                      <input class="form-control" name="password" type="password" placeholder="Password">
-                    </div>
-                    <div class="row">
-                      <div class="col-6">
-                        <button class="btn btn-primary px-4" type="submit">Login</button>
-                      </div>
-                      <div class="col-6 text-right">
-                        <button class="btn btn-link px-0" type="button">Forgot password?</button>
+                <div class="col-md-4">
+                  <div class="card-group">
+                    <div class="card p-4">
+                      <div class="card-body">
+                        <h1>Login</h1>
+                        <?php
+                            if(!empty($message)){
+                        ?>
+                            <script>
+                                setTimeout(function() {
+                                    $("#error_msg").hide();
+                                }, 2000);
+                            </script>
+                            <span id="error_msg" class="error_msg" > <?php echo $message; ?></span>
+                        <?php }?>
+                        <p class="text-muted">Sign In to your account</p>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="icon-user"></i>
+                            </span>
+                          </div>
+                          <input class="form-control" type="text" name="username" placeholder="Username">
+                        </div>
+                        <div class="input-group mb-4">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="icon-lock"></i>
+                            </span>
+                          </div>
+                          <input class="form-control" name="password" type="password" placeholder="Password">
+                        </div>
+                        <div class="row">
+                          <div class="col-6">
+                            <button class="btn btn-primary px-4" type="submit">Login</button>
+                          </div>
+                          <div class="col-6 text-right">
+                            <button class="btn btn-link px-0" type="button">Forgot password?</button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
           </div>
-        </div>
-    </form>
+      </form>
+    </div>
     <!-- CoreUI and necessary plugins-->
     <script src="<?php echo base_url()?>assets/vendors/jquery/dist/jquery.min.js"></script>
     <script src="<?php echo base_url()?>assets/vendors/popper.js/dist/umd/popper.min.js"></script>
