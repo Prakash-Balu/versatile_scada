@@ -14167,4 +14167,19 @@ body {
   breakpoint-lg: 992px;
   breakpoint-xl: 1200px;
 }
+
+.tile-box {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.12), 0 10px 10px rgba(0, 0, 0, 0.24);
+}
+
+.tile-box:hover {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transition: transform .8s;
+  /*transform: scale(1.5);*/
+  background-color:#1CC09F !important; box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+    transform: translate(0px, -4px);
+}
 /*# sourceMappingURL=style.css.map */
