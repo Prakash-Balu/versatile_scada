@@ -53,117 +53,67 @@ foreach($region_list as $list)
       <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <ul class="nav navbar-nav d-md-down-none">
-        <li class="nav-item px-3">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
-        <li class="nav-item px-3">
-          <a class="nav-link" href="#">Users</a>
-        </li>
-        <li class="nav-item px-3">
-          <a class="nav-link" href="#">Settings</a>
-        </li>
-      </ul>
       <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item d-md-down-none">
-          <a class="nav-link" href="#">
-            <i class="icon-bell"></i>
-            <span class="badge badge-pill badge-danger">5</span>
-          </a>
-        </li>
-        <li class="nav-item d-md-down-none">
-          <a class="nav-link" href="#">
-            <i class="icon-list"></i>
-          </a>
-        </li>
-        <li class="nav-item d-md-down-none">
-          <a class="nav-link" href="#">
-            <i class="icon-location-pin"></i>
-          </a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <img class="img-avatar" src="<?php echo base_url();?>assets/images/avatars/6.jpg" alt="admin@bootstrapmaster.com">
+        <li class="nav-item dropdown navbar-toggler aside-menu-toggler d-md-down-none">
+          <a class="navbar-toggler-icon" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
           </a>
           <div class="dropdown-menu dropdown-menu-right">
-            <div class="dropdown-header text-center">
-              <strong>Account</strong>
-            </div>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-bell-o"></i> Updates
-              <span class="badge badge-info">42</span>
-            </a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-envelope-o"></i> Messages
-              <span class="badge badge-success">42</span>
-            </a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-tasks"></i> Tasks
-              <span class="badge badge-danger">42</span>
-            </a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-comments"></i> Comments
-              <span class="badge badge-warning">42</span>
-            </a>
-            <div class="dropdown-header text-center">
-              <strong>Settings</strong>
-            </div>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-user"></i> Profile</a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-wrench"></i> Settings</a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-usd"></i> Payments
-              <span class="badge badge-secondary">42</span>
-            </a>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-file"></i> Projects
-              <span class="badge badge-primary">42</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-              <i class="fa fa-shield"></i> Lock Account</a>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="<?php echo base_url().'logout';?>">
               <i class="fa fa-lock"></i> Logout</a>
           </div>
         </li>
       </ul>
-      <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <button class="navbar-toggler aside-menu-toggler d-lg-none" type="button" data-toggle="aside-menu-show">
-        <span class="navbar-toggler-icon"></span>
-      </button>
     </header>
     <div class="app-body">
       <div class="sidebar">
         <nav class="sidebar-nav">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="index.html">
-                <i class="nav-icon icon-speedometer"></i> Dashboard
-                <span class="badge badge-primary">NEW</span>
+              <a class="nav-link">
+                <img class="img-avatar" src="<?php echo base_url();?>assets/images/user.png" alt="" width="35" height="35">
+                <span>Welcome, </span>
+                <span><?php echo $this->session->userdata('username'); ?></span>
               </a>
             </li>
-            <li class="nav-title">Theme</li>
             <li class="nav-item">
-              <a class="nav-link" href="colors.html">
-                <i class="nav-icon icon-drop"></i> Colors</a>
+              <a class="nav-link" href="<?php echo base_url().'dashboard';?>">
+                <i class="nav-icon icon-drop"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="typography.html">
-                <i class="nav-icon icon-pencil"></i> Typography</a>
+              <a class="nav-link" href="<?php echo base_url().'dashboard/park_view';?>">
+                <i class="nav-icon icon-pencil"></i> Park View</a>
             </li>
-            <li class="nav-title">Components</li>
             <li class="nav-item nav-dropdown">
               <a class="nav-link nav-dropdown-toggle" href="#">
-                <i class="nav-icon icon-puzzle"></i> Base</a>
+                <i class="nav-icon icon-puzzle"></i> Region Wise</a>
               <ul class="nav-dropdown-items">
-                <li class="nav-item">
-                  <a class="nav-link" href="base/breadcrumb.html">
-                    <i class="nav-icon icon-puzzle"></i> Breadcrumb</a>
-                </li>
-                <li class="nav-item">
+                <?php if(!empty($menu)) {
+                        foreach($menu as $key=>$sub) {
+                      ?>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">
+                            <i class="nav-icon icon-puzzle"></i> <?php echo $key;?></a>
+                            <ul class="nav-dropdown-items">
+                                <?php foreach($sub as $key => $val){ ?>
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                      <i class="nav-icon icon-puzzle"></i> <?php echo $key;?></a>
+                                      <ul class="nav-dropdown-items">
+                                        <?php foreach($val as $device){ ?>
+                                         <li class="nav-item">
+                                          <a class="nav-link" href="#">
+                                            <i class="nav-icon icon-puzzle"></i> <?php echo $device;?></a>
+                                        </li>
+                                      <?php } ?>
+                                      </ul>
+                            </li>
+                          <?php } ?> 
+                          </ul>
+                        </li>
+                              <?php } } ?>
+                            </ul>
+                        </li>
+                <!-- <li class="nav-item">
                   <a class="nav-link" href="base/cards.html">
                     <i class="nav-icon icon-puzzle"></i> Cards</a>
                 </li>
@@ -222,7 +172,7 @@ foreach($region_list as $list)
                 <li class="nav-item">
                   <a class="nav-link" href="base/tooltips.html">
                     <i class="nav-icon icon-puzzle"></i> Tooltips</a>
-                </li>
+                </li> -->
               </ul>
             </li>
             <li class="nav-item nav-dropdown">
