@@ -47,7 +47,7 @@ foreach($region_list as $list)
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="#">
-        <img class="navbar-brand-full" src="<?php echo base_url();?>assets/images/brand/logo.svg" width="89" height="25" alt="CoreUI Logo">
+        <img class="navbar-brand-full" src="<?php echo base_url();?>assets/images/Ver.jpg" width="125" height="50" alt="CoreUI Logo">
         <img class="navbar-brand-minimized" src="<?php echo base_url();?>assets/images/brand/sygnet.svg" width="30" height="30" alt="CoreUI Logo">
       </a>
       <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
