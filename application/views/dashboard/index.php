@@ -126,11 +126,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <iframe width="480" height="240" src="https://embed.windy.com/embed2.html?lat=13.083&lon=80.283&zoom=6&level=surface&overlay=wind&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=13.083&detailLon=80.283&metricWind=default&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
                 </div>
               </div>
-              <div class="card">
+              <div class="card" style="height:284px">
                 <div class="card-header">Temperature Trending</div>
                 <div class="card-body">
-                  <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
-                    <canvas class="chart" id="temp_trending_chart" height="70"></canvas>
+                  <div class="chart-wrapper mt-3 mx-3" style="height:200px;">
+                    <canvas class="chart" id="temp_trending_chart" height="200"></canvas>
                   </div>
                 </div>
               </div>
@@ -525,12 +525,7 @@ var theme = {
       //  barColor: 'orange'
       // }); 
 
-      var arr_data1 = [
-        ['10', 17],
-        ['20', 60],
-        ['30', 60],
-        ['40', 60]
-      ]; 
+      var arr_data1 = [10, 17, 20, 60]; 
 
       var cardChart1 = new Chart($('#temp_trending_chart'), {
   type: 'line',
@@ -563,7 +558,7 @@ var theme = {
         display: false,
         ticks: {
           display: false,
-          min: 35,
+          min: 0,
           max: 89
         }
       }]
