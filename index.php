@@ -1,4 +1,17 @@
 <?php
+if ( isset( $_SERVER['HTTPS'] ) && ( $_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1 ) || isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' ) {
+$protocol = 'https://';
+} else {
+$protocol = 'http://';
+}
+
+if($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == $_SERVER['SERVER_NAME']){
+$url = $protocol.$_SERVER['HTTP_HOST'].'/scada/';
+define('BASE_URL',$url);
+}elseif($_SERVER['HTTP_HOST'] == $_SERVER['SERVER_NAME'] ){
+$url = $protocol.$_SERVER['HTTP_HOST'];
+define('BASE_URL',$url);
+}
 /**
  * CodeIgniter
  *

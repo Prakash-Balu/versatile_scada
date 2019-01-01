@@ -85,94 +85,37 @@ foreach($region_list as $list)
             </li>
             <li class="nav-item nav-dropdown">
               <a class="nav-link nav-dropdown-toggle" href="#">
-                <i class="nav-icon icon-puzzle"></i> Region Wise</a>
+                <i class="nav-icon icon-puzzle"></i> Region Wise
+              </a>
               <ul class="nav-dropdown-items">
                 <?php if(!empty($menu)) {
-                        foreach($menu as $key=>$sub) {
-                      ?>
+                    foreach($menu as $key=>$sub) {
+                  ?>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      <i class="nav-icon icon-puzzle"></i> <?php echo $key;?>
+                    </a>
+                    <ul class="nav-dropdown-items">
+                      <?php foreach($sub as $key1 => $val){ ?>
                         <li class="nav-item">
                           <a class="nav-link" href="#">
-                            <i class="nav-icon icon-puzzle"></i> <?php echo $key;?></a>
-                            <ul class="nav-dropdown-items">
-                                <?php foreach($sub as $key => $val){ ?>
-                                  <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                      <i class="nav-icon icon-puzzle"></i> <?php echo $key;?></a>
-                                      <ul class="nav-dropdown-items">
-                                        <?php foreach($val as $device){ ?>
-                                         <li class="nav-item">
-                                          <a class="nav-link" href="#">
-                                            <i class="nav-icon icon-puzzle"></i> <?php echo $device;?></a>
-                                        </li>
-                                      <?php } ?>
-                                      </ul>
-                            </li>
-                          <?php } ?> 
+                            <i class="nav-icon icon-puzzle"></i> <?php echo $key1;?>
+                          </a>
+                          <ul class="nav-dropdown-items">
+                            <?php foreach($val as $device){ ?>
+                              <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                  <i class="nav-icon icon-puzzle"></i> <?php echo $device;?>
+                                </a>
+                              </li>
+                            <?php } ?>
                           </ul>
                         </li>
-                              <?php } } ?>
-                            </ul>
-                        </li>
-                <!-- <li class="nav-item">
-                  <a class="nav-link" href="base/cards.html">
-                    <i class="nav-icon icon-puzzle"></i> Cards</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/carousel.html">
-                    <i class="nav-icon icon-puzzle"></i> Carousel</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/collapse.html">
-                    <i class="nav-icon icon-puzzle"></i> Collapse</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/forms.html">
-                    <i class="nav-icon icon-puzzle"></i> Forms</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/jumbotron.html">
-                    <i class="nav-icon icon-puzzle"></i> Jumbotron</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/list-group.html">
-                    <i class="nav-icon icon-puzzle"></i> List group</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/navs.html">
-                    <i class="nav-icon icon-puzzle"></i> Navs</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/pagination.html">
-                    <i class="nav-icon icon-puzzle"></i> Pagination</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/popovers.html">
-                    <i class="nav-icon icon-puzzle"></i> Popovers</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/progress.html">
-                    <i class="nav-icon icon-puzzle"></i> Progress</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/scrollspy.html">
-                    <i class="nav-icon icon-puzzle"></i> Scrollspy</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/switches.html">
-                    <i class="nav-icon icon-puzzle"></i> Switches</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/tables.html">
-                    <i class="nav-icon icon-puzzle"></i> Tables</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/tabs.html">
-                    <i class="nav-icon icon-puzzle"></i> Tabs</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="base/tooltips.html">
-                    <i class="nav-icon icon-puzzle"></i> Tooltips</a>
-                </li> -->
+                      <?php } ?> 
+                    </ul>
+                  </li>
+                <?php } 
+                  } ?>
               </ul>
             </li>
             <li class="nav-item nav-dropdown">
