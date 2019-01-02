@@ -492,28 +492,37 @@ var theme = {
         });
 
     }
-  $(".avg_wind_speed").sparkline(avg_wind_speed, {
-        type: 'line',
-        height: '40',
-        width: '100%',
-        lineColor: 'green',
-        fillColor: 'white',
-        lineWidth: 5,
-        spotColor: 'red',
-        minSpotColor: 'orange'
-      });
+    function init_sparklines() {
+			
+			if(typeof (jQuery.fn.sparkline) === 'undefined'){ return; }
+			console.log('init_sparklines');
+    $(".avg_wind_speed").sparkline(avg_wind_speed, {
+          type: 'line',
+          height: '40',
+          width: '100%',
+          lineColor: 'green',
+          fillColor: 'white',
+          lineWidth: 5,
+          spotColor: 'red',
+          minSpotColor: 'orange'
+        });
 
-      $(".power_speed").sparkline(power_speed, {
-        title:'Power Speed',
-        type: 'line',
-        height: '40',
-        width: '100%',
-        lineColor: 'blue',
-        fillColor: 'white',
-        lineWidth: 5,
-        spotColor: 'red',
-        minSpotColor: 'orange'
-      });
+        $(".power_speed").sparkline(power_speed, {
+          title:'Power Speed',
+          type: 'line',
+          height: '40',
+          width: '100%',
+          lineColor: 'blue',
+          fillColor: 'white',
+          lineWidth: 5,
+          spotColor: 'red',
+          minSpotColor: 'orange'  
+        });
+    };
+    $(document).ready(function() {
+				
+        init_sparklines();
+    });
       
       // $(".export_gad").sparkline(pat_gen, {
       //  type: 'bar',
@@ -527,7 +536,7 @@ var theme = {
       //  barColor: 'orange'
       // }); 
 
-      var arr_data1 = [10, 17, 20, 60]; 
+    /*   var arr_data1 = [10, 17, 20, 60]; 
       var ttc = document.getElementById("temp_trending_chart");
       var cardChart1 = new Chart(ttc, {
   type: 'line',
@@ -576,7 +585,7 @@ var theme = {
       }
     }
   }
-}); // eslint-disable-next-line no-unused-vars
+}); */ // eslint-disable-next-line no-unused-vars
 
       
 </script>
