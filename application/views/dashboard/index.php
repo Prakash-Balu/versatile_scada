@@ -33,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div>Total WTG : <?php echo $val['total']; ?></div>
                   </div>
                   <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
-                    <!-- <canvas class="chart" id="card-chart<?php echo $index;?>" height="70"></canvas> -->
+                     <canvas class="chart" id="card-chart<?php echo $index;?>" height="70"></canvas>
                   </div>
                 </div>
               </div>
@@ -123,9 +123,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="card-columns cols-2">
               <div class="card">
                 <div class="card-body">
-                  <iframe width="480" height="240" src="https://embed.windy.com/embed2.html?lat=13.083&lon=80.283&zoom=6&level=surface&overlay=wind&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=13.083&detailLon=80.283&metricWind=default&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
-                </div>
-              </div>
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <iframe class="embed-responsive-item" src="https://embed.windy.com/embed2.html?lat=13.083&lon=80.283&zoom=6&level=surface&overlay=wind&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=13.083&detailLon=80.283&metricWind=default&metricTemp=default&radarRange=-1" frameborder="0"></iframe>
+                    </div>
+                  </div>
+                 </div>
               <div class="card" style="height:284px">
                 <div class="card-header">Temperature Trending</div>
                 <div class="card-body">
@@ -526,8 +528,8 @@ var theme = {
       // }); 
 
       var arr_data1 = [10, 17, 20, 60]; 
-
-      var cardChart1 = new Chart($('#temp_trending_chart'), {
+      var ttc = document.getElementById("temp_trending_chart");
+      var cardChart1 = new Chart(ttc, {
   type: 'line',
   data: {
     labels: arr_data1,

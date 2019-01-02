@@ -47,9 +47,9 @@ class Login extends CI_Controller {
 						$data['db_name']	= $userdata['0']['Db_Name'];
 						$data['user_type_id']	= $userdata['0']['User_Type_ID'];
 						$data['account_id']	= $userdata['0']['Account_ID'];
-						// echo "<pre>"; print_r($data); exit;
+ 
 						$this->session->set_userdata($data);
-						redirect(base_url().'dashboard');
+						redirect('dashboard');
 					}
 				}else{
 					$message	=	'Username or Password you entered is incorrect';

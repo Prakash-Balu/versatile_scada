@@ -14184,6 +14184,21 @@ body {
 }
 
 .child_menu {
-  padding-left: 36px!important;
+  padding-left: 10px !important;
+  background-color: #313a44;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.child_sub_menu {
+  padding-left: 5px !important;
+  background-color: #4b4e50;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+a .sub_link{
+  max-width: 100px;
 }
 /*# sourceMappingURL=style.css.map */

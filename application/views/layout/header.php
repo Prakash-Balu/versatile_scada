@@ -91,17 +91,17 @@ foreach($region_list as $list)
                 <?php if(!empty($menu)) {
                     foreach($menu as $key=>$sub) {
                   ?>
-                  <li class="nav-item nav-dropdown child_menu">
+                  <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#">
                       <i class="nav-icon icon-puzzle"></i> <?php echo $key;?>
                     </a>
-                    <ul class="nav-dropdown-items">
+                    <ul class="nav-dropdown-items child_menu">
                       <?php foreach($sub as $key1 => $val){ ?>
-                        <li class="nav-item nav-dropdown child_menu">
+                        <li class="nav-item nav-dropdown">
                           <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="nav-icon icon-puzzle"></i> <?php echo $key1;?>
                           </a>
-                          <ul class="nav-dropdown-items">
+                          <ul class="nav-dropdown-items child_sub_menu">
                             <?php foreach($val as $device){ ?>
                               <li class="nav-item">
                                 <a class="nav-link" href="#">
@@ -136,12 +136,45 @@ foreach($region_list as $list)
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="charts.html">
-                <i class="nav-icon icon-pie-chart"></i> Reports</a>
-            </li>
             <li class="divider"></li>
-            <li class="nav-item">
+            <li class="nav-divider"></li>
+            <li class="nav-title">Reports</li>
+            <li class="nav-item px-3 d-compact-none d-minimized-none">
+            <div class="text-uppercase mb-1">
+            <small>
+            <b>Avg Wind Speed</b>
+            </small>
+            </div>
+            <div class="progress progress-xs">
+            <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <small class="text-muted"><?php echo $this->session->userdata('avgWindSpeedSum').'m/s';?></small>
+            </li>
+
+            <li class="nav-item px-3 d-compact-none d-minimized-none">
+              <div class="text-uppercase mb-1">
+              <small>
+              <b>Total Power</b>
+              </small>
+              </div>
+              <div class="progress progress-xs">
+              <div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <small class="text-muted"><?php echo $this->session->userdata('powerSpeedSum').'MW';?></small>
+            </li>
+
+            <li class="nav-item px-3 mb-3 d-compact-none d-minimized-none">
+              <div class="text-uppercase mb-1">
+              <small>
+              <b>Total Export Today</b>
+              </small>
+              </div>
+              <div class="progress progress-xs">
+              <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <small class="text-muted"><?php echo $this->session->userdata('patGenSum').'Kwh';?></small>
+            </li>
+            <!--<li class="nav-item">
               <a class="nav-link" href="charts.html">
                 <i class="nav-icon icon-pie-chart"></i> Avg Wind Speed: <?php echo $this->session->userdata('avgWindSpeedSum').'m/s';?></a>
             </li>
@@ -152,7 +185,7 @@ foreach($region_list as $list)
             <li class="nav-item">
               <a class="nav-link" href="charts.html">
                 <i class="nav-icon icon-pie-chart"></i> Total Export Today: <?php echo $this->session->userdata('patGenSum').'Kwh';?></a>
-            </li>
+            </li>-->
           </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
