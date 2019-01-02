@@ -536,7 +536,7 @@ var theme = {
       //  barColor: 'orange'
       // }); 
 
-    /*   var arr_data1 = [10, 17, 20, 60]; 
+      var arr_data1 = [10, 17, 20, 60]; 
       var ttc = document.getElementById("temp_trending_chart");
       var cardChart1 = new Chart(ttc, {
   type: 'line',
@@ -585,7 +585,7 @@ var theme = {
       }
     }
   }
-}); */ // eslint-disable-next-line no-unused-vars
+}); // eslint-disable-next-line no-unused-vars
 
       
 </script>

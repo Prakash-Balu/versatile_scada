@@ -19,13 +19,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="<?php echo base_url();?>assets/vendors/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendors/@coreui/coreui/dist/js/coreui.min.js"></script>
     <!-- Plugins and scripts required by this view-->
-    <!--<script src="<?php echo base_url();?>assets/vendors/chart.js/dist/Chart.min.js"></script>-->
+    <script src="<?php echo base_url();?>assets/vendors/chart.js/dist/Chart.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendors/echarts/dist/echarts.min.js"></script>
     <!-- jQuery Sparklines -->
     <script src="<?php echo base_url();?>assets/vendors/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
 
     <script src="<?php echo base_url();?>assets/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/dist/js/custom-tooltips.min.js"></script>
-    <!--<script src="<?php echo base_url();?>assets/js/charts.js"></script>-->
-    <!--<script src="<?php echo base_url();?>assets/js/main.js"></script>-->
+    <script src="<?php echo base_url();?>assets/js/charts.js"></script>
+    <script src="<?php echo base_url();?>assets/js/main.js"></script>
   </body>
 </html>
