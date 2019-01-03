@@ -7,9 +7,8 @@ Class Common_model extends CI_Model {
 		$this->load->database();
 		$this->load->library('session');
 		$this->db2 = $this->load->database($this->set_db_config(), TRUE);
-		if(!empty($this->session->userdata('username'))){
+		if($this->session->userdata('username')!=''){
 			$this->set_session_device_list();
-			
 		}
 		
     }
