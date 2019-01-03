@@ -15,6 +15,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="<?php echo base_url();?>assets/vendors/jquery/dist/jquery.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendors/popper.js/dist/umd/popper.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- bootstrap-datetimepicker -->    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendors/pace-progress/pace.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendors/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendors/@coreui/coreui/dist/js/coreui.min.js"></script>

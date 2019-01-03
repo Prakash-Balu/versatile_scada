@@ -23,6 +23,9 @@ foreach($region_list as $list)
     <link href="<?php echo base_url();?>assets/vendors/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets/vendors/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+     <link href="<?php echo base_url();?>assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap-datetimepicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
     <!-- Main styles for this application-->
     <link href="<?php echo base_url();?>assets/css/style.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets/vendors/pace-progress/css/pace.min.css" rel="stylesheet">
@@ -54,7 +57,7 @@ foreach($region_list as $list)
         <span class="navbar-toggler-icon"></span>
       </button>
       <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item dropdown navbar-toggler aside-menu-toggler d-md-down-none">
+        <li class="nav-item dropdown">
           <a class="navbar-toggler-icon" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
           </a>
           <div class="dropdown-menu dropdown-menu-right">
@@ -123,7 +126,7 @@ foreach($region_list as $list)
                 <i class="nav-icon icon-cursor"></i> Analytics</a>
               <ul class="nav-dropdown-items">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="<?php echo base_url().'dashboard/temp_analysis';?>">
                     <i class="nav-icon icon-cursor"></i> Temperature</a>
                 </li>
                 <li class="nav-item">
