@@ -99,7 +99,7 @@ class Dashboard extends CI_Controller {
 				//$power = $device_info['Power'];
 				$top_data[$list['Region']]['Windspeed'][] =$device_info['Windspeed'];
 				$top_data[$list['Region']]['Power'][] =$device_info['Power'];
-				//$top_data[$list['Region']][]=$device_info['Device_Name'];
+				$top_data[$list['Region']]['device_list'][]=$device_info['Device_Name'];
 			}
 			if( !empty($error_info) ) {
 				$footer_data[$list['Region']][] =array(

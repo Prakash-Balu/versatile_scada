@@ -37,8 +37,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       </thead>
                       <tbody>
                         <tr>
-                          <td><?php echo array_sum($value['Power']);?></td>
-                          <td><?php echo array_sum($value['Windspeed']);?></td>
+                          <td><?php echo array_sum($value['Power'])/1000;?></td>
+                          <td><?php echo array_sum($value['Windspeed']) / count($value['device_list']);?></td>
                           <td>--</td>
                           <td>--</td>
                           <td>--</td>
