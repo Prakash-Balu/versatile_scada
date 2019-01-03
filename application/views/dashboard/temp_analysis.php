@@ -28,11 +28,11 @@
               <div class="col-xs-12">
                 <div class='col-xs-12'>
                   <div class="text-center">
-                    <input type="button" onclick="getTempAnalysis('Gear_Temp');" value="Gear"/>
-                    <input type="button" onclick="getTempAnalysis('Bearing_Temp');" value="Bearing"/>
-                    <input type="button" onclick="getTempAnalysis('Genl_Temp');" value="Generator"/>
-                    <input type="button" onclick="getTempAnalysis('Hydraulic_Temp');" value="Hydraulic"/>
-                    <input type="button" onclick="getTempAnalysis('Control_Temp');" value="Control"/>
+                    <input type="button" onclick="getTempAnalysis('Gear_Temp','Gear');" value="Gear"/>
+                    <input type="button" onclick="getTempAnalysis('Bearing_Temp','Bearing');" value="Bearing"/>
+                    <input type="button" onclick="getTempAnalysis('Gen1_Temp','Gen1');" value="Generator"/>
+                    <input type="button" onclick="getTempAnalysis('Hydraulic_Temp','Hydraulic');" value="Hydraulic"/>
+                    <input type="button" onclick="getTempAnalysis('Control_Temp','Control');" value="Control"/>
                   </div>
                 </div>
                 <div class='col-sm-6'>
@@ -100,11 +100,11 @@
               <div class="col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Graph area</h2>
+                    <h2><span id="temp">Temperature</temp></h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content2">
-                    <div id="graph_area" style="width:100%; height:300px;"></div>
+                    <div id="graph_area_temp" style="width:100%; height:300px;"></div>
                   </div>
                 </div>
               </div>
@@ -125,35 +125,53 @@
         format: 'DD-MM-YYYY'
     });
 
-function getTempAnalysis(TempName) {
+function getTempAnalysis(TempName,title) {
   console.log(TempName)
   var date_val = $('#start_date').val();
-
-   var device_name = [];
-    $.each($("input[name='device_name[]']:checked"), function(){            
-      device_name.push($(this).val());
-    });
-    console.log(device_name);
-
-  if( device_name == '' ){
-    alert ('Please select device name');
-    return false;
-  }
 
   if( date_val == '' ){
     alert ('Please select date');
     return false;
   }
 
-  
+   var device_name = [];
+  $.each($("input[name='device_name[]']:checked"), function(){            
+    device_name.push($(this).val());
+  });
+    console.log(device_name);
 
+  if( device_name == '' ){
+    alert ('Please select device name');
+    return false;
+  }
+ 
+  $("#graph_area_temp").empty();
+  $("#temp").html(title);
   $.ajax({
     type:'POST',
     url:"<?php echo base_url(); ?>dashboard/get_temp_analysis",
     dataType: 'json',
-    data:{'device_name':device_name,'date':date_val},
+    data:{'device_name':device_name,'date':date_val,'temp_name':TempName},
     success:function(data){
+      if(data.valid){
         console.log(data);
+        if ($('#graph_area_temp').length ){
+          Morris.Area({
+            element: 'graph_area_temp',
+            data: data.valid,
+            xkey: 'hours',
+            ykeys: ['green', 'red', 'blue','gray'],
+            lineColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+            labels: ['Green', 'Red', 'Blue','Gray'],
+            pointSize: 2,
+            hideHover: 'auto',
+            parseTime: false,
+            resize: true
+          });
+        }
+      }else{
+          alert(data.invalid);
+      }
     }
   });
   
@@ -167,5 +185,7 @@ $(function() {
             return $(this).text().match(new RegExp(pattern, 'i'));
         }).show();
     });
+
+    
 });
 </script>

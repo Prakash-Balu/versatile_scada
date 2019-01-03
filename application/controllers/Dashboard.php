@@ -83,27 +83,37 @@ class Dashboard extends CI_Controller {
 	function park_view() {
 		
 		$region_list = $this->Common_model->get_region_site_list();
-		$i=0;
-		// echo '<pre>';print_r( $region_list);
+			// echo '<pre>';print_r( $region_list);exit;
 		foreach($region_list as $list)
 		{
 			$device_info = (array)$this->Common_model->get_device_data_details( $list['Format_Type'], $list['IMEI'] );
-
+			$error_info = (array)$this->Common_model->get_device_data_details( $list['Format_Type'], $list['IMEI'] );
+			
 			if( !empty($device_info) ) {
-			$device_info['Device_Name']= $list['Device_Name'];
-			$device_data[$list['Region']][$list['Device_Name']][] = $device_info;
-			$winspeed[$list['Region']]['Windspeed'][$list['IMEI']] = $device_info['Windspeed'];
-			$winspeed[$list['Region']]['Power'][$list['IMEI']] = $device_info['Power'];
-			$top_data[$list['Region']] = array( 'Windspeed'=>array($device_info['Windspeed']), 'Power'=>array($device_info['Power']));
+				$device_info['Device_Name']= $list['Device_Name'];
+				$device_info['LOC_No']= $list['LOC_No'];
+				$device_info['capacity']= $list['capacity'];
+				$device_info['Connect_Feeder']= $list['Connect_Feeder'];
+				$device_data[$list['Region']][$list['Device_Name']] = $device_info;
+				//$winspeed = $device_info['Windspeed'];
+				//$power = $device_info['Power'];
+				$top_data[$list['Region']]['Windspeed'][] =$device_info['Windspeed'];
+				$top_data[$list['Region']]['Power'][] =$device_info['Power'];
+				//$top_data[$list['Region']][]=$device_info['Device_Name'];
+			}
+			if( !empty($error_info) ) {
+				$footer_data[$list['Region']][] =array(
+														'Date_S'=> !empty($error_info['Date_S'])?date('d-m-Y',strtotime($error_info['Date_S'])):'---',
+														'Time_S'=> $error_info['Time_S'],
+														'Device_Name'=>$list['Device_Name'],
+														'Description'=>'');
+				}
+		
 		}
-		$i++;}
 
-		// echo '<pre>';print_r( $device_data);
-		// echo '<pre>';print_r($winspeed);exit;
-
-		$data['parkview']['regions'] = $region_list;
-		$data['parkview']['regionDeviceData'] = $device_data;
-
+	 	$data['regions'] = $top_data;
+		$data['regionDeviceData'] = $device_data;
+		$data['footer_data'] = $footer_data;
 		$this->load->view('dashboard/park_view', $data);
 	}
 	
@@ -123,26 +133,67 @@ class Dashboard extends CI_Controller {
 	}
 
 	function get_temp_analysis() {
-		if(empty($_REQUEST['device_name']) && empty($_REQUEST['date'])) {
-			echo json_encode(array('message'=>'invaid'));exit;
-		}
-		echo'<pre>';print_r( $_REQUEST);exit;
-		$device_list = $this->Common_model->getDeviceList($_REQUEST['device_name']);
-		foreach($device_list as $list)
+		$this->form_validation->set_rules('device_name[]', 'device name', 'required');
+		$this->form_validation->set_rules('temp_name', 'Temp name', 'required');
+		$this->form_validation->set_rules('date', 'Date', 'required');
+		$data = array();
+		if ($this->form_validation->run() == TRUE)
 		{
-			$date = date('Y-m-d', strtotime($_REQUEST['date']));
-			$search = array('order' =>'ASC','start_date'=>$date,'end_date'=>$date);
-			$val	=	$this->Common_model->get_device_details( $list->Format_Type, $list->IMEI,$search );
-			 echo "<pre>";print_r($val); exit;
-			if(!empty($val))
+			$green_array = array('Run', 'RUN', 'M/C Running', 'M/C Running');
+			$blue_array = array('GRIDDROP', 'griddrop', 'Grid Drop', 'Grid Drop');
+			$red_array = array_merge($green_array,$blue_array);
+			$formvalues	=	$this->input->post();
+			$device_list = $this->Common_model->getDeviceList($formvalues['device_name']);
+			$green=$blue=$red=$gray=null;
+			$avgWindSpeed = $powerSpeed=$pat_gen_list=$pat_gen_first=$pat_gen_last=array();
+
+			foreach($device_list as $list)
 			{
-				$date = date('Y-m-d', strtotime($_REQUEST['date']));
+				$date = date('Y-m-d', strtotime($formvalues['date']));
 				$search = array('order' =>'ASC','start_date'=>$date,'end_date'=>$date);
-				$tempAnaData =	$this->get_device_data_details( $list->Format_Type, '',$search);
+				$val	=	$this->Common_model->get_device_data_Info( $list->Format_Type, $list->IMEI,$search );
+				//$data['table'][]= $list->Format_Type;
+				if(!empty($val))
+				{
+					
+					foreach($val as $val_list)
+					{
+						/** get current time from DB and then check device date is less then 1 hour for current time */
+						$query = $this->db2->query('select (NOW() - INTERVAL 2 HOUR) as curr_time', TRUE);
+						$curr_time = strtotime($query->row()->curr_time);
+						$device_time = strtotime($val_list['Date_S'].' '.$val_list['Time_S']);
+						$status = $val_list['Status'];
+						// echo '<pre>';print_r($formvalues['temp_name'].' Gen1_Temp');
+						//echo '<pre>';print_r();exit;
+						$temp_value = isset($val_list[$formvalues['temp_name']])?$val_list[$formvalues['temp_name']]:0;
+						/** less then 1 hour for current time then it's gray color*/
+						if($device_time > $curr_time)
+						{
+							$gray = $temp_value;
+						}
+						elseif(in_array($status,$green_array))
+						{
+							$green= $temp_value;
+						}elseif(in_array($status,$blue_array)){
+							$blue = $temp_value;
+						}elseif(in_array($status,$red_array)){
+							$red = $temp_value;
+						}
+						$data[] = array('hours'=>$val_list['Time_S'],'green'=>$green,'red'=>$red,'blue'=>$blue,'gray'=>$gray);
+					}
+				}
+				
 			}
+			/* $data['green'] = $green;
+			$data['red']= $red;
+			$data['blue']= $blue;
+			$data['gray']= $gray; */
+			$message	=	array('valid'=>$data);
+		}else{
+			$message	=	array('invalid'=>validation_errors());
 		}
 		
-		
+		echo json_encode($message);die;
 
 	}
 }

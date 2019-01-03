@@ -42,7 +42,9 @@ Class Common_model extends CI_Model {
 			$avgWindSpeed = $powerSpeed=$pat_gen_list=$pat_gen_first=$pat_gen_last=array();
 			foreach($type_list as $list)
 			{
-				$device_list	=	$this->get_device_data_details( $list->Format_Type, $list->IMEI );
+				$date = '2018-08-14';//date('Y-m-d');
+				$search_info = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
+				$device_list	=	$this->get_device_data_details( $list->Format_Type, $list->IMEI, $search_info );
 				
 				if(!empty($device_list))
 				{
