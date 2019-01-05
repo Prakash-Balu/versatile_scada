@@ -116,6 +116,10 @@ class Dashboard extends CI_Controller {
 		$data['footer_data'] = $footer_data;
 		$this->load->view('dashboard/park_view', $data);
 	}
+
+	function device_view() {
+		$this->load->view('dashboard/device_view');
+	}
 	
 	function temp_analysis() {
 		$device_list = $this->Common_model->get_region_site_list();

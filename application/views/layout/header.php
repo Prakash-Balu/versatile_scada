@@ -107,7 +107,7 @@ foreach($region_list as $list)
                           <ul class="nav-dropdown-items child_sub_menu">
                             <?php foreach($val as $device){ ?>
                               <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="<?php echo base_url().'dashboard/device_view';?>">
                                   <i class="nav-icon icon-puzzle"></i> <?php echo $device;?>
                                 </a>
                               </li>

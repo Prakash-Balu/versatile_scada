@@ -22,7 +22,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="<?php echo base_url();?>assets/vendors/@coreui/coreui/dist/js/coreui.min.js"></script>
     <!-- Plugins and scripts required by this view-->
     <script src="<?php echo base_url();?>assets/vendors/chart.js/dist/Chart.min.js"></script>
+    <!-- Highchart -->
+    <script src="<?php echo base_url();?>assets/vendors/highcharts/highcharts.js"></script>
+    <script src="<?php echo base_url();?>assets/vendors/highcharts/highcharts-more.js"></script>
+    <!-- Echart -->
     <script src="<?php echo base_url();?>assets/vendors/echarts/dist/echarts.min.js"></script>
+    <!-- Fusion chart -->
+    <script src="<?php echo base_url();?>assets/vendors/fusioncharts/fusioncharts.js"></script>
     <!-- jQuery Sparklines -->
     <script src="<?php echo base_url();?>assets/vendors/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
 
