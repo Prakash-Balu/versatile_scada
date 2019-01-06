@@ -139,9 +139,12 @@ foreach($region_list as $list)
                 </li>
               </ul>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="nav-icon icon-pencil"></i>Reports</a>
+            </li>
             <li class="divider"></li>
             <li class="nav-divider"></li>
-            <li class="nav-title">Reports</li>
             <li class="nav-item px-3 d-compact-none d-minimized-none">
             <div class="text-uppercase mb-1">
             <small>
