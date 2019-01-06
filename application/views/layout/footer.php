@@ -17,6 +17,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="<?php echo base_url();?>assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- bootstrap-datetimepicker -->    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <!-- morris.js -->
+    <script src="<?php echo base_url();?>assets/vendors/raphael/raphael.min.js"></script>
+    <script src="<?php echo base_url();?>assets/vendors/morris.js/morris.min.js"></script>
+    
     <script src="<?php echo base_url();?>assets/vendors/pace-progress/pace.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendors/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendors/@coreui/coreui/dist/js/coreui.min.js"></script>
@@ -31,7 +35,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="<?php echo base_url();?>assets/vendors/fusioncharts/fusioncharts.js"></script>
     <!-- jQuery Sparklines -->
     <script src="<?php echo base_url();?>assets/vendors/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-
+    <!-- Bootstrap Select2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendors/@coreui/coreui-plugin-chartjs-custom-tooltips/dist/js/custom-tooltips.min.js"></script>
     <script src="<?php echo base_url();?>assets/js/charts.js"></script>
     <script src="<?php echo base_url();?>assets/js/main.js"></script>

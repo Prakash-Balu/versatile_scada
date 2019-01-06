@@ -160,6 +160,31 @@ Class Common_model extends CI_Model {
         return $query->result_array();
     }
 
+	function get_device_data_Info( $type , $imei, $search=array()) {
+		//skip for format type 1
+		($type == 1? $type = "" : $type = "_f".$type);
+		$this->db2->select('*')->from('device_data'.$type);
+		if(!empty($imei))
+		{
+			$this->db2->where('IMEI',$imei);
+		}
+		if(!empty($search['order']))
+		{
+			$this->db2->order_by('Record_Index',$search['order']);
+		}
+
+		if(!empty($search['start_date']) && !empty($search['end_date']))
+		{
+			$this->db2->where("DATE_FORMAT(Date_S,'%y-%m-%d') BETWEEN DATE('".$search['start_date']."') AND DATE('".$search['end_date']."') ");
+		}
+		
+		$query = $this->db2->get();
+		// if(!empty($search['start_date']) && !empty($search['end_date']))
+		// {
+		 //echo $this->db2->last_query();
+		// }
+        return $query->result_array();
+	}
    
 }
 

@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+// echo "<pre>"; print_r($tempAna); exit;
 ?>
 <style>
     .searchable-container{margin:20px 0 0 0}
@@ -30,40 +31,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="card">
                         <div class="card-header">Location Temperature Analysis</div>
                         <div class="card-body">
-                            <div class="col-md-12">
-                                <div class="text-center">
-                                    <input type="button" class="btn btn-default" onclick="getTempAnalysis('Gear_Temp','Gear');" value="Gear" />
-                                    <input type="button" class="btn btn-default" onclick="getTempAnalysis('Bearing_Temp','Bearing');" value="Bearing" />
-                                    <input type="button" class="btn btn-default" onclick="getTempAnalysis('Gen1_Temp','Gen1');" value="Generator" />
-                                    <input type="button" class="btn btn-default" onclick="getTempAnalysis('Hydraulic_Temp','Hydraulic');" value="Hydraulic" />
-                                    <input type="button" class="btn btn-default" onclick="getTempAnalysis('Control_Temp','Control');" value="Control" />
-                                </div>
-                            </div>
-                            <br />
-                            <div class="col-md-8 offset-2">
-                                <div class="input-group mb-4">
-                                    <input class="form-control start_date" type="text" placeholder="Start Date" id="datepicker">
-                                    <div class="input-group-append">
-                                        <span class="fa fa-calendar input-group-text start_date" aria-hidden="true "></span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="input-group mb-4">
+                                        <input class="form-control start_date" type="text" placeholder="Start Date" id="start_date">
+                                        <div class="input-group-append">
+                                            <span class="fa fa-calendar input-group-text" aria-hidden="true "></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label>Device List</label>
+                                      <select multiple class="form-control" name="device_name" placeholder="Choose anything" data-allow-clear="1">
+                                        <?php 
+                                            foreach ($tempAna['deviceList'] as $key => $value) {
+                                            ?>
+                                            <option value="<?php echo $value['Device_Name'];?>">
+                                                <?php echo $value['Device_Name'];?>
+                                            </option>
+                                            <?php }?>
+                                      </select>
                                     </div>
                                 </div>
-                                <div>
-                                    <h5>Device List</h5>
-                                    <select class="form-control" id="multiple-select" name="multiple-select" size="5" multiple="">
-                                        <?php 
-                                        foreach ($tempAna['deviceList'] as $key => $value) {
-                                        ?>
-                                        <option value="<?php echo $value['Device_Name'];?>">
-                                            <?php echo $value['Device_Name'];?>
-                                        </option>
-                                        <?php }?>
-                                    </select>
+                                <div class="col-md-8">
+                                    <h2><span id="temp">Temperature</span></h2>
+                                    <div id="graph_area_temp" style="width:100%; height:300px;"></div>
                                 </div>
                             </div>
-                            <br />
-                            <div class="col-md-12">
-                                <h2><span id="temp">Temperature</temp></h2>
-                                <div id="graph_area_temp" style="width:100%; height:300px;"></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Gear_Temp','Gear');" value="Gear" />
+                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Bearing_Temp','Bearing');" value="Bearing" />
+                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Gen1_Temp','Gen1');" value="Generator" />
+                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Hydraulic_Temp','Hydraulic');" value="Hydraulic" />
+                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Control_Temp','Control');" value="Control" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -90,8 +93,12 @@ function getTempAnalysis(TempName, title) {
     }
 
     var device_name = [];
-    $.each($("input[name='device_name[]']:checked"), function() {
-        device_name.push($(this).val());
+    // $.each($("select[name='device_name:selected']"), function() {
+    //     device_name.push($(this).val());
+    // });
+
+    $.each($("select[name='device_name']").select2('data'), function(key, value) {
+        device_name.push(value.id);
     });
     console.log(device_name);
 
