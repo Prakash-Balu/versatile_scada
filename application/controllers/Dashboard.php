@@ -21,6 +21,8 @@ class Dashboard extends CI_Controller {
 	}
  
 	function index() {
+		//$details = $this->Common_model->get_dashboard_device_list();
+		
 		$type_list = $this->Common_model->getDeviceList(  );//get devic type list
 		//print_r($type_list);
 		$data['green']=$data['blue']=$data['red']=$data['gray']=array();
@@ -137,69 +139,5 @@ class Dashboard extends CI_Controller {
 		$this->load->view('dashboard/performance_analysis');
 	}
 
-	function get_temp_analysis() {
-		$this->form_validation->set_rules('device_name[]', 'device name', 'required');
-		$this->form_validation->set_rules('temp_name', 'Temp name', 'required');
-		$this->form_validation->set_rules('date', 'Date', 'required');
-		$data = array();
-		if ($this->form_validation->run() == TRUE)
-		{
-			$green_array = array('Run', 'RUN', 'M/C Running', 'M/C Running');
-			$blue_array = array('GRIDDROP', 'griddrop', 'Grid Drop', 'Grid Drop');
-			$red_array = array_merge($green_array,$blue_array);
-			$formvalues	=	$this->input->post();
-			$device_list = $this->Common_model->getDeviceList($formvalues['device_name']);
-			$green=$blue=$red=$gray=null;
-			$avgWindSpeed = $powerSpeed=$pat_gen_list=$pat_gen_first=$pat_gen_last=array();
-
-			foreach($device_list as $list)
-			{
-				$date = date('Y-m-d', strtotime($formvalues['date']));
-				$search = array('order' =>'ASC','start_date'=>$date,'end_date'=>$date);
-				$val	=	$this->Common_model->get_device_data_Info( $list->Format_Type, $list->IMEI,$search );
-				//$data['table'][]= $list->Format_Type;
-				if(!empty($val))
-				{
-					
-					foreach($val as $val_list)
-					{
-						/** get current time from DB and then check device date is less then 1 hour for current time */
-						$query = $this->db2->query('select (NOW() - INTERVAL 2 HOUR) as curr_time', TRUE);
-						$curr_time = strtotime($query->row()->curr_time);
-						$device_time = strtotime($val_list['Date_S'].' '.$val_list['Time_S']);
-						$status = $val_list['Status'];
-						// echo '<pre>';print_r($formvalues['temp_name'].' Gen1_Temp');
-						//echo '<pre>';print_r();exit;
-						$temp_value = isset($val_list[$formvalues['temp_name']])?$val_list[$formvalues['temp_name']]:0;
-						/** less then 1 hour for current time then it's gray color*/
-						if($device_time > $curr_time)
-						{
-							$gray = $temp_value;
-						}
-						elseif(in_array($status,$green_array))
-						{
-							$green= $temp_value;
-						}elseif(in_array($status,$blue_array)){
-							$blue = $temp_value;
-						}elseif(in_array($status,$red_array)){
-							$red = $temp_value;
-						}
-						$data[] = array('hours'=>$val_list['Time_S'],'green'=>$green,'red'=>$red,'blue'=>$blue,'gray'=>$gray);
-					}
-				}
-				
-			}
-			/* $data['green'] = $green;
-			$data['red']= $red;
-			$data['blue']= $blue;
-			$data['gray']= $gray; */
-			$message	=	array('valid'=>$data);
-		}else{
-			$message	=	array('invalid'=>validation_errors());
-		}
-		
-		echo json_encode($message);die;
-
-	}
 }
 ?>

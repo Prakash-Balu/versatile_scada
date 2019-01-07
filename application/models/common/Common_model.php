@@ -137,7 +137,7 @@ Class Common_model extends CI_Model {
 	
 		$Account_ID = $this->session->userdata('account_id');
 
-        $this->db->select('IMEI, Format_Type , (SELECT  count(*) as cnt FROM `device_register` WHERE `Account_ID` = '.$Account_ID.') as cnt')
+        $this->db->select('IMEI, Device_Name, Format_Type , (SELECT  count(*) as cnt FROM `device_register` WHERE `Account_ID` = '.$Account_ID.') as cnt')
 				->where('Account_ID',$Account_ID);
 				if(!empty($device_name)){
 					$this->db->where_in('Device_Name',$device_name);
@@ -184,6 +184,60 @@ Class Common_model extends CI_Model {
 		 //echo $this->db2->last_query();
 		// }
         return $query->result_array();
+	}
+
+	function get_dashboard_device_list(){
+		$type_list = $this->getDeviceList(  );//get devic type list
+		$data = array();
+		$total_device = count($type_list);
+		if(!empty($type_list))
+		{
+			$total_count=0;
+			$count=0;
+			$i=0;
+			$green=$blue=$red=$gray=array();
+			$avgWindSpeed = $powerSpeed=$pat_gen_list=$pat_gen_first=$pat_gen_last=array();
+			foreach($type_list as $list)
+			{
+				$date = '2018-08-14';//date('Y-m-d');
+				$search_info = array('start_date'=>$date,'end_date'=>$date);
+				$device_list	=	$this->get_device_data_Info( $list->Format_Type, $list->IMEI, $search_info );
+				
+				if(!empty($device_list))
+				{
+					foreach ($device_list as $key => $value) {
+						$hour = date('H',strtotime($value['Time_S']));
+						$powerSpeed[$hour][] = $value['Power'];
+						$avgWindSpeed[$hour][] = $value['Windspeed'];
+					}
+				}
+				/* $date = '2018-08-14';//date('Y-m-d');
+				$search = array('start_date'=>$date,'end_date'=>$date);
+				$search1 = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
+				$pat_gen_first	=	$this->get_device_data_Info( $list->Format_Type, '',$search);
+				$pat_gen_last	=	$this->get_device_data_Info( $list->Format_Type, '',$search1 );
+				
+				if(!empty($pat_gen_first) && !empty($pat_gen_last) ) 
+				{
+					$pat_gen_list[] =	$pat_gen_last->PAT_Gen1-$pat_gen_first->PAT_Gen1;
+				} */
+			}
+			//	echo '<pre>';print_r($powerSpeed);exit;
+			if(!empty($avgWindSpeed))
+			{
+				foreach ($avgWindSpeed as $key => $value) {
+					$data['avgWindSpeedSum'][$key] = number_format((array_sum($value)/count($value)),2);
+				}
+			}
+			if(!empty($powerSpeed))
+			{
+				foreach ($powerSpeed as $key1 => $value1) {
+					$data['powerSpeedSum'][$key1] = number_format((array_sum($value1)/1000),2);
+				}
+			}
+		}
+		//echo '<pre>';print_r($data);exit;
+		return $data;
 	}
    
 }

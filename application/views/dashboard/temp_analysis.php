@@ -111,10 +111,11 @@ function getTempAnalysis(TempName, title) {
     $("#temp").html(title);
     $.ajax({
         type: 'POST',
-        url: "<?php echo base_url(); ?>dashboard/get_temp_analysis",
+        url: "<?php echo base_url(); ?>ajax/ajax_temp_analysis",
         dataType: 'json',
         data: { 'device_name': device_name, 'date': date_val, 'temp_name': TempName },
         success: function(data) {
+
             if (data.valid) {
                 console.log(data);
                 if ($('#graph_area_temp').length) {
@@ -131,6 +132,9 @@ function getTempAnalysis(TempName, title) {
                         resize: true
                     });
                 }
+            } else if(data.session=='expired'){
+                alert('session expired');
+                windows.reload();
             } else {
                 alert(data.invalid);
             }
