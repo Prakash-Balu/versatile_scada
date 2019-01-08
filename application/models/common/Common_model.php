@@ -104,6 +104,7 @@ Class Common_model extends CI_Model {
 		if(!empty($search['order']))
 		{
 			$this->db2->order_by('Record_Index',$search['order']);
+			//$limit = (!empty($search['limit'])?$search['limit']:1);
 			$this->db2->limit(1);
 		}
 
@@ -186,6 +187,38 @@ Class Common_model extends CI_Model {
         return $query->result_array();
 	}
 
+
+	function get_error_data_Info( $type , $imei, $search=array()) {
+		//skip for format type 1
+		($type == 1? $type = "" : $type = "_f".$type);
+		$this->db2->select('*')->from('error_data'.$type);
+		if(!empty($imei))
+		{
+			$this->db2->where('IMEI',$imei);
+		}
+		if(!empty($search['order']))
+		{
+			$this->db2->order_by('Record_Index',$search['order']);
+		}
+
+		if(!empty($search['limit']))
+		{
+			$this->db2->limit($search['limit']);
+		}
+
+		if(!empty($search['start_date']) && !empty($search['end_date']))
+		{
+			$this->db2->where("DATE_FORMAT(Date_S,'%y-%m-%d') BETWEEN DATE('".$search['start_date']."') AND DATE('".$search['end_date']."') ");
+		}
+		
+		$query = $this->db2->get();
+		// if(!empty($search['start_date']) && !empty($search['end_date']))
+		// {
+		 //echo $this->db2->last_query();
+		// }
+        return $query->result_array();
+	}
+
 	function get_dashboard_device_list(){
 		$type_list = $this->getDeviceList(  );//get devic type list
 		$data = array();
@@ -238,6 +271,18 @@ Class Common_model extends CI_Model {
 		}
 		//echo '<pre>';print_r($data);exit;
 		return $data;
+	}
+
+	function build_sorter($key) {
+		return function ($a, $b) use ($key) {
+			return strnatcmp($a[$key], $b[$key]);
+		};
+	}
+	public function sort_by_array($array){
+
+		//usort($array, function (int $a, int $b) { return -($a <=> $b); });
+		usort($array, $this->build_sorter('datetime'));
+		return $array;
 	}
    
 }

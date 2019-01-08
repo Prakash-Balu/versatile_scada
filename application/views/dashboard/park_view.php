@@ -67,13 +67,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       </thead>
                       <tbody>
                       <?php
+                      $green_array = array('Run', 'RUN', 'M/C Running', 'M/C Running');
+                      $blue_array = array('GRIDDROP', 'griddrop', 'Grid Drop', 'Grid Drop');
+                      $red_array = array_merge($green_array,$blue_array);
+
                       foreach ($regionDeviceData as $key1 => $value1) {
                         if( $key == $key1  ) {
                           foreach ($value1 as $key2 => $value2) {
                     ?>
                         <tr>
                           <td><?php echo !empty($value2['LOC_No'])?$value2['LOC_No']:0;?></td>
-                          <td><?php echo !empty($value2['Status'])?$value2['Status']:'';?></td>
+                          <td>
+                          
+                          
+                          <?php
+                           $color = 'gray';
+                          $status =!empty($value2['Status'])?$value2['Status']:'';
+                          if(in_array($status,$green_array))
+                          {
+                            $color = 'green';
+                          }elseif(in_array($status,$blue_array)){
+                            $color = 'blue';
+                          }elseif(in_array($status,$red_array)){
+                            $color = 'red';
+                          }
+
+                          ?>
+                          
+                          <div class="progress progress-xs">
+                            <div class="progress-bar bg-<?php echo $color;?>" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          </td>
                           <td><?php echo !empty($value2['capacity']) ? $value2['capacity']: 0;?></td>
                           <td><?php echo !empty($value2['Power'])?$value2['Power']:0;?></td>
                           <td><?php echo !empty($value2['Windspeed'])?$value2['Windspeed']:0;?></td>
@@ -103,8 +127,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           </thead>
                           <tbody>
                           <?php foreach ($footer_data as $k => $val) {
+                            
                                 if( $key == $k ) {
+                                  $i=1;
                                   foreach ($val as $info) {
+                                    if($i==5)
+                                       break;
                           ?>
                             <tr>
                               <td><?php echo $info['Date_S'];?></td>
@@ -112,7 +140,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                               <td><?php echo $info['Device_Name'];?></td>
                               <td><?php echo $info['Description'];?></td>
                             </tr>
-                          <?php } } }?>
+                          <?php $i++;} } }?>
                           </tbody>
                         </table>
                     <?php } ?>
