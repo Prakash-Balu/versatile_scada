@@ -76,7 +76,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           foreach ($value1 as $key2 => $value2) {
                     ?>
                         <tr>
-                          <td><?php echo !empty($value2['LOC_No'])?$value2['LOC_No']:0;?></td>
+                          <td><?php echo !empty($value2['Device_Name'])?$value2['Device_Name']:0;?></td>
                           <td>
                           
                           

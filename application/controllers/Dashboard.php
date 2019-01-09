@@ -84,49 +84,50 @@ class Dashboard extends CI_Controller {
 	}
 	
 	function park_view() {
-		$device_info=$top_data=$footer_data=array();
+		$device_info=$top_data=$footer_data=$footer =$device_data=array();
 		$region_list = $this->Common_model->get_region_site_list();
-			// echo '<pre>';print_r( $region_list);exit;
-		foreach($region_list as $list)
-		{
-			$device_info = (array)$this->Common_model->get_device_data_details( $list['Format_Type'], $list['IMEI'] );
-			$search['limit']=5;
-			$error_info = (array)$this->Common_model->get_error_data_Info( $list['Format_Type'], $list['IMEI'], $search );
+		if(!empty($region_list))
+			{
+			foreach($region_list as $list)
+			{
+				$device_info = (array)$this->Common_model->get_device_data_details( $list['Format_Type'], $list['IMEI'] );
+				$search['limit']=5;
+				$error_info = (array)$this->Common_model->get_error_data_Info( $list['Format_Type'], $list['IMEI'], $search );
+				
+				if( !empty($device_info) ) {
+					$device_info['Device_Name']= $list['Device_Name'];
+					$device_info['LOC_No']= $list['LOC_No'];
+					$device_info['capacity']= $list['capacity'];
+					$device_info['Connect_Feeder']= $list['Connect_Feeder'];
+					$device_data[$list['Region']][$list['Device_Name']] = $device_info;
+					//$winspeed = $device_info['Windspeed'];
+					//$power = $device_info['Power'];
+					$top_data[$list['Region']]['Windspeed'][] =$device_info['Windspeed'];
+					$top_data[$list['Region']]['Power'][] =$device_info['Power'];
+					$top_data[$list['Region']]['device_list'][]=$device_info['Device_Name'];
+				}
+				if( !empty($error_info) ) {
+					//echo '<pre>';print_r($error_info);exit;
+					foreach($error_info as $info)
+					{
+						$footer_data[$list['Region']][] =array(
+																'Date_S'=> !empty($info['Date_S'])?date('d-m-Y',strtotime($info['Date_S'])):'---',
+																'Time_S'=> $info['Time_S'],
+																'Device_Name'=>$list['Device_Name'],
+																'Description'=>$info['Status'],
+																'datetime'=> $info['Date_S'].' '.$info['Time_S']
+															);
+					}
+				}
+			}
 			
-			if( !empty($device_info) ) {
-				$device_info['Device_Name']= $list['Device_Name'];
-				$device_info['LOC_No']= $list['LOC_No'];
-				$device_info['capacity']= $list['capacity'];
-				$device_info['Connect_Feeder']= $list['Connect_Feeder'];
-				$device_data[$list['Region']][$list['Device_Name']] = $device_info;
-				//$winspeed = $device_info['Windspeed'];
-				//$power = $device_info['Power'];
-				$top_data[$list['Region']]['Windspeed'][] =$device_info['Windspeed'];
-				$top_data[$list['Region']]['Power'][] =$device_info['Power'];
-				$top_data[$list['Region']]['device_list'][]=$device_info['Device_Name'];
-			}
-			if( !empty($error_info) ) {
-				//echo '<pre>';print_r($error_info);exit;
-				foreach($error_info as $info)
-				{
-					$footer_data[$list['Region']][] =array(
-															'Date_S'=> !empty($info['Date_S'])?date('d-m-Y',strtotime($info['Date_S'])):'---',
-															'Time_S'=> $info['Time_S'],
-															'Device_Name'=>$list['Device_Name'],
-															'Description'=>$info['Status'],
-															'datetime'=> $info['Date_S'].' '.$info['Time_S']
-														);
+			if(!empty($footer_data)){
+				foreach ($footer_data as $key => $value) {
+					if(count($value)> 5 ){
+						$value=$this->Common_model->sort_by_array($value);
+					}
+					$footer[$key]=$value;
 				}
-			}
-		}
-		
-		$footer = array();
-		if(!empty($footer_data)){
-			foreach ($footer_data as $key => $value) {
-				if(count($value)> 5 ){
-					$value=$this->Common_model->sort_by_array($value);
-				}
-				$footer[$key]=$value;
 			}
 		}
 		//echo '<pre>';print_r($footer);exit;
