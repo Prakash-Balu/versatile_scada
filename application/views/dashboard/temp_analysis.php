@@ -35,9 +35,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="col-md-4">
                                     <div class="input-group mb-4">
                                         <input class="form-control start_date" type="text" placeholder="Start Date" id="start_date">
-                                        <div class="input-group-append">
-                                            <span class="fa fa-calendar input-group-text" aria-hidden="true "></span>
-                                        </div>
                                     </div>
                                     <div class="form-group">
                                       <label>Device List</label>
@@ -54,7 +51,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                                 <div class="col-md-8">
                                     <h2><span id="temp">Temperature</span></h2>
-                                    <div id="graph_area_temp" style="width:100%; height:300px;"></div>
+                                    <!-- <div id="graph_area_temp" style="width:100%; height:300px;"></div> -->
+                                <div id="power-curve" style="height: 400px;"></div>
                                 </div>
                             </div>
                             <div class="row">
@@ -119,18 +117,124 @@ function getTempAnalysis(TempName, title) {
             if (data.valid) {
                 console.log(data);
                 if ($('#graph_area_temp').length) {
-                    Morris.Area({
-                        element: 'graph_area_temp',
-                        data: data.valid,
-                        xkey: 'hours',
-                        ykeys: ['green', 'red', 'blue', 'gray'],
-                        lineColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
-                        labels: ['Green', 'Red', 'Blue', 'Gray'],
-                        pointSize: 2,
-                        hideHover: 'auto',
-                        parseTime: false,
-                        resize: true
-                    });
+                    // Morris.Area({
+                    //     element: 'graph_area_temp',
+                    //     data: data.valid,
+                    //     xkey: 'hours',
+                    //     ykeys: ['green', 'red', 'blue', 'gray'],
+                    //     lineColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+                    //     labels: ['Green', 'Red', 'Blue', 'Gray'],
+                    //     pointSize: 2,
+                    //     hideHover: 'auto',
+                    //     parseTime: false,
+                    //     resize: true
+                    // });
+
+                    const dataSource = {
+  "chart": {
+    "caption": "",
+    "yaxisname": "Power(kw)",
+    "xaxisname": "WindSpeed(m/s)",
+    "yAxisMaxValue": "750",
+    "yAxisMinValue": "-250",
+    "subcaption": "",
+    "showhovereffect": "1",
+    "numbersuffix": "",
+    "drawcrossline": "1",
+    "plottooltext": "<b>$dataValue</b> of youth were on $seriesName",
+    "theme": "fusion"
+  },
+  "categories": [
+    {
+      "category": [
+        {
+          "label": "-5"
+        },
+        {
+          "label": "0"
+        },
+        {
+          "label": "5"
+        },
+        {
+          "label": "10"
+        },
+        {
+          "label": "15"
+        },
+        {
+          "label": "20"
+        },
+        {
+          "label": "25"
+        },
+        {
+          "label": "30"
+        },
+        {
+          "label": "-5"
+        },
+        {
+          "label": "0"
+        },
+        {
+          "label": "5"
+        },
+        {
+          "label": "10"
+        },
+        {
+          "label": "15"
+        },
+        {
+          "label": "20"
+        },
+        {
+          "label": "25"
+        },
+        {
+          "label": "30"
+        },
+        {
+          "label": "-5"
+        },
+        {
+          "label": "0"
+        },
+        {
+          "label": "5"
+        },
+        {
+          "label": "10"
+        },
+        {
+          "label": "15"
+        },
+        {
+          "label": "20"
+        },
+        {
+          "label": "25"
+        },
+        {
+          "label": "30"
+        }
+      ]
+    }
+  ],
+  "dataset": data.valid
+};
+
+FusionCharts.ready(function() {
+   var myChart = new FusionCharts({
+      type: "msline",
+      renderAt: "power-curve",
+      width: "100%",
+      height: "100%",
+      dataFormat: "json",
+      dataSource
+   }).render();
+});
                 }
             } else if(data.session=='expired'){
                 alert('session expired');

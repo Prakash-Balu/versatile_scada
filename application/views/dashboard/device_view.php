@@ -422,7 +422,7 @@ const dataSource = {
           "value": "160"
         },
         {
-          "value": "172"
+          "value": ""
         },
         {
           "value": "500"
@@ -432,6 +432,35 @@ const dataSource = {
         },
         {
           "value": "500"
+        }
+      ]
+    },
+    {
+      "seriesname": "Device3",
+      "data": [
+        {
+          "value": ""
+        },
+        {
+          "value": ""
+        },
+        {
+          "value": "75"
+        },
+        {
+          "value": "170"
+        },
+        {
+          "value": ""
+        },
+        {
+          "value": "150"
+        },
+        {
+          "value": "412"
+        },
+        {
+          "value": "320"
         }
       ]
     }
