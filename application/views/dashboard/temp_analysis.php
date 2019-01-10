@@ -50,10 +50,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h2><span id="temp">Temperature</span></h2>
-                                    <!-- <div id="graph_area_temp" style="width:100%; height:300px;"></div> -->
-                                <div id="power-curve" style="height: 400px;"></div>
-                                </div>
+                        <div class="card">
+                            <div class="card-header" id="temp">Temperature</div>
+                            <div class="card-body">
+                                <div id="power-curve1" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -114,9 +117,9 @@ function getTempAnalysis(TempName, title) {
         data: { 'device_name': device_name, 'date': date_val, 'temp_name': TempName },
         success: function(data) {
 
-            if (data.valid) {
+            if (data) {
                 console.log(data);
-                if ($('#graph_area_temp').length) {
+                // if ($('#graph_area_temp').length) {
                     // Morris.Area({
                     //     element: 'graph_area_temp',
                     //     data: data.valid,
@@ -130,112 +133,39 @@ function getTempAnalysis(TempName, title) {
                     //     resize: true
                     // });
 
-                    const dataSource = {
+ const dataSource = {
   "chart": {
     "caption": "",
-    "yaxisname": "Power(kw)",
-    "xaxisname": "WindSpeed(m/s)",
-    "yAxisMaxValue": "750",
-    "yAxisMinValue": "-250",
+    "yaxisname": "Temperature",
+    "xaxisname": date_val,
+    "yAxisMaxValue": "100",
+    "yAxisMinValue": "0",
     "subcaption": "",
     "showhovereffect": "1",
     "numbersuffix": "",
     "drawcrossline": "1",
-    "plottooltext": "<b>$dataValue</b> of youth were on $seriesName",
+    // "plottooltext": "<b>$dataValue</b> on $seriesName",
     "theme": "fusion"
   },
   "categories": [
     {
-      "category": [
-        {
-          "label": "-5"
-        },
-        {
-          "label": "0"
-        },
-        {
-          "label": "5"
-        },
-        {
-          "label": "10"
-        },
-        {
-          "label": "15"
-        },
-        {
-          "label": "20"
-        },
-        {
-          "label": "25"
-        },
-        {
-          "label": "30"
-        },
-        {
-          "label": "-5"
-        },
-        {
-          "label": "0"
-        },
-        {
-          "label": "5"
-        },
-        {
-          "label": "10"
-        },
-        {
-          "label": "15"
-        },
-        {
-          "label": "20"
-        },
-        {
-          "label": "25"
-        },
-        {
-          "label": "30"
-        },
-        {
-          "label": "-5"
-        },
-        {
-          "label": "0"
-        },
-        {
-          "label": "5"
-        },
-        {
-          "label": "10"
-        },
-        {
-          "label": "15"
-        },
-        {
-          "label": "20"
-        },
-        {
-          "label": "25"
-        },
-        {
-          "label": "30"
-        }
-      ]
+      "category": data.dataLabel
     }
   ],
-  "dataset": data.valid
+  "dataset": data.dataValue
 };
 
 FusionCharts.ready(function() {
    var myChart = new FusionCharts({
       type: "msline",
-      renderAt: "power-curve",
+      renderAt: "power-curve1",
       width: "100%",
       height: "100%",
       dataFormat: "json",
       dataSource
    }).render();
 });
-                }
+                // }
             } else if(data.session=='expired'){
                 alert('session expired');
                 windows.reload();

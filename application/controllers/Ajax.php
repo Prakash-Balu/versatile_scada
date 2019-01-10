@@ -35,30 +35,37 @@ class Ajax extends CI_Controller {
 				$date = date('Y-m-d', strtotime($formvalues['date']));
 				$search = array('order' =>'ASC','start_date'=>$date,'end_date'=>$date);
 				$val	=	$this->Common_model->get_device_data_Info( $list->Format_Type, $list->IMEI,$search );
+				// echo "<pre>"; print_r($val); exit;
 				if(!empty($val))
 				{
 					$i=0;
 					//$random_color = str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
 					//$color = '#'.$random_color.$random_color.$random_color;
-					$listInfo['device'][$j]['seriesname']=$list->Device_Name;
+					
+					$listInfo['dataValue'][$j] = array('seriesname'=>$list->Device_Name);
 					foreach($val as $val_list)
 					{
 						$status = $val_list['Status'];
 						$temp_value = isset($val_list[$formvalues['temp_name']])?$val_list[$formvalues['temp_name']]:'';
 
-						
-						$listInfo['device'][$j]['data'][$i]['value'] = $temp_value;
+						$listInfo['dataLabel'][$i]['label'] =$val_list['Time_S'];
+						$listInfo['dataValue'][$j]['data'][$i]['value'] = $temp_value;
 						// echo $temp_value;
 						$i++;
-						// echo '<pre>'; print_r($listInfo); 
+						
 					}
 					//$data[$list->Device_Name]['color'][] = $color;
 
-					 // exit;
+					// echo '<pre>'; print_r($listInfo);  exit;
 				}
 				$j++;
 			}
-			$message	=	array('valid'=>$listInfo['device']);
+
+			if(!empty($listInfo['dataLabel']) && !empty($listInfo['dataValue'])){
+				$message	=	array('dataLabel'=>$listInfo['dataLabel'], 'dataValue'=>$listInfo['dataValue'] );
+			} else {
+				$message	=	array('invalid'=>validation_errors());
+			}
 		}else{
 			$message	=	array('invalid'=>validation_errors());
 		}
