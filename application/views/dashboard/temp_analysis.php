@@ -32,33 +32,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="card-header">Location Temperature Analysis</div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="input-group mb-4">
-                                        <input class="form-control start_date" type="text" placeholder="Start Date" id="start_date">
-                                    </div>
-                                    <div class="form-group">
-                                      <label>Device List</label>
-                                      <select multiple class="form-control" name="device_name" placeholder="Choose anything" data-allow-clear="1">
-                                        <?php 
-                                            foreach ($tempAna['deviceList'] as $key => $value) {
-                                            ?>
-                                            <option value="<?php echo $value['Device_Name'];?>">
-                                                <?php echo $value['Device_Name'];?>
-                                            </option>
-                                            <?php }?>
-                                      </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-header" id="temp">Temperature</div>
-                            <div class="card-body">
-                                <div id="power-curve1" style="height: 400px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
                                         <input type="button" class="btn btn-default" onclick="getTempAnalysis('Gear_Temp','Gear');" value="Gear" />
@@ -66,6 +39,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <input type="button" class="btn btn-default" onclick="getTempAnalysis('Gen1_Temp','Gen1');" value="Generator" />
                                         <input type="button" class="btn btn-default" onclick="getTempAnalysis('Hydraulic_Temp','Hydraulic');" value="Hydraulic" />
                                         <input type="button" class="btn btn-default" onclick="getTempAnalysis('Control_Temp','Control');" value="Control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="input-group mb-4">
+                                        <input class="form-control start_date" type="text" placeholder="Start Date" id="start_date">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Device List</label>
+                                        <select multiple class="form-control" name="device_name" placeholder="Choose anything" data-allow-clear="1">
+                                            <?php 
+                                            foreach ($tempAna['deviceList'] as $key => $value) {
+                                            ?>
+                                            <option value="<?php echo $value['Device_Name'];?>">
+                                                <?php echo $value['Device_Name'];?>
+                                            </option>
+                                            <?php }?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card">
+                                        <div class="card-header" id="temp">Temperature</div>
+                                        <div class="card-body">
+                                            <div id="power-curve1" style="height: 400px;"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -108,6 +109,8 @@ function getTempAnalysis(TempName, title) {
         return false;
     }
 
+    $body = $("body");
+    $body.addClass("loading");
     $("#graph_area_temp").empty();
     $("#temp").html(title);
     $.ajax({
@@ -118,55 +121,126 @@ function getTempAnalysis(TempName, title) {
         success: function(data) {
 
             if (data) {
+                $body.removeClass("loading");
                 console.log(data);
                 // if ($('#graph_area_temp').length) {
-                    // Morris.Area({
-                    //     element: 'graph_area_temp',
-                    //     data: data.valid,
-                    //     xkey: 'hours',
-                    //     ykeys: ['green', 'red', 'blue', 'gray'],
-                    //     lineColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
-                    //     labels: ['Green', 'Red', 'Blue', 'Gray'],
-                    //     pointSize: 2,
-                    //     hideHover: 'auto',
-                    //     parseTime: false,
-                    //     resize: true
-                    // });
+                // Morris.Area({
+                //     element: 'graph_area_temp',
+                //     data: data.valid,
+                //     xkey: 'hours',
+                //     ykeys: ['green', 'red', 'blue', 'gray'],
+                //     lineColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+                //     labels: ['Green', 'Red', 'Blue', 'Gray'],
+                //     pointSize: 2,
+                //     hideHover: 'auto',
+                //     parseTime: false,
+                //     resize: true
+                // });
 
- const dataSource = {
-  "chart": {
-    "caption": "",
-    "yaxisname": "Temperature",
-    "xaxisname": date_val,
-    "yAxisMaxValue": "100",
-    "yAxisMinValue": "0",
-    "subcaption": "",
-    "showhovereffect": "1",
-    "numbersuffix": "",
-    "drawcrossline": "1",
-    // "plottooltext": "<b>$dataValue</b> on $seriesName",
-    "theme": "fusion"
-  },
-  "categories": [
-    {
-      "category": data.dataLabel
-    }
-  ],
-  "dataset": data.dataValue
-};
+                const dataSource = {
+                    "chart": {
+                        "caption": "",
+                        "yaxisname": "Temperature",
+                        "xaxisname": date_val,
+                        "yAxisMaxValue": "100",
+                        "yAxisMinValue": "0",
+                        "subcaption": "",
+                        "showhovereffect": "1",
+                        "numbersuffix": "",
+                        "drawcrossline": "1",
+                        // "plottooltext": "<b>$dataValue</b> on $seriesName",
+                        "theme": "fusion"
+                    },
+                    "categories": [{
+                        "category": [{
+                                "label": "1"
+                            },
+                            {
+                                "label": "2"
+                            },
+                            {
+                                "label": "3"
+                            },
+                            {
+                                "label": "4"
+                            },
+                            {
+                                "label": "5"
+                            },
+                            {
+                                "label": "6"
+                            },
+                            {
+                                "label": "7"
+                            },
+                            {
+                                "label": "8"
+                            },
+                            {
+                                "label": "9"
+                            },
+                            {
+                                "label": "10"
+                            },
+                            {
+                                "label": "11"
+                            },
+                            {
+                                "label": "12"
+                            },
+                            {
+                                "label": "13"
+                            },
+                            {
+                                "label": "14"
+                            },
+                            {
+                                "label": "15"
+                            },
+                            {
+                                "label": "16"
+                            },
+                            {
+                                "label": "17"
+                            },
+                            {
+                                "label": "18"
+                            },
+                            {
+                                "label": "19"
+                            },
+                            {
+                                "label": "20"
+                            },
+                            {
+                                "label": "21"
+                            },
+                            {
+                                "label": "22"
+                            },
+                            {
+                                "label": "23"
+                            },
+                            {
+                                "label": "24"
+                            }
+                        ]
+                    }],
+                    "dataset": data.dataValue
+                };
 
-FusionCharts.ready(function() {
-   var myChart = new FusionCharts({
-      type: "msline",
-      renderAt: "power-curve1",
-      width: "100%",
-      height: "100%",
-      dataFormat: "json",
-      dataSource
-   }).render();
-});
+                FusionCharts.ready(function() {
+                    var myChart = new FusionCharts({
+                        type: "msline",
+                        renderAt: "power-curve1",
+                        width: "100%",
+                        height: "100%",
+                        dataFormat: "json",
+                        dataSource
+                    }).render();
+                });
                 // }
-            } else if(data.session=='expired'){
+            } else if (data.session == 'expired') {
                 alert('session expired');
                 windows.reload();
             } else {

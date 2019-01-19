@@ -70,6 +70,7 @@ foreach($region_list as $list)
         </li>
       </ul>
     </header>
+    <div class="modal"></div>
     <div class="app-body">
       <div class="sidebar">
         <nav class="sidebar-nav">
