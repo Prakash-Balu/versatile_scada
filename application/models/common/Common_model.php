@@ -48,8 +48,9 @@ Class Common_model extends CI_Model {
 				
 				if(!empty($device_list))
 				{
-						$powerSpeed[] = $device_list->Power;
-						$avgWindSpeed[] = $device_list->Windspeed;
+					// echo "<pre>"; print_r($device_list); exit;
+						$powerSpeed[] = (float)$device_list->Power;
+						$avgWindSpeed[] = (float)$device_list->Windspeed;
 						$count =$count+1;
 				}
 				$date = '2018-08-14';//date('Y-m-d');

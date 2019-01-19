@@ -48,13 +48,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <div class="card-body">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                 <label>AVG wind speed : </label> <?php echo $avgWindSpeedSum;?>
-                          <div class="avg_wind_speed graph" style="height: 70px;"><canvas style="display: inline-block; width: 468px; height: 40px; vertical-align: top;" width="468" height="40"></canvas></div>
+                          <!-- <div class="avg_wind_speed graph" style="height: 70px;"><canvas style="display: inline-block; width: 468px; height: 40px; vertical-align: top;" width="468" height="40"></canvas></div> -->
+
+                          <div class="chart-wrapper" style="height:50px;">
+                            <canvas id="avg-wind-speed"></canvas>
+                          </div>
                         </div>
 
                         <div class="col-md-12 col-sm-12 col-xs-12">
                     <label>Real Power : </label> <?php echo $powerSpeedSum;?>
-                      <div class="power_speed graph" style="height: 70px;">
+                      <!-- <div class="power_speed graph" style="height: 70px;">
                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                          </div> -->
+
+                          <div class="chart-wrapper" style="height:50px;">
+                            <canvas id="power-speed"></canvas>
                           </div>
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -76,7 +84,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           </div>
                           <div class="progress-group-bars">
                             <div class="progress progress-xs">
-                              <div class="progress-bar bg-danger" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                              <div class="progress-bar bg-danger" role="progressbar" style="width: 150%" aria-valuenow="150" aria-valuemin="0" aria-valuemax="100"></div>
+                              <div class="progress-bar bg-info" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                           </div>
                         </div>
@@ -433,6 +442,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   var power_speed =<?php echo json_encode($powerSpeed );?>;
   var pat_gen =<?php echo json_encode($patGen );?>;
   console.log(avg_wind_speed);
+  console.log(power_speed);
 var theme = {
           color: [
             '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
@@ -587,5 +597,159 @@ var theme = {
   }
 }); // eslint-disable-next-line no-unused-vars
 
+
+// var avgWindSpeed = new Chart($('#avg-wind-speed'), {
+//   type: 'line',
+//   data: {
+//     labels: [16.3, 7.1, 12.3, 7.8],
+//     datasets: [{
+//       // label: 'My First dataset',
+//       backgroundColor: getStyle('--primary'),
+//       borderColor: 'rgba(255,255,255,.55)',
+//       data: [163, 71, 123, 78]
+//     }]
+//   },
+//   options: {
+//     maintainAspectRatio: false,
+//     legend: {
+//       display: false
+//     },
+//     scales: {
+//       xAxes: [{
+//         gridLines: {
+//           color: 'transparent',
+//           zeroLineColor: 'transparent'
+//         },
+//         ticks: {
+//           fontSize: 2,
+//           fontColor: 'transparent'
+//         }
+//       }],
+//       yAxes: [{
+//         display: false,
+//         ticks: {
+//           display: false,
+//           min: 35,
+//           max: 89
+//         }
+//       }]
+//     },
+//     elements: {
+//       line: {
+//         borderWidth: 1
+//       },
+//       point: {
+//         radius: 4,
+//         hitRadius: 10,
+//         hoverRadius: 4
+//       }
+//     }
+//   }
+// });
+
+var avgWindSpeed = new Chart($('#avg-wind-speed'), {
+  type: 'line',
+  data: {
+    labels: avg_wind_speed,
+    datasets: [{
+      label: 'AVG Wind Speed',
+      backgroundColor: getStyle('--primary'),
+      borderColor: 'rgba(255,255,255,.55)',
+      data: avg_wind_speed
+    }]
+  },
+  // options: {
+  //   responsive: true
+  // }
+    options: {
+    maintainAspectRatio: false,
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [{
+        gridLines: {
+          color: 'transparent',
+          zeroLineColor: 'transparent'
+        },
+        ticks: {
+          fontSize: 2,
+          fontColor: 'transparent'
+        }
+      }],
+      yAxes: [{
+        display: false,
+        ticks: {
+          display: false,
+          // min: 0,
+          max: 20
+        }
+      }]
+    },
+    elements: {
+      line: {
+        borderWidth: 1
+      },
+      point: {
+        radius: 4,
+        hitRadius: 10,
+        hoverRadius: 4
+      }
+    }
+  }
+}); // eslint-disable-next-line no-unused-vars
+
+
+var powerSpeed = new Chart($('#power-speed'), {
+  type: 'line',
+  data: {
+    labels: power_speed,
+    datasets: [{
+      label: 'AVG Wind Speed',
+      backgroundColor: getStyle('--success'),
+      borderColor: 'rgba(255,255,255,.55)',
+      data: power_speed
+    }]
+  },
+  // options: {
+  //   responsive: true
+  // }
+    options: {
+    maintainAspectRatio: false,
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [{
+        gridLines: {
+          color: 'transparent',
+          zeroLineColor: 'transparent'
+        },
+        ticks: {
+          fontSize: 2,
+          fontColor: 'transparent'
+        }
+      }],
+      yAxes: [{
+        display: false,
+        ticks: {
+          display: false,
+          // min: 0,
+          max: 1000
+        }
+      }]
+    },
+    elements: {
+      line: {
+        borderWidth: 1
+      },
+      point: {
+        radius: 4,
+        hitRadius: 10,
+        hoverRadius: 4
+      }
+    }
+  }
+}); // eslint-disable-next-line no-unused-vars
       
 </script>
