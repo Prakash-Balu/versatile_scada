@@ -63,9 +63,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <span class="glyphicon glyphicon-tags glyphicon-lg"></span>
                                                     </div>
                                                     <div data-toggle="buttons" class="btn-group bizmoduleselect">
-                                                        <label class="btn btn-default">
+                                                        <label class="check btn btn-default">
                                                             <div class="bizcontent">
-                                                                <input type="checkbox" name="device_name[]" autocomplete="off" value="<?php echo $value['Device_Name'];?>" onchange="getDeviceList()">
+                                                                <input type="checkbox" id="input_<?php echo $key;?>" name="device_name[]" autocomplete="off" value="<?php echo $value['Device_Name'];?>" onchange="getDeviceList()">
                                                                 <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
                                                                 <div>
                                                                     <?php echo $value['Device_Name'];?>
@@ -134,18 +134,21 @@ $('.end_date').datepicker({
  var count =0;
 function getDeviceList() {
   
-        $(':checkbox:checked').each(function(i){
-            if(count >2) {
-                this.checked = false;
-                if( $(this).parent().parent().hasClass('active') ) {
-                    $(this).parent().parent().removeClass('active');
+        $('.check').each(function(i){
+            if( $(this).hasClass('active') ) {
+                count++;
+                if(count >2) {
+                    this.checked = false;
+                //    if( $(this).hasClass('active') ) {
+                        $(this).removeClass('active');
+               // }
+                    alert('Please check two device only');
+                    count = count-1;
+                    return false;
                 }
-                alert('Please check two device only');
-                count = count-1;
-                return false;
-            }
+                
             
-          count++;
+            }
         }); 
 }
 
