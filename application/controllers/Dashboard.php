@@ -159,5 +159,12 @@ class Dashboard extends CI_Controller {
 		$this->load->view('dashboard/performance_analysis');
 	}
 
+	function reports() {
+		$device_list = $this->Common_model->get_region_site_list();
+		
+		$data['reports']['deviceList'] = $device_list;
+		$this->load->view('dashboard/reports', $data);
+	}
+
 }
 ?>

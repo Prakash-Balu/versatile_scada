@@ -3,6 +3,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 // echo "<pre>"; print_r($parkview); exit;
 ?>
+<style>
+.table .thead-green th {
+  color: #fff;
+  background-color: #4dbd74;
+  border-color: #c8ced3;
+}
+.table .thead-blue th {
+  color: #fff;
+  background-color: #20a8d8;
+  border-color: #c8ced3;
+}
+
+.table .thead-airforce-blue th {
+  color: #fff;
+  background-color: #517fa4;
+  border-color: #c8ced3;
+}
+
+.table .thead-pompadour th {
+  color: #fff;
+  background-color: #581845;
+  border-color: #c8ced3;
+}
+
+ /*#581845 - Pompadour*/
+/*#20a8d8*/
+</style>
 <main class="main">
     <!-- Breadcrumb-->
     <ol class="breadcrumb">
@@ -50,7 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <br/> -->
                             <?php if(!empty($regionDeviceData)) { ?>
                             <table class="table table-responsive-sm table-hover table-outline mb-0">
-                                <thead class="thead-light">
+                                <thead class="thead-airforce-blue">
                                     <tr>
                                         <th>Loc no</th>
                                         <th>Status</th>
@@ -159,7 +186,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <?php if(!empty($footer_data)) {?>
                             <h4> Active Alarams </h4>
                             <table class="table table-responsive-sm table-hover table-outline mb-0">
-                                <thead class="thead-light">
+                                <thead class="thead-pompadour">
                                     <tr>
                                         <th>Date</th>
                                         <th>Stop Time</th>
