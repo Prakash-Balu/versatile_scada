@@ -24,7 +24,7 @@ class Dashboard extends CI_Controller {
 		//$details = $this->Common_model->get_dashboard_device_list();
 		
 		$type_list = $this->Common_model->getDeviceList(  );//get devic type list
-		//print_r($type_list);
+		// echo "<pre>";print_r($type_list); exit;
 		$data['green']=$data['blue']=$data['red']=$data['gray']=array();
 		$total_device = count($type_list);
 		if(!empty($type_list))
@@ -41,7 +41,7 @@ class Dashboard extends CI_Controller {
 			{
 				$val	=	$this->Common_model->get_device_details( $list->Format_Type, $list->IMEI );
 				$date = '2018-08-14';//date('Y-m-d');//current date
-				$search = '';//array('start_date'=>$date,'end_date'=>$date);
+				$search = array('start_date'=>$date,'end_date'=>$date);
 				$val1	=	$this->Common_model->get_device_data_Info( $list->Format_Type, $list->IMEI,$search );
 				
 				$color = '';
@@ -68,7 +68,7 @@ class Dashboard extends CI_Controller {
 					}
 					
 				}
-
+				$data['device_list'][trim($list->Device_Name)][] = $color;
 				if(!empty($val1))
 				{
 
@@ -100,13 +100,15 @@ class Dashboard extends CI_Controller {
 				$total_count = $list->cnt;
 			}
 		
-		//	echo'<pre>';print_r($data['device_list']);exit;
+			
 			$data['response']['green'] = array('count'=> count($green),'name'=>'WTG RUN','total'=>$total_count);
 			$data['response']['red']= array('count'=> count($red),'name'=>'WTG GRID DROP','total'=>$total_count);
 			$data['response']['blue']= array('count'=> count($blue),'name'=>'WTG ERROR','total'=>$total_count);
 			$data['response']['gray']= array('count'=> count($gray),'name'=>'WTG SCADA OFF','total'=>$total_count);
 			
 		}
+
+		// echo'<pre>';print_r($data['device_list']);exit;
 
 		$data['avgWindSpeed'] = $this->session->userdata('avgWindSpeed');
 		$data['powerSpeed'] = $this->session->userdata('powerSpeed');

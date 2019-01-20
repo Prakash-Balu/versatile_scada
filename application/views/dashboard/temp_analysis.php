@@ -14,6 +14,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 .searchable-container .btn.active span.glyphicon {
     opacity: 1;
 }
+.temp-btn-margin {
+    margin-right: 20px;
+}
 </style>
 <main class="main">
     <!-- Breadcrumb-->
@@ -32,13 +35,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="card-header">Location Temperature Analysis</div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 offset-2">
                                     <div class="text-center">
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Gear_Temp','Gear');" value="Gear" />
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Bearing_Temp','Bearing');" value="Bearing" />
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Gen1_Temp','Gen1');" value="Generator" />
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Hydraulic_Temp','Hydraulic');" value="Hydraulic" />
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Control_Temp','Control');" value="Control" />
+                                        <input type="button" class="btn btn-default temp-btn-margin" onclick="getTempAnalysis('Gear_Temp','Gear');" value="Gear" />
+                                        <input type="button" class="btn btn-default temp-btn-margin" onclick="getTempAnalysis('Bearing_Temp','Bearing');" value="Bearing" />
+                                        <input type="button" class="btn btn-default temp-btn-margin" onclick="getTempAnalysis('Gen1_Temp','Gen1');" value="Generator" />
+                                        <input type="button" class="btn btn-default temp-btn-margin" onclick="getTempAnalysis('Hydraulic_Temp','Hydraulic');" value="Hydraulic" />
+                                        <input type="button" class="btn btn-default temp-btn-margin" onclick="getTempAnalysis('Control_Temp','Control');" value="Control" />
                                     </div>
                                 </div>
                             </div>

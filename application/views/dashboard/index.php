@@ -81,20 +81,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="card-header">Performance Trending Chart</div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-12" style="height: 490px; overflow-y: scroll;">
+                                  <?php foreach($device_list as $deviceName=>$deviceArrVal){ ?>
                                     <div class="progress-group mb-4">
                                         <div class="progress-group-prepend">
-                                            <span class="progress-group-text">Device 1</span>
+                                            <span class="progress-group-text"><?php echo $deviceName;?></span>
                                         </div>
                                         <div class="progress-group-bars">
                                             <div class="progress progress-xs">
-                                                <div class="progress-bar bg-danger" role="progressbar" style="width: 150%" aria-valuenow="150" aria-valuemin="0" aria-valuemax="100"></div>
-                                                <div class="progress-bar bg-info" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                <div class="progress-bar bg-green" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <!-- <div class="progress-bar bg-danger" role="progressbar" style="width: 150%" aria-valuenow="150" aria-valuemin="0" aria-valuemax="100"></div> -->
+                                                <!-- <div class="progress-bar bg-info" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div> -->
+                                                <?php foreach($deviceArrVal as $deviceKey=>$deviceVal) {
+                                                  if( !empty($deviceVal) ) {?>
+                                                <div class="progress-bar bg-<?php echo $deviceVal;?>" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                              <?php } else {?>
+                                                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                              <?php }}?>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="progress-group mb-4">
+                                  <?php }?>
+                                    <!-- <div class="progress-group mb-4">
                                         <div class="progress-group-prepend">
                                             <span class="progress-group-text">Device 2</span>
                                         </div>
@@ -123,7 +130,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <div class="progress-bar bg-success" role="progressbar" style="width: 48%" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <!-- /.col-->
                             </div>
