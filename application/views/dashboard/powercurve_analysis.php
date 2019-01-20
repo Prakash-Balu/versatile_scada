@@ -20,6 +20,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     clip: rect(0,0,0,0);
     pointer-events: none;
 }
+.airforce-blue {
+  color: #fff;
+  background-color: #517fa4;
+}
 </style>
 <main class="main">
     <!-- Breadcrumb-->
@@ -83,7 +87,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="card">
-                                        <div class="card-header" id="temp0"></div>
+                                        <div class="card-header airforce-blue" id="temp0"></div>
                                         <div class="card-body">
                                             <div id="power-curve0" style="height: 400px;"></div>
                                         </div>
@@ -91,7 +95,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                         <div class="col-md-6">
                                             <div class="card">
-                                        <div class="card-header" id="temp1"></div>
+                                        <div class="card-header airforce-blue" id="temp1"></div>
                                         <div class="card-body">
                                             <div id="power-curve1" style="height: 400px;"></div>
                                         </div>
