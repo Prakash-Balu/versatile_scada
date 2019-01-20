@@ -149,7 +149,10 @@ class Dashboard extends CI_Controller {
 	}
 
 	function powercurve_analysis() {
-		$this->load->view('dashboard/powercurve_analysis');
+		$device_list = $this->Common_model->get_region_site_list();
+		
+		$data['powCurve']['deviceList'] = $device_list;
+		$this->load->view('dashboard/powercurve_analysis', $data);
 	}
 
 	function performance_analysis() {

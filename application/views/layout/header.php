@@ -134,7 +134,7 @@ foreach($region_list as $list)
                     <i class="nav-icon icon-cursor"></i> Temperature</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="<?php echo base_url().'dashboard/powercurve_analysis';?>">
                     <i class="nav-icon icon-cursor"></i> Power Curve</a>
                 </li>
                 <li class="nav-item">

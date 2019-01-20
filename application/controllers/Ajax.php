@@ -48,7 +48,7 @@ class Ajax extends CI_Controller {
 						$status = $val_list['Status'];
 						$temp_value = isset($val_list[$formvalues['temp_name']])?$val_list[$formvalues['temp_name']]:'';
 
-						$listInfo['dataLabel'][$i]['label'] =$val_list['Time_S'];
+						// $listInfo['dataLabel'][$i]['label'] =$val_list['Time_S'];
 						$listInfo['dataValue'][$j]['data'][$i]['value'] = $temp_value;
 						// echo $temp_value;
 						$i++;
@@ -61,8 +61,8 @@ class Ajax extends CI_Controller {
 				$j++;
 			}
 
-			if(!empty($listInfo['dataLabel']) && !empty($listInfo['dataValue'])){
-				$message	=	array('dataLabel'=>$listInfo['dataLabel'], 'dataValue'=>$listInfo['dataValue'] );
+			if(!empty($listInfo['dataValue'])){
+				$message	=	array('dataValue'=>$listInfo['dataValue'] );
 			} else {
 				$message	=	array('invalid'=>validation_errors());
 			}
@@ -82,27 +82,37 @@ class Ajax extends CI_Controller {
 		{
 			$formvalues	=	$this->input->post();
 			$device_list = $this->Common_model->getDeviceList($formvalues['device_name']);
+			$i=0;
+
 			foreach($device_list as $list)
 			{
 				$date = date('Y-m-d', strtotime($formvalues['date']));
 				$search = array('order' =>'ASC','start_date'=>$date,'end_date'=>$date);
 				$val	=	$this->Common_model->get_device_data_Info( $list->Format_Type, $list->IMEI,$search );
+
 				if(!empty($val))
 				{
+					$j=0;
 					$random_color = str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+					$data[$list->Device_Name][0] = array('seriesname'=>'windspeed');
+					$data[$list->Device_Name][1] = array('seriesname'=>'power');
 					$color = '#'.$random_color.$random_color.$random_color;
 					foreach($val as $val_list)
 					{
 						$windspeed = isset($val_list['Windspeed'])?$val_list['Windspeed']:'';
-						$data[$list->Device_Name]['value'][] = $windspeed;
+
+						//$data[$list->Device_Name]['windSpeed'][] = $windspeed;
 						$power = isset($val_list['Power'])?$val_list['Power']:'';
-						$data[$list->Device_Name]['value'][] = $power;
+						// $data[$list->Device_Name]['power'][] = $power;
+
+						$data[$list->Device_Name][0]['data'][$j]['value'] = $windspeed;
+						$data[$list->Device_Name][1]['data'][$j]['value'] = $power;
+						$j++;
 					}
-					$data[$list->Device_Name]['color'][] = $color;
 				}
-				
+				$i++;
 			}
-			$message	=	array('valid'=>$data);
+			$message	=	$data;
 		}else{
 			$message	=	array('invalid'=>validation_errors());
 		}

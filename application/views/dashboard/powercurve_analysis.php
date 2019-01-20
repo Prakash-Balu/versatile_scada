@@ -14,6 +14,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 .searchable-container .btn.active span.glyphicon {
     opacity: 1;
 }
+
+.searchable-container .bizcontent input[type="checkbox"] {
+    position: absolute;
+    clip: rect(0,0,0,0);
+    pointer-events: none;
+}
 </style>
 <main class="main">
     <!-- Breadcrumb-->
@@ -29,45 +35,66 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">Location Temperature Analysis</div>
+                        <div class="card-header">Location Power Curve</div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="input-group mb-4">
-                                        <input class="form-control start_date" type="text" placeholder="Start Date" id="start_date">
-                                        <div class="input-group-append">
-                                            <span class="fa fa-calendar input-group-text" aria-hidden="true "></span>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="input-group mb-4">
+                                                <input class="form-control start_date" type="text" placeholder="Start Date" id="start_date">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group mb-4">
+                                                <input class="form-control end_date" type="text" placeholder="End Date" id="end_date">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                      <label>Device List</label>
-                                      <select multiple class="form-control" name="device_name" placeholder="Choose anything" data-allow-clear="1">
-                                        <?php 
-                                            foreach ($tempAna['deviceList'] as $key => $value) {
+                                        <h4>Device List</h4>
+                                        <div class="row">
+                                            <?php 
+                                            foreach ($powCurve['deviceList'] as $key => $value) {
                                             ?>
-                                            <option value="<?php echo $value['Device_Name'];?>">
-                                                <?php echo $value['Device_Name'];?>
-                                            </option>
+                                            <div class="searchable-container items col-md-6">
+                                                <div class="info-block block-info clearfix">
+                                                    <div class="square-box pull-left">
+                                                        <span class="glyphicon glyphicon-tags glyphicon-lg"></span>
+                                                    </div>
+                                                    <div data-toggle="buttons" class="btn-group bizmoduleselect">
+                                                        <label class="btn btn-default" onclick="getPowerCurve('<?php echo $value['Device_Name'];?>', event);">
+                                                            <div class="bizcontent">
+                                                                <input type="checkbox" name="device_name[]" autocomplete="off" value="<?php echo $value['Device_Name'];?>" >
+                                                                <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+                                                                <div>
+                                                                    <?php echo $value['Device_Name'];?>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <?php }?>
-                                      </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h2><span id="temp">Temperature</span></h2>
-                                    <div id="graph_area_temp" style="width:100%; height:300px;"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="text-center">
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Gear_Temp','Gear');" value="Gear" />
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Bearing_Temp','Bearing');" value="Bearing" />
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Gen1_Temp','Gen1');" value="Generator" />
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Hydraulic_Temp','Hydraulic');" value="Hydraulic" />
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Control_Temp','Control');" value="Control" />
+                                    <div class="card">
+                                        <div class="card-header" id="temp"></div>
+                                        <div class="card-body">
+                                            <div id="power-curve1" style="height: 400px;"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- <div class="row">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <input type="button" class="btn btn-default" onclick="getPowerCurve('');" value="Submit" />
+                                    </div>
+                                </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -83,12 +110,18 @@ $('.start_date').datepicker({
     orientation: "bottom",
 });
 
-function getTempAnalysis(TempName, title) {
-    console.log(TempName)
+$('.end_date').datepicker({
+    orientation: "bottom",
+});
+
+function getPowerCurve(deviceName, event) {
     var date_val = $('#start_date').val();
 
+    // var deviceBtn = $('.searchable-container label');
+    console.log($(event.target).hasClass('active'));
     if (date_val == '') {
         alert('Please select date');
+        // event.removeClass('active');
         return false;
     }
 
@@ -97,9 +130,10 @@ function getTempAnalysis(TempName, title) {
     //     device_name.push($(this).val());
     // });
 
-    $.each($("select[name='device_name']").select2('data'), function(key, value) {
-        device_name.push(value.id);
-    });
+    // $.each($("select[name='device_name']").select2('data'), function(key, value) {
+    //     device_name.push(value.id);
+    // });
+    device_name= deviceName;
     console.log(device_name);
 
     if (device_name == '') {
@@ -107,32 +141,73 @@ function getTempAnalysis(TempName, title) {
         return false;
     }
 
+    $body = $("body");
+    $body.addClass("loading");
     $("#graph_area_temp").empty();
-    $("#temp").html(title);
+    $("#temp").html('WTG Loc No: ' + deviceName);
     $.ajax({
         type: 'POST',
-        url: "<?php echo base_url(); ?>ajax/ajax_temp_analysis",
+        url: "<?php echo base_url(); ?>ajax/ajax_power_curve",
         dataType: 'json',
-        data: { 'device_name': device_name, 'date': date_val, 'temp_name': TempName },
+        data: { 'device_name': device_name, 'date': date_val},
         success: function(data) {
 
-            if (data.valid) {
+            if (data) {
+                $body.removeClass("loading");
                 console.log(data);
-                if ($('#graph_area_temp').length) {
-                    Morris.Area({
-                        element: 'graph_area_temp',
-                        data: data.valid,
-                        xkey: 'hours',
-                        ykeys: ['green', 'red', 'blue', 'gray'],
-                        lineColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
-                        labels: ['Green', 'Red', 'Blue', 'Gray'],
-                        pointSize: 2,
-                        hideHover: 'auto',
-                        parseTime: false,
-                        resize: true
-                    });
-                }
-            } else if(data.session=='expired'){
+                const dataSource = {
+                    "chart": {
+                        "caption": "",
+                        "yaxisname": "Temperature",
+                        "xaxisname": date_val,
+                        "yAxisMaxValue": "100",
+                        "yAxisMinValue": "0",
+                        "subcaption": "",
+                        "showhovereffect": "1",
+                        "numbersuffix": "",
+                        "drawcrossline": "1",
+                        // "plottooltext": "<b>$dataValue</b> on $seriesName",
+                        "theme": "fusion"
+                    },
+                    "categories": [{
+                        "category": [{
+                                "label": "0"
+                            },
+                            {
+                                "label": "5"
+                            },
+                            {
+                                "label": "10"
+                            },
+                            {
+                                "label": "15"
+                            },
+                            {
+                                "label": "20"
+                            },
+                            {
+                                "label": "25"
+                            },
+                            {
+                                "label": "30"
+                            }
+                        ]
+                    }],
+                    "dataset": data[deviceName]
+                };
+
+                FusionCharts.ready(function() {
+                    var myChart = new FusionCharts({
+                        type: "msline",
+                        renderAt: "power-curve1",
+                        width: "100%",
+                        height: "100%",
+                        dataFormat: "json",
+                        dataSource
+                    }).render();
+                });
+                // }
+            } else if (data.session == 'expired') {
                 alert('session expired');
                 windows.reload();
             } else {
@@ -142,16 +217,4 @@ function getTempAnalysis(TempName, title) {
     });
 
 }
-
-$(function() {
-    $('#search').on('keyup', function() {
-        var pattern = $(this).val();
-        $('.searchable-container .items').hide();
-        $('.searchable-container .items').filter(function() {
-            return $(this).text().match(new RegExp(pattern, 'i'));
-        }).show();
-    });
-
-
-});
 </script>
