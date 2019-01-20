@@ -40,16 +40,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="input-group mb-4">
-                                                <input class="form-control start_date" type="text" placeholder="Start Date" id="start_date">
+                                                <input class="form-control start_date" type="text" placeholder="Date" id="start_date">
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
                                             <div class="input-group mb-4">
                                                 <input class="form-control end_date" type="text" placeholder="End Date" id="end_date">
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="form-group">
                                         <h4>Device List</h4>
@@ -63,9 +63,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <span class="glyphicon glyphicon-tags glyphicon-lg"></span>
                                                     </div>
                                                     <div data-toggle="buttons" class="btn-group bizmoduleselect">
-                                                        <label class="btn btn-default" onclick="getPowerCurve('<?php echo $value['Device_Name'];?>', event);">
+                                                        <label class="btn btn-default">
                                                             <div class="bizcontent">
-                                                                <input type="checkbox" name="device_name[]" autocomplete="off" value="<?php echo $value['Device_Name'];?>" >
+                                                                <input type="checkbox" name="device_name[]" autocomplete="off" value="<?php echo $value['Device_Name'];?>" onchange="getDeviceList()">
                                                                 <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
                                                                 <div>
                                                                     <?php echo $value['Device_Name'];?>
@@ -80,21 +80,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="card">
-                                        <div class="card-header" id="temp"></div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                        <div class="card-header" id="temp0"></div>
+                                        <div class="card-body">
+                                            <div id="power-curve0" style="height: 400px;"></div>
+                                        </div>
+                                    </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                        <div class="card-header" id="temp1"></div>
                                         <div class="card-body">
                                             <div id="power-curve1" style="height: 400px;"></div>
                                         </div>
                                     </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="card">
+                                        <div class="card-header" id="temp"></div>
+                                        <div class="card-body">
+                                            <div id="power-curve" style="height: 400px;"></div>
+                                        </div>
+                                    </div> -->
                                 </div>
                             </div>
-                            <!-- <div class="row">
+                            <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
-                                        <input type="button" class="btn btn-default" onclick="getPowerCurve('');" value="Submit" />
+                                        <input type="button" class="btn btn-default" onclick="getPowerCurve();" value="Submit" />
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -113,8 +131,26 @@ $('.start_date').datepicker({
 $('.end_date').datepicker({
     orientation: "bottom",
 });
+ var count =0;
+function getDeviceList() {
+  
+        $(':checkbox:checked').each(function(i){
+            if(count >2) {
+                this.checked = false;
+                if( $(this).parent().parent().hasClass('active') ) {
+                    $(this).parent().parent().removeClass('active');
+                }
+                alert('Please check two device only');
+                count = count-1;
+                return false;
+            }
+            
+          count++;
+        }); 
+}
 
-function getPowerCurve(deviceName, event) {
+
+function getPowerCurve() {
     var date_val = $('#start_date').val();
 
     // var deviceBtn = $('.searchable-container label');
@@ -125,16 +161,11 @@ function getPowerCurve(deviceName, event) {
         return false;
     }
 
-    var device_name = [];
-    // $.each($("select[name='device_name:selected']"), function() {
-    //     device_name.push($(this).val());
-    // });
-
-    // $.each($("select[name='device_name']").select2('data'), function(key, value) {
-    //     device_name.push(value.id);
-    // });
-    device_name= deviceName;
-    console.log(device_name);
+     var device_name = [];
+        $(':checkbox:checked').each(function(i){
+          device_name[i] = $(this).val();
+        });
+        console.log(device_name);
 
     if (device_name == '') {
         alert('Please select device name');
@@ -144,7 +175,7 @@ function getPowerCurve(deviceName, event) {
     $body = $("body");
     $body.addClass("loading");
     $("#graph_area_temp").empty();
-    $("#temp").html('WTG Loc No: ' + deviceName);
+    // $("#temp").html('WTG Loc No: ' + deviceName);
     $.ajax({
         type: 'POST',
         url: "<?php echo base_url(); ?>ajax/ajax_power_curve",
@@ -155,7 +186,9 @@ function getPowerCurve(deviceName, event) {
             if (data) {
                 $body.removeClass("loading");
                 console.log(data);
-                const dataSource = {
+                device_name.forEach(function(val, i){
+                    $("#temp"+i).html('WTG Loc No: ' + val);
+                    const dataSource = {
                     "chart": {
                         "caption": "",
                         "yaxisname": "Temperature",
@@ -193,19 +226,21 @@ function getPowerCurve(deviceName, event) {
                             }
                         ]
                     }],
-                    "dataset": data[deviceName]
+                    "dataset": data[val]
                 };
 
                 FusionCharts.ready(function() {
                     var myChart = new FusionCharts({
                         type: "msline",
-                        renderAt: "power-curve1",
+                        renderAt: "power-curve" + i,
                         width: "100%",
                         height: "100%",
                         dataFormat: "json",
                         dataSource
                     }).render();
                 });
+                });
+                
                 // }
             } else if (data.session == 'expired') {
                 alert('session expired');

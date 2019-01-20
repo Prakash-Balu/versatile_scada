@@ -90,6 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <div class="progress progress-xs">
                                                 <div class="progress-bar bg-danger" role="progressbar" style="width: 150%" aria-valuenow="150" aria-valuemin="0" aria-valuemax="100"></div>
                                                 <div class="progress-bar bg-info" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-green" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -709,7 +710,7 @@ var powerSpeed = new Chart($('#power-speed'), {
     data: {
         labels: power_speed,
         datasets: [{
-            label: 'AVG Wind Speed',
+            label: 'Real Power',
             backgroundColor: getStyle('--success'),
             borderColor: 'rgba(255,255,255,.55)',
             data: power_speed

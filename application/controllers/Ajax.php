@@ -57,8 +57,9 @@ class Ajax extends CI_Controller {
 					//$data[$list->Device_Name]['color'][] = $color;
 
 					// echo '<pre>'; print_r($listInfo);  exit;
+					$j++;
 				}
-				$j++;
+				
 			}
 
 			if(!empty($listInfo['dataValue'])){
