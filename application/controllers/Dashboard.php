@@ -40,7 +40,11 @@ class Dashboard extends CI_Controller {
 			foreach($type_list as $list)
 			{
 				$val	=	$this->Common_model->get_device_details( $list->Format_Type, $list->IMEI );
-				// echo "<pre>";print_r($val); exit;
+				$date = '2018-08-14';//date('Y-m-d');//current date
+				$search = '';//array('start_date'=>$date,'end_date'=>$date);
+				$val1	=	$this->Common_model->get_device_data_Info( $list->Format_Type, $list->IMEI,$search );
+				
+				$color = '';
 				if(!empty($val))
 				{
 					/** get current time from DB and then check device date is less then 1 hour for current time */
@@ -49,6 +53,7 @@ class Dashboard extends CI_Controller {
 
 					$device_time = strtotime($val->Date_S.' '.$val->Time_S);
 					/** less then 1 hour for current time then it's gray color*/
+					
 					if($device_time > $curr_time)
 					{
 						$gray[] = $val;
@@ -61,11 +66,41 @@ class Dashboard extends CI_Controller {
 					}elseif(in_array($val->Status,$red_array)){
 						$red[] = $val;
 					}
+					
+				}
+
+				if(!empty($val1))
+				{
+
+					/** get current time from DB and then check device date is less then 1 hour for current time */
+					$query = $this->db2->query('select (NOW() - INTERVAL 2 HOUR) as curr_time', TRUE);
+					$curr_time = strtotime($query->row()->curr_time);
+
+					foreach ($val1 as $key => $value) {
+							
+						$device_time = strtotime($value['Date_S'].' '.$value['Time_S']);
+						/** less then 1 hour for current time then it's gray color*/
+						
+						if($device_time > $curr_time)
+						{
+							$color = 'gray';
+						}
+						elseif(in_array($value['Status'],$green_array))
+						{
+							$color = 'green';
+						}elseif(in_array($value['Status'],$blue_array)){
+							$color = 'blue';
+						}elseif(in_array($value['Status'],$red_array)){
+								$color = 'red';
+						}
+						$data['device_list'][trim($list->Device_Name)][] = $color;
+					}
+					
 				}
 				$total_count = $list->cnt;
 			}
 		
-
+		//	echo'<pre>';print_r($data['device_list']);exit;
 			$data['response']['green'] = array('count'=> count($green),'name'=>'WTG RUN','total'=>$total_count);
 			$data['response']['red']= array('count'=> count($red),'name'=>'WTG GRID DROP','total'=>$total_count);
 			$data['response']['blue']= array('count'=> count($blue),'name'=>'WTG ERROR','total'=>$total_count);
