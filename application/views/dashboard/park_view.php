@@ -105,7 +105,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     ?>
                                     <tr>
                                         <td>
-                                            <?php echo !empty($value2['Device_Name'])?$value2['Device_Name']:0;?>
+                                            <a target="_blank" href="<?php echo base_url().'dashboard/device_view';?>"><?php echo !empty($value2['Device_Name'])?$value2['Device_Name']:0;?></a>
                                         </td>
                                         <td>
                                             <?php
@@ -113,17 +113,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           $status =!empty($value2['Status'])?$value2['Status']:'';
                           if(in_array($status,$green_array))
                           {
-                            $color = 'green';
+                            $color = '&#9989';//green
                           }elseif(in_array($status,$blue_array)){
                             $color = 'blue';
                           }elseif(in_array($status,$red_array)){
-                            $color = 'red';
+                            $color = '&#10060';//red
                           }
 
                           ?>
-                                            <div class="progress progress-xs" style="height:15px;">
+                                            <!-- <div class="progress progress-xs" style="height:15px;">
                                                 <div class="progress-bar bg-<?php echo $color;?>" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
+                                            </div> -->
+                                            <div class="mark text-center"><?php echo $color;?></div>
                                         </td>
                                         <td>
                                             <?php echo !empty($value2['capacity']) ? $value2['capacity']: 0;?>

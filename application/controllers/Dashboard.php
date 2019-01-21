@@ -102,8 +102,8 @@ class Dashboard extends CI_Controller {
 		
 			
 			$data['response']['green'] = array('count'=> count($green),'name'=>'WTG RUN','total'=>$total_count);
-			$data['response']['red']= array('count'=> count($red),'name'=>'WTG GRID DROP','total'=>$total_count);
-			$data['response']['blue']= array('count'=> count($blue),'name'=>'WTG ERROR','total'=>$total_count);
+			$data['response']['red']= array('count'=> count($red),'name'=>'WTG ERROR','total'=>$total_count);
+			$data['response']['blue']= array('count'=> count($blue),'name'=>'WTG GRID DROP','total'=>$total_count);
 			$data['response']['gray']= array('count'=> count($gray),'name'=>'WTG SCADA OFF','total'=>$total_count);
 			
 		}

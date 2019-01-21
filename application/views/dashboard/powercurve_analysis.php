@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <li class="breadcrumb-item">
             <a href="#">Admin</a>
         </li>
-        <li class="breadcrumb-item active">Park View</li>
+        <li class="breadcrumb-item active">Power Curve</li>
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">

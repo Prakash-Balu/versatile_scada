@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // echo "<pre>"; print_r($tempAna); exit;
 ?>
 <style>
-    .searchable-container{margin:20px 0 0 0}
+ .searchable-container{margin:20px 0 0 0}
 .searchable-container label.btn-default.active{background-color:#007ba7;color:#FFF}
 .searchable-container label.btn-default{width:90%;border:1px solid #efefef;margin:5px; box-shadow:5px 8px 8px 0 #ccc;}
 .searchable-container label .bizcontent{width:100%;}
@@ -13,6 +13,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 }
 .searchable-container .btn.active span.glyphicon {
     opacity: 1;
+}
+
+.searchable-container .bizcontent input[type="checkbox"] {
+    position: absolute;
+    clip: rect(0,0,0,0);
+    pointer-events: none;
 }
 .temp-btn-margin {
     margin-right: 20px;
@@ -25,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <li class="breadcrumb-item">
             <a href="#">Admin</a>
         </li>
-        <li class="breadcrumb-item active">Park View</li>
+        <li class="breadcrumb-item active">Temperature</li>
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
@@ -53,15 +59,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                     <div class="form-group">
                                         <label>Device List</label>
-                                        <select multiple class="form-control" name="device_name" placeholder="Choose anything" data-allow-clear="1">
+                                        <!-- <select multiple class="form-control" name="device_name" placeholder="Choose anything" data-allow-clear="1"> -->
+                                            <div class="row">
                                             <?php 
                                             foreach ($tempAna['deviceList'] as $key => $value) {
                                             ?>
-                                            <option value="<?php echo $value['Device_Name'];?>">
+                                            <!-- <option value="<?php echo $value['Device_Name'];?>">
                                                 <?php echo $value['Device_Name'];?>
-                                            </option>
+                                            </option> -->
+                                            <div class="searchable-container items col-md-6">
+                                                <div class="info-block block-info clearfix">
+                                                    <div class="square-box pull-left">
+                                                        <span class="glyphicon glyphicon-tags glyphicon-lg"></span>
+                                                    </div>
+                                                    <div data-toggle="buttons" class="btn-group bizmoduleselect">
+                                                        <label class="check btn btn-default">
+                                                            <div class="bizcontent">
+                                                                <input type="checkbox" id="input_<?php echo $key;?>" name="device_name[]" autocomplete="off" value="<?php echo $value['Device_Name'];?>">
+                                                                <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+                                                                <div>
+                                                                    <?php echo $value['Device_Name'];?>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <?php }?>
-                                        </select>
+                                        <!-- </select> -->
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
@@ -97,15 +123,19 @@ function getTempAnalysis(TempName, title) {
         return false;
     }
 
-    var device_name = [];
     // $.each($("select[name='device_name:selected']"), function() {
     //     device_name.push($(this).val());
     // });
 
-    $.each($("select[name='device_name']").select2('data'), function(key, value) {
-        device_name.push(value.id);
-    });
-    console.log(device_name);
+    // $.each($("select[name='device_name']").select2('data'), function(key, value) {
+    //     device_name.push(value.id);
+    // });
+    // console.log(device_name);
+    var device_name = [];
+        $(':checkbox:checked').each(function(i){
+          device_name[i] = $(this).val();
+        });
+        console.log(device_name);
 
     if (device_name == '') {
         alert('Please select device name');

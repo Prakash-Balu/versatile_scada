@@ -19,16 +19,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-sm-6 col-lg-3">
                     <div class="card text-white <?php echo 'bg-'.$key;?> tile-box">
                         <div class="card-body pb-0">
-                            <!-- <div class="btn-group float-right">
-                      <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="icon-settings"></i>
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                      </div>
-                    </div> -->
                             <div class="text-value">
                                 <?php echo $val['name'].' : '.$val['count']; ?>
                             </div>
@@ -37,7 +27,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                         </div>
                         <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
-                            <canvas class="chart" id="card-chart<?php echo $index;?>" height="70"></canvas>
+                            <!-- <canvas class="chart" id="card-chart<?php echo $index;?>" height="70"></canvas> -->
+                            <img class="img-fluid" src="<?php echo base_url();?>assets/images/box/<?php echo $key .'.jpg';?>" style="margin-top: -35px; margin-left: 108px;"/>
                         </div>
                     </div>
                 </div>
@@ -50,7 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header">Wind Speed</div>
+                        <div class="card-header">Status</div>
                         <div class="card-body">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <label>AVG wind speed : </label>

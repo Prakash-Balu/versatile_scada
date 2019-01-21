@@ -100,19 +100,19 @@ foreach($region_list as $list)
                   ?>
                   <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#">
-                      <i class="nav-icon icon-puzzle"></i> <?php echo $key;?>
+                      <!-- <i class="nav-icon icon-puzzle"></i> --><i class="fa fa-puzzle-piece"></i> <?php echo $key;?>
                     </a>
                     <ul class="nav-dropdown-items child_menu">
                       <?php foreach($sub as $key1 => $val){ ?>
                         <li class="nav-item nav-dropdown">
                           <a class="nav-link nav-dropdown-toggle" href="#">
-                            <i class="nav-icon icon-puzzle"></i> <?php echo $key1;?>
+                            <!-- <i class="nav-icon icon-puzzle"></i> --><i class="fa fa-thermometer-empty"></i> <?php echo $key1;?>
                           </a>
                           <ul class="nav-dropdown-items child_sub_menu">
                             <?php foreach($val as $device){ ?>
                               <li class="nav-item">
                                 <a class="nav-link" href="<?php echo base_url().'dashboard/device_view';?>">
-                                  <i class="nav-icon icon-puzzle"></i> <?php echo $device;?>
+                                  <i class="fa fa-bar-chart"></i> <?php echo $device;?>
                                 </a>
                               </li>
                             <?php } ?>
@@ -131,15 +131,15 @@ foreach($region_list as $list)
               <ul class="nav-dropdown-items">
                 <li class="nav-item">
                   <a class="nav-link" href="<?php echo base_url().'dashboard/temp_analysis';?>">
-                    <i class="nav-icon icon-cursor"></i> Temperature</a>
+                    <i class="fa fa-area-chart"></i> Temperature</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="<?php echo base_url().'dashboard/powercurve_analysis';?>">
-                    <i class="nav-icon icon-cursor"></i> Power Curve</a>
+                    <i class="fa fa-area-chart"></i> Power Curve</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">
-                    <i class="nav-icon icon-cursor"></i> Performance</a>
+                    <i class="fa fa-area-chart"></i> Performance</a>
                 </li>
               </ul>
             </li>
