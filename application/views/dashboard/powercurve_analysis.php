@@ -130,11 +130,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script type="text/javascript">
 $('.start_date').datepicker({
     orientation: "bottom",
+    autoclose: true
 });
 
 $('.end_date').datepicker({
     orientation: "bottom",
+    autoclose: true
 });
+
  var count =0;
 function getDeviceList() {
   
@@ -155,6 +158,7 @@ function getDeviceList() {
             }
         }); 
 }
+
 
 
 function getPowerCurve() {
@@ -198,7 +202,7 @@ function getPowerCurve() {
                     const dataSource = {
                     "chart": {
                         "caption": "",
-                        "yaxisname": "Temperature",
+                        "yaxisname": "Power",
                         "xaxisname": date_val,
                         "yAxisMaxValue": "100",
                         "yAxisMinValue": "0",

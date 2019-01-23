@@ -14,11 +14,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card" style="height: 415px;">
                         <div class="card-header">Device Name</div>
                         <div class="card-body">
                             <div class="float-left">
-                                <img src="<?php echo base_url();?>assets/images/wind.jpg" class="img-fluid" style=" position: absolute;width: 35%;height: 75%;">
+                                <img src="<?php echo base_url();?>assets/images/device/blue.png" class="img-fluid" style=" position: absolute;width: 35%;height: 60%;">
                             </div>
                                 <div class="float-right">
                                     <p>Device Name : A1</p>
@@ -33,40 +33,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </div>
                     <!-- /.col-->
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="card">
                             <div class="card-header">Live Status</div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6 text-center">
+                                    <div class="col-md-4 text-center">
                                         <h6>Generation</h6>
                                         <div id="gen_guage1" style="max-width: 150px; height: 140px;"></div>
                                     </div>
-                                    <div class="col-md-6 text-center">
+                                    <div class="col-md-4 text-center">
                                         <h6>Wind Speed</h6>
                                         <div id="gen_guage2" style="max-width: 150px; height: 140px;"></div>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <h6>Pitch</h6>
+                                        <div id="gen_guage3" style="max-width: 150px; height: 140px;"></div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 text-center">
-                                        <h6>Pitch</h6>
-                                        <div id="gen_guage3" style="max-width: 150px; height: 140px;"></div>
-                                    </div>
-                                    <div class="col-md-6 text-center">
                                         <h6>GRPM</h6>
                                         <div id="gen_guage4" style="max-width: 150px; height: 140px;"></div>
+                                    </div>
+                                    <div class="col-md-6 text-center">
+                                        <h6>ROTOR</h6>
+                                        <div id="gen_guage5" style="max-width: 150px; height: 140px;"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- /.col-->
-                    <div class="col-md-4">
-                        <div class="card">
+                    <div class="col-md-3">
+                        <div class="card" style="height: 415px;">
                             <div class="card-header">Turbine Current Generation</div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <div class="progress-group mb-4">
                                             <div class="progress-group-prepend">
                                                 <span class="progress-group-text">PLF</span>
@@ -78,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <div class="progress-group mb-4">
                                             <div class="progress-group-prepend">
                                                 <span class="progress-group-text">MA</span>
@@ -90,7 +94,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <div class="progress-group mb-4">
                                             <div class="progress-group-prepend">
                                                 <span class="progress-group-text">GA</span>
@@ -102,13 +106,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 text-center">
-                                        <h6>ROTOR</h6>
-                                        <div id="gen_guage5" style="max-width: 150px; height: 140px;"></div>
-                                    </div>
-                                    <div class="col-md-6 text-center">
+                                    <div class="col-md-12 text-center">
                                         <div class="progress-group mb-4">
                                             <div class="progress-group-prepend">
                                                 <span class="progress-group-text">Energy Generated Today</span>
@@ -188,49 +186,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="card-header">Temperature</div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-6 p-b-90">
                                         <div class="progress-group mb-4">
                                             <div class="progress-group-prepend">
                                                 <span class="progress-group-text">Hydraulic</span>
                                             </div>
                                             <div class="progress-group-bars">
-                                                <div class="progress progress-xs">
+                                                <div class="progress progress-xs temp-thermo-bar-height">
                                                     <div class="progress-bar bg-primary" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+
                                                 </div>
+                                                <!-- <i class="fa fa-thermometer-half" aria-hidden="true"></i> -->
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6 p-b-90">
                                         <div class="progress-group mb-4">
                                             <div class="progress-group-prepend">
                                                 <span class="progress-group-text">Gear Bearing</span>
                                             </div>
                                             <div class="progress-group-bars">
-                                                <div class="progress progress-xs">
+                                                <div class="progress progress-xs temp-thermo-bar-height">
                                                     <div class="progress-bar bg-primary" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6 p-b-90">
                                         <div class="progress-group mb-4">
                                             <div class="progress-group-prepend">
                                                 <span class="progress-group-text">Gear Box Oil</span>
                                             </div>
                                             <div class="progress-group-bars">
-                                                <div class="progress progress-xs">
+                                                <div class="progress progress-xs temp-thermo-bar-height">
                                                     <div class="progress-bar bg-primary" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6 p-b-90">
                                         <div class="progress-group mb-4">
                                             <div class="progress-group-prepend">
                                                 <span class="progress-group-text">Generator</span>
                                             </div>
                                             <div class="progress-group-bars">
-                                                <div class="progress progress-xs">
+                                                <div class="progress progress-xs temp-thermo-bar-height">
                                                     <div class="progress-bar bg-primary" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>

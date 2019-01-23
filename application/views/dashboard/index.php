@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
                             <!-- <canvas class="chart" id="card-chart<?php echo $index;?>" height="70"></canvas> -->
-                            <img class="img-fluid" src="<?php echo base_url();?>assets/images/box/<?php echo $key .'.jpg';?>" style="margin-top: -35px; margin-left: 108px;"/>
+                            <img class="img-fluid" src="<?php echo base_url();?>assets/images/box/<?php echo $key .'.png';?>" style="margin-top: -35px; margin-left: 108px;"/>
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div class="col-md-6">
                     <div class="card" style="height: 595px;">
-                        <div class="card-header">Performance Trending Chart</div>
+                        <div class="card-header">Performance Trending Chart - Today</div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12" style="height: 490px; overflow-y: scroll;">
@@ -77,6 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="progress-group mb-4">
                                         <div class="progress-group-prepend">
                                             <span class="progress-group-text"><?php echo $deviceName;?></span>
+                                            <input type="hidden" name="device_name[]" value="<?php echo $deviceName;?>">
                                         </div>
                                         <div class="progress-group-bars">
                                             <div class="progress progress-xs">
@@ -141,7 +142,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="card" style="height:284px">
-                    <div class="card-header">Temperature Trending</div>
+                    <div class="card-header">Temperature Trending - Notification</div>
                     <div class="card-body">
                         <div class="chart-wrapper mt-3 mx-3" style="height:200px;">
                             <canvas class="chart" id="temp_trending_chart" height="200"></canvas>
@@ -450,6 +451,12 @@ var theme = {
         '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
     ]
 };
+
+    var device_name = [];
+    $.each($("input[name='device_name[]']"), function(key, data) {
+        device_name.push(data.value);
+    });
+    console.log(device_name);
 if ($('#export_gad').length) {
 
     var echartBar = echarts.init(document.getElementById('export_gad'), theme);
@@ -471,7 +478,8 @@ if ($('#export_gad').length) {
         calculable: false,
         xAxis: [{
             type: 'category',
-            data: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100', '110', '120']
+            // data: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100', '110', '120']
+            data:device_name
         }],
         yAxis: [{
             type: 'value',

@@ -14179,7 +14179,8 @@ body {
   -webkit-transform: scale(1.5); /* Safari 3-8 */
   transition: transform .8s;
   /*transform: scale(1.5);*/
-  background-color:#1CC09F !important; box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+  /*background-color:#1CC09F !important;*/
+  /*box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);*/
     transform: translate(0px, -4px);
 }
 
@@ -14229,4 +14230,13 @@ body.loading {
    modal element will be visible */
 body.loading .modal {
     display: block;
+}
+
+
+.p-b-90 {
+  padding-bottom: 90px;
+}
+
+.temp-thermo-bar-height {
+  height: 20px;
 }

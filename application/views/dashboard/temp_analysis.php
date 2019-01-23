@@ -112,6 +112,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script type="text/javascript">
 $('.start_date').datepicker({
     orientation: "bottom",
+    autoclose: true
 });
 
 function getTempAnalysis(TempName, title) {
