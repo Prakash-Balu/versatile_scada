@@ -110,6 +110,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <td>
                                             <?php
                            $color = 'gray';
+                           $symbol = '<i class="fa fa-circle-o fa-3" aria-hidden="true"></i>';
                           $status =!empty($value2['Status'])?$value2['Status']:'';
                           if(in_array($status,$green_array))
                           {
