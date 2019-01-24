@@ -14,6 +14,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 .searchable-container .btn.active span.glyphicon {
     opacity: 1;
 }
+
+.searchable-container .bizcontent input[type="checkbox"] {
+    position: absolute;
+    clip: rect(0,0,0,0);
+    pointer-events: none;
+}
+.airforce-blue {
+  color: #fff;
+  background-color: #517fa4;
+}
 </style>
 <main class="main">
     <!-- Breadcrumb-->
@@ -22,49 +32,78 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <li class="breadcrumb-item">
             <a href="#">Admin</a>
         </li>
-        <li class="breadcrumb-item active">Park View</li>
+        <li class="breadcrumb-item active">Power Curve</li>
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">Location Temperature Analysis</div>
+                        <div class="card-header">Location Power Curve</div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="input-group mb-4">
-                                        <input class="form-control start_date" type="text" placeholder="Start Date" id="start_date">
-                                        <div class="input-group-append">
-                                            <span class="fa fa-calendar input-group-text" aria-hidden="true "></span>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="input-group mb-4">
+                                                <input class="form-control start_date" type="text" placeholder="Month" id="start_date">
+                                            </div>
                                         </div>
+                                        <!-- <div class="col-md-6">
+                                            <div class="input-group mb-4">
+                                                <input class="form-control end_date" type="text" placeholder="End Date" id="end_date">
+                                            </div>
+                                        </div> -->
                                     </div>
                                     <div class="form-group">
-                                      <label>Device List</label>
-                                      <select multiple class="form-control" name="device_name" placeholder="Choose anything" data-allow-clear="1">
-                                        <?php 
-                                            foreach ($tempAna['deviceList'] as $key => $value) {
+                                        <h4>Device List</h4>
+                                        <div class="row">
+                                            <?php 
+                                            foreach ($perAna['deviceList'] as $key => $value) {
                                             ?>
-                                            <option value="<?php echo $value['Device_Name'];?>">
-                                                <?php echo $value['Device_Name'];?>
-                                            </option>
+                                            <div class="searchable-container items col-md-6">
+                                                <div class="info-block block-info clearfix">
+                                                    <div class="square-box pull-left">
+                                                        <span class="glyphicon glyphicon-tags glyphicon-lg"></span>
+                                                    </div>
+                                                    <div data-toggle="buttons" class="btn-group bizmoduleselect">
+                                                        <label class="check btn btn-default">
+                                                            <div class="bizcontent">
+                                                                <input type="checkbox" id="input_<?php echo $key;?>" name="device_name[]" autocomplete="off" value="<?php echo $value['Device_Name'];?>" onchange="getDeviceList()">
+                                                                <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+                                                                <div>
+                                                                    <?php echo $value['Device_Name'];?>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <?php }?>
-                                      </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h2><span id="temp">Temperature</span></h2>
-                                    <div id="graph_area_temp" style="width:100%; height:300px;"></div>
+                                    
+                                            <div class="card">
+                                        <div class="card-header airforce-blue" id="temp0"></div>
+                                        <div class="card-body">
+                                            <div id="power-curve0" style="height: 400px;"></div>
+                                        </div>
+                                    </div>
+                                        
+                                    <!-- <div class="card">
+                                        <div class="card-header" id="temp"></div>
+                                        <div class="card-body">
+                                            <div id="power-curve" style="height: 400px;"></div>
+                                        </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Gear_Temp','Gear');" value="Gear" />
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Bearing_Temp','Bearing');" value="Bearing" />
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Gen1_Temp','Gen1');" value="Generator" />
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Hydraulic_Temp','Hydraulic');" value="Hydraulic" />
-                                        <input type="button" class="btn btn-default" onclick="getTempAnalysis('Control_Temp','Control');" value="Control" />
+                                        <input type="button" class="btn btn-default" onclick="getPowerCurve();" value="Submit" />
                                     </div>
                                 </div>
                             </div>
@@ -80,59 +119,133 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php  $this->load->view('layout/footer'); ?>
 <script type="text/javascript">
 $('.start_date').datepicker({
+    format:'M-yyyy',
+     viewMode: "months",
     orientation: "bottom",
+    autoclose: true
 });
 
-function getTempAnalysis(TempName, title) {
-    console.log(TempName)
+$('.end_date').datepicker({
+    orientation: "bottom",
+    autoclose: true
+});
+
+ var count =0;
+function getDeviceList() {
+  
+        $('.check').each(function(i){
+            if( $(this).hasClass('active') ) {
+                count++;
+                if(count >2) {
+                    this.checked = false;
+                //    if( $(this).hasClass('active') ) {
+                        $(this).removeClass('active');
+               // }
+                    alert('Please check two device only');
+                    count = count-1;
+                    return false;
+                }
+                
+            
+            }
+        }); 
+}
+
+
+
+function getPowerCurve() {
     var date_val = $('#start_date').val();
 
+    // var deviceBtn = $('.searchable-container label');
+    console.log($(event.target).hasClass('active'));
     if (date_val == '') {
         alert('Please select date');
+        // event.removeClass('active');
         return false;
     }
 
-    var device_name = [];
-    // $.each($("select[name='device_name:selected']"), function() {
-    //     device_name.push($(this).val());
-    // });
-
-    $.each($("select[name='device_name']").select2('data'), function(key, value) {
-        device_name.push(value.id);
-    });
-    console.log(device_name);
+     var device_name = [];
+        $(':checkbox:checked').each(function(i){
+          device_name[i] = $(this).val();
+        });
+        console.log(device_name);
 
     if (device_name == '') {
         alert('Please select device name');
         return false;
     }
 
+    $body = $("body");
+    $body.addClass("loading");
     $("#graph_area_temp").empty();
-    $("#temp").html(title);
+    // $("#temp").html('WTG Loc No: ' + deviceName);
     $.ajax({
         type: 'POST',
-        url: "<?php echo base_url(); ?>ajax/ajax_temp_analysis",
+        url: "<?php echo base_url(); ?>ajax/ajax_power_curve",
         dataType: 'json',
-        data: { 'device_name': device_name, 'date': date_val, 'temp_name': TempName },
+        data: { 'device_name': device_name, 'date': date_val},
         success: function(data) {
 
-            if (data.valid) {
+            if (data) {
+                $body.removeClass("loading");
                 console.log(data);
-                if ($('#graph_area_temp').length) {
-                    Morris.Area({
-                        element: 'graph_area_temp',
-                        data: data.valid,
-                        xkey: 'hours',
-                        ykeys: ['green', 'red', 'blue', 'gray'],
-                        lineColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
-                        labels: ['Green', 'Red', 'Blue', 'Gray'],
-                        pointSize: 2,
-                        hideHover: 'auto',
-                        parseTime: false,
-                        resize: true
-                    });
-                }
-            } else if(data.session=='expired'){
+                device_name.forEach(function(val, i){
+                    $("#temp"+i).html('WTG Loc No: ' + val);
+                    const dataSource = {
+                    "chart": {
+                        "caption": "",
+                        "yaxisname": "Power",
+                        "xaxisname": date_val,
+                        "yAxisMaxValue": "100",
+                        "yAxisMinValue": "0",
+                        "subcaption": "",
+                        "showhovereffect": "1",
+                        "numbersuffix": "",
+                        "drawcrossline": "1",
+                        // "plottooltext": "<b>$dataValue</b> on $seriesName",
+                        "theme": "fusion"
+                    },
+                    "categories": [{
+                        "category": [{
+                                "label": "0"
+                            },
+                            {
+                                "label": "5"
+                            },
+                            {
+                                "label": "10"
+                            },
+                            {
+                                "label": "15"
+                            },
+                            {
+                                "label": "20"
+                            },
+                            {
+                                "label": "25"
+                            },
+                            {
+                                "label": "30"
+                            }
+                        ]
+                    }],
+                    "dataset": data[val]
+                };
+
+                FusionCharts.ready(function() {
+                    var myChart = new FusionCharts({
+                        type: "msline",
+                        renderAt: "power-curve" + i,
+                        width: "100%",
+                        height: "100%",
+                        dataFormat: "json",
+                        dataSource
+                    }).render();
+                });
+                });
+                
+                // }
+            } else if (data.session == 'expired') {
                 alert('session expired');
                 windows.reload();
             } else {
@@ -142,16 +255,4 @@ function getTempAnalysis(TempName, title) {
     });
 
 }
-
-$(function() {
-    $('#search').on('keyup', function() {
-        var pattern = $(this).val();
-        $('.searchable-container .items').hide();
-        $('.searchable-container .items').filter(function() {
-            return $(this).text().match(new RegExp(pattern, 'i'));
-        }).show();
-    });
-
-
-});
 </script>
