@@ -39,7 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <!-- /.row-->
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">Status</div>
                         <div class="card-body">
@@ -67,7 +67,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card" style="height: 595px;">
                         <div class="card-header">Performance Trending Chart - Today</div>
                         <div class="card-body">
