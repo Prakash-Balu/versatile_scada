@@ -113,18 +113,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           $status =!empty($value2['Status'])?$value2['Status']:'';
                           if(in_array($status,$green_array))
                           {
-                            $color = '&#9989';//green
+                            $color = 'green';//green
+                            $symbol = '<i class="fa fa-check fa-3" aria-hidden="true"></i>';
                           }elseif(in_array($status,$blue_array)){
                             $color = 'blue';
+                            $symbol = '<i class="fa fa-circle-o fa-3" aria-hidden="true"></i>';
                           }elseif(in_array($status,$red_array)){
-                            $color = '&#10060';//red
+                            $color = 'red';//red
+                            $symbol = '<i class="fa fa-times fa-3" aria-hidden="true"></i>';
                           }
 
                           ?>
                                             <!-- <div class="progress progress-xs" style="height:15px;">
                                                 <div class="progress-bar bg-<?php echo $color;?>" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div> -->
-                                            <div class="mark text-center"><?php echo $color;?></div>
+                                            <div class="mark text-center" style="color:#fff;background-color: <?php echo $color;?>"><?php echo $symbol;?></div>
                                         </td>
                                         <td>
                                             <?php echo !empty($value2['capacity']) ? $value2['capacity']: 0;?>
