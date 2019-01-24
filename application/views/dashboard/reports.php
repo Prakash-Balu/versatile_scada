@@ -69,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card">
-                                        <div class="card-header" id="temp">Location Name:MTK Textile 6</div>
+                                        <div class="card-header" id="temp">Location Name: MTK Textile 6</div>
                                         <div class="card-body">
                                             <table class="table table-responsive-sm table-hover table-outline mb-0">
                                                 <thead class="thead-light">
@@ -82,10 +82,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"></td>
+                                                        <td class="text-center">
+                                                            <select  class="form-control" name="device_name">
+                                        
+                                            <option value="Select">
+                                                select
+                                            </option>
+                                            <option value="Gen_temp">
+                                                Generation & Temperature
+                                            </option>
+                                            
+                                      </select>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            
+                                                <input class="form-control start_date" type="text" placeholder="Start Date" id="start_date">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <input class="form-control end_date" type="text" placeholder="End Date" id="end_date">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <button class="btn btn-primary">Go</button>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -104,4 +122,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </main>
 <?php  $this->load->view('layout/footer'); ?>
 <script type="text/javascript">
+    $('.start_date').datepicker({
+    orientation: "bottom",
+    autoclose: true
+});
+
+$('.end_date').datepicker({
+    orientation: "bottom",
+    autoclose: true
+});
 </script>
