@@ -102,10 +102,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       foreach ($regionDeviceData as $key1 => $value1) {
                         if( $key == $key1  ) {
                           foreach ($value1 as $key2 => $value2) {
+							  $device_name = !empty($value2['Device_Name'])?$value2['Device_Name']:0;
+							  $IMEI = !empty($value2['IMEI'])?$value2['IMEI']:0;
                     ?>
                                     <tr>
                                         <td>
-                                            <a target="_blank" href="<?php echo base_url().'dashboard/device_view';?>"><?php echo !empty($value2['Device_Name'])?$value2['Device_Name']:0;?></a>
+                                            <a target="_blank" href="<?php echo base_url().'dashboard/device_view?d='.$IMEI;?>"><?php echo $device_name;?></a>
                                         </td>
                                         <td>
                                             <?php

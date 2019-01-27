@@ -147,6 +147,7 @@ Class Common_model extends CI_Model {
 				if(!empty($device_name)){
 					$this->db->where_in('Device_Name',$device_name);
 				}
+				
 		$query = $this->db->get('device_register');
     
         return $query->result();
@@ -160,11 +161,27 @@ Class Common_model extends CI_Model {
         $this->db->select('Site_Location,Region, Device_Name, Format_Type,IMEI, LOC_No, capacity, Connect_Feeder')
 				->where('Account_ID',$Account_ID)
 				->where("Region!=''");
+
 			//	->group_by('Region,Site_Location');
         $query = $this->db->get('device_register');
         return $query->result_array();
     }
 
+	function get_device_list_by_given_imei( $imei='' ) {
+        $result = array();
+	
+		$Account_ID = $this->session->userdata('account_id');
+
+        $this->db->select('Site_Location,Region, Device_Name, Format_Type,IMEI, LOC_No, capacity, Connect_Feeder')
+				->where('Account_ID',$Account_ID)
+				->where("Region!=''");
+				if(!empty($imei)){
+					$this->db->where_in('IMEI',$imei);
+				}
+			//	->group_by('Region,Site_Location');
+        $query = $this->db->get('device_register');
+        return $query->row_array();
+    }
 	function get_device_data_Info( $type , $imei, $search=array()) {
 		//skip for format type 1
 		($type == 1? $type = "" : $type = "_f".$type);
@@ -187,6 +204,32 @@ Class Common_model extends CI_Model {
 		// if(!empty($search['start_date']) && !empty($search['end_date']))
 		// {
 		 // echo $this->db2->last_query(); exit;
+		// }
+        return $query->result_array();
+	}
+	
+	function get_date_wise_device_data_Info( $type , $imei, $search=array()) {
+		//skip for format type 1
+		($type == 1? $type = "" : $type = "_f".$type);
+		$this->db2->select('Date_S, sum(Windspeed) as Windspeed')->from('device_data'.$type);
+		if(!empty($imei))
+		{
+			$this->db2->where('IMEI',$imei);
+		}
+		if(!empty($search['order']))
+		{
+			$this->db2->order_by('Record_Index',$search['order']);
+		}
+
+		if(!empty($search['start_date']) && !empty($search['end_date']))
+		{
+			$this->db2->where("DATE_FORMAT(Date_S,'%y-%m-%d') BETWEEN DATE('".$search['start_date']."') AND DATE('".$search['end_date']."') ");
+		}
+		$this->db2->group_by('Date_S');
+		$query = $this->db2->get();
+		// if(!empty($search['start_date']) && !empty($search['end_date']))
+		// {
+		//  echo $this->db2->last_query(); exit;
 		// }
         return $query->result_array();
 	}

@@ -127,9 +127,11 @@ class Dashboard extends CI_Controller {
 			{
 			foreach($region_list as $list)
 			{
-				$device_info = (array)$this->Common_model->get_device_data_details( $list['Format_Type'], $list['IMEI'] );
-				$search['limit']=5;
-				$error_info = (array)$this->Common_model->get_error_data_Info( $list['Format_Type'], $list['IMEI'], $search );
+				$date = '2018-08-14'; //date('Y-m-d');//current date
+				$search = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
+				$search1 = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date,'limit'=>5);
+				$device_info = (array)$this->Common_model->get_device_data_details( $list['Format_Type'], $list['IMEI'], $search );
+				$error_info = (array)$this->Common_model->get_error_data_Info( $list['Format_Type'], $list['IMEI'], $search1 );
 				
 				if( !empty($device_info) ) {
 					$device_info['Device_Name']= $list['Device_Name'];
@@ -174,8 +176,85 @@ class Dashboard extends CI_Controller {
 		$this->load->view('dashboard/park_view', $data);
 	}
 
-	function device_view() {
-		$this->load->view('dashboard/device_view');
+	function device_view() 
+	{
+		$device_info=$top_data=$footer_data=$footer =$device_data=array();
+		
+		if(!empty($_REQUEST['d'] ))
+		{
+			$list = $this->Common_model->get_device_list_by_given_imei( $_REQUEST['d']);
+			
+			$date = '2018-08-14'; //date('Y-m-d');//current date
+			$search = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
+			$search1 = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date,'limit'=>5);
+			$device_info = (array)$this->Common_model->get_device_data_details( $list['Format_Type'], $list['IMEI'], $search );
+			$error_info = (array)$this->Common_model->get_error_data_Info( $list['Format_Type'], $list['IMEI'], $search1 );
+			
+			if( !empty($device_info) ) {
+				$device_info['Device_Name']= $list['Device_Name'];
+				$device_info['LOC_No']= $list['LOC_No'];
+				$device_info['capacity']= $list['capacity'];
+				$device_info['Connect_Feeder']= $list['Connect_Feeder'];
+
+			}
+			
+			if( !empty($error_info) ) {
+				foreach($error_info as $info)
+				{
+					$event_log[] =array(
+															'Date_S'=> !empty($info['Date_S'])?date('d-m-Y',strtotime($info['Date_S'])):'---',
+															'Time_S'=> $info['Time_S'],
+															'Device_Name'=>$list['Device_Name'],
+															'Description'=>$info['Status'],
+															'datetime'=> $info['Date_S'].' '.$info['Time_S']
+														);
+				}
+			}
+			
+			$search_info = array('order' =>'ASC','start_date'=>$date,'end_date'=>$date);
+			$val	=	$this->Common_model->get_device_data_Info( $list['Format_Type'], $list['IMEI'],$search_info );
+			$power_curve=array();
+			if(!empty($val))
+			{
+				$j=0;
+				$power_curve[0] = array('seriesname'=>'windspeed');
+				$power_curve[1] = array('seriesname'=>'power');
+				foreach($val as $val_list)
+				{
+					$windspeed = isset($val_list['Windspeed'])?$val_list['Windspeed']:'';
+					$power = isset($val_list['Power'])?$val_list['Power']:'';
+					$power_curve[0]['data'][$j]['value'] = $windspeed;
+					$power_curve[1]['data'][$j]['value'] = $power;
+					$j++;
+				}
+			}
+			
+			$sdate = '2018-08-01'; //date('Y-m-01');//current month start date
+			$edate = '2018-08-31'; //date('Y-m-d');//current date
+			$search_avg = array('order' =>'ASC','start_date'=>$sdate,'end_date'=>$edate);
+			$speed_list	=	$this->Common_model->get_date_wise_device_data_Info( $list['Format_Type'], $list['IMEI'],$search_avg );
+
+			$avg_speed=$event_log=array();
+			if(!empty($speed_list))
+			{
+				$j=0;
+				foreach($speed_list as $speed)
+				{
+					$windspeed = isset($speed['Windspeed'])?$speed['Windspeed']:'';
+					$date_list = !empty($speed['Date_S'])?date('d-m-Y',strtotime($speed['Date_S'])):'---';
+					$avg_speed[$date_list] = $windspeed;
+					$j++;
+				}
+			}
+		}
+
+	 	$data['regions'] = $list;
+		$data['live_status'] = $device_info;
+		$data['event_log'] = $event_log;
+		$data['power_curve'] = $power_curve;
+		$data['avg_speed'] = $avg_speed;
+		echo '<pre>';print_r($data);exit;
+		$this->load->view('dashboard/device_view',$data);
 	}
 	
 	function temp_analysis() {
