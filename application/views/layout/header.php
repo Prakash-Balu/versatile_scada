@@ -3,9 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $region_list = $this->Common_model->get_region_site_list();
 foreach($region_list as $list)
 {
-  $menu[$list['Region']][$list['Site_Location']][] = $list['Device_Name'];
+  $menu[$list['Region']][$list['Site_Location']][] = array('device_name'=>$list['Device_Name'], 'IMEI'=>$list['IMEI']);
 }
-//echo '<pre>';print_r($menu);exit;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,7 +86,7 @@ foreach($region_list as $list)
                 <i class="nav-icon icon-drop"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo base_url().'dashboard/park_view';?>">
+              <a class="nav-link" target="_blank" href="<?php echo base_url().'dashboard/park_view';?>">
                 <i class="nav-icon icon-pencil"></i> Park View</a>
             </li>
             <li class="nav-item nav-dropdown">
@@ -109,10 +108,12 @@ foreach($region_list as $list)
                             <!-- <i class="nav-icon icon-puzzle"></i> --><i class="fa fa-thermometer-empty"></i> <?php echo $key1;?>
                           </a>
                           <ul class="nav-dropdown-items child_sub_menu">
-                            <?php foreach($val as $device){ ?>
+                            <?php foreach($val as $device){
+                             
+                             ?>
                               <li class="nav-item">
-                                <a class="nav-link" href="<?php echo base_url().'dashboard/device_view';?>">
-                                  <i class="fa fa-bar-chart"></i> <?php echo $device;?>
+                                <a class="nav-link" target="_blank" href="<?php echo base_url().'dashboard/device_view?d='.$device["IMEI"];?>">
+                                  <i class="fa fa-bar-chart"></i> <?php echo $device['device_name'];?>
                                 </a>
                               </li>
                             <?php } ?>

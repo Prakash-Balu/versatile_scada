@@ -183,7 +183,7 @@ class Dashboard extends CI_Controller {
 		if(!empty($_REQUEST['d'] ))
 		{
 			$list = $this->Common_model->get_device_list_by_given_imei( $_REQUEST['d']);
-			
+			$avg_speed=$event_log=array();
 			$date = '2018-08-14'; //date('Y-m-d');//current date
 			$search = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
 			$search1 = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date,'limit'=>5);
@@ -234,7 +234,7 @@ class Dashboard extends CI_Controller {
 			$search_avg = array('order' =>'ASC','start_date'=>$sdate,'end_date'=>$edate);
 			$speed_list	=	$this->Common_model->get_date_wise_device_data_Info( $list['Format_Type'], $list['IMEI'],$search_avg );
 
-			$avg_speed=$event_log=array();
+			
 			if(!empty($speed_list))
 			{
 				$j=0;
@@ -253,7 +253,7 @@ class Dashboard extends CI_Controller {
 		$data['event_log'] = $event_log;
 		$data['power_curve'] = $power_curve;
 		$data['avg_speed'] = $avg_speed;
-		echo '<pre>';print_r($data);exit;
+		// echo '<pre>';print_r($data);exit;
 		$this->load->view('dashboard/device_view',$data);
 	}
 	

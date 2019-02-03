@@ -8,26 +8,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <li class="breadcrumb-item">
             <a href="#">Admin</a>
         </li>
-        <li class="breadcrumb-item active">Device 1</li>
+        <li class="breadcrumb-item active"><?php echo $regions['Device_Name'];?></li>
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col-md-4">
                     <div class="card" style="height: 415px;">
-                        <div class="card-header">Device Name</div>
+                        <div class="card-header"><?php echo $regions['Device_Name'];?></div>
                         <div class="card-body">
                             <div class="float-left">
                                 <img src="<?php echo base_url();?>assets/images/device/blue.png" class="img-fluid" style=" position: absolute;width: 35%;height: 60%;">
                             </div>
                                 <div class="float-right">
-                                    <p>Device Name : A1</p>
+                                    <p>Device Name : <?php echo $regions['Device_Name'];?></p>
                                     <p>HTSC No : 2284</p>
-                                    <p>Capacity : 600</p>
-                                    <p>Feeder Name : Micon 7</p>
-                                    <p>Status : Grid in Gen Brk Trip</p>
-                                    <p>Date : 2018-11-19</p>
-                                    <p>Time : 11:57:52</p>
+                                    <p>Capacity : <?php echo $regions['capacity'];?></p>
+                                    <p>Feeder Name : <?php echo $regions['Connect_Feeder'];?></p>
+                                    <p>Status : <?php echo $live_status['Status'];?></p>
+                                    <p>Date : <?php echo $live_status['Date'];?></p><!-- 2018-11-19 -->
+                                    <p>Time : <?php echo $live_status['Time'];?></p><!-- 11:57:52-->
                                 </div>
                             </div>
                         </div>
@@ -193,7 +193,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </div>
                                             <div class="progress-group-bars">
                                                 <div class="progress progress-xs temp-thermo-bar-height">
-                                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-primary" role="progressbar" title="<?php echo $live_status['Hydraulic_Temp'];?>" style="width: <?php echo $live_status['Hydraulic_Temp'];?>%" aria-valuenow="<?php echo $live_status['Hydraulic_Temp'];?>" aria-valuemin="0" aria-valuemax="100"></div>
 
                                                 </div>
                                                 <!-- <i class="fa fa-thermometer-half" aria-hidden="true"></i> -->
@@ -207,7 +207,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </div>
                                             <div class="progress-group-bars">
                                                 <div class="progress progress-xs temp-thermo-bar-height">
-                                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-primary" role="progressbar" title="<?php echo $live_status['Bearing_Temp'];?>" style="width: <?php echo $live_status['Bearing_Temp'];?>%" aria-valuenow="<?php echo $live_status['Bearing_Temp'];?>" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -219,7 +219,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </div>
                                             <div class="progress-group-bars">
                                                 <div class="progress progress-xs temp-thermo-bar-height">
-                                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-primary" role="progressbar" title="<?php echo $live_status['Gear_Temp'];?>" style="width: <?php echo $live_status['Gear_Temp'];?>%" aria-valuenow="<?php echo $live_status['Gear_Temp'];?>" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -231,7 +231,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </div>
                                             <div class="progress-group-bars">
                                                 <div class="progress progress-xs temp-thermo-bar-height">
-                                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar bg-primary" role="progressbar" title="<?php echo $live_status['Gen1_Temp'];?>" style="width: <?php echo $live_status['Gen1_Temp'];?>%" aria-valuenow="<?php echo $live_status['Gen1_Temp'];?>" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -326,22 +326,227 @@ chartData.series[0].data = [0.30];
 
 $('#gen_guage1').highcharts(chartData);
 
+//Windspeed
+var windspeed = <?php echo $live_status['Windspeed'];?>;
+var chartData1 ={
 
-chartData.series[0].data = [0.70];
+    chart: {
+        type: 'gauge'
+    },
 
-$('#gen_guage2').highcharts(chartData);
+    title: {
+        text: ''
+    },
+
+    pane: {
+        startAngle: -90,
+        endAngle: 90, 
+        background: null
+    },
+
+    // the value axis
+    yAxis: {
+        min: 5,
+        max: 20,
+
+        minorTickInterval: 'auto',
+        minorTickWidth: 1,
+        minorTickLength: 10,
+        minorTickPosition: 'inside',
+        minorTickColor: '#666',
+
+        tickPixelInterval: 30,
+        tickWidth: 2,
+        tickPosition: 'inside',
+        tickLength: 10,
+        tickColor: '#666',
+        labels: {
+            step: 2,
+            rotation: 'auto'
+        },
+        
+        plotBands: [{
+            from: 0,
+            to: 120,
+            color: '#55BF3B' // green
+        }]
+    },
+    series: [{
+        name: 'Windspeed',
+        data: [windspeed],
+        tooltip: {
+            valueSuffix: ''
+        }
+    }]
+};
+
+$('#gen_guage2').highcharts(chartData1);
   
-  chartData.series[0].data = [0.90];
+  //Pitch
+  var Pitch = <?php echo $live_status['Pitch'];?>;
+var chartData2 ={
 
-$('#gen_guage3').highcharts(chartData);
+    chart: {
+        type: 'gauge'
+    },
 
-chartData.series[0].data = [0.85];
+    title: {
+        text: ''
+    },
 
-$('#gen_guage4').highcharts(chartData);
+    pane: {
+        startAngle: -90,
+        endAngle: 90, 
+        background: null
+    },
 
-chartData.series[0].data = [0.95];
+    // the value axis
+    yAxis: {
+        min: 5,
+        max: 20,
 
-$('#gen_guage5').highcharts(chartData);
+        minorTickInterval: 'auto',
+        minorTickWidth: 1,
+        minorTickLength: 10,
+        minorTickPosition: 'inside',
+        minorTickColor: '#666',
+
+        tickPixelInterval: 30,
+        tickWidth: 2,
+        tickPosition: 'inside',
+        tickLength: 10,
+        tickColor: '#666',
+        labels: {
+            step: 2,
+            rotation: 'auto'
+        },
+        
+        plotBands: [{
+            from: 0,
+            to: 120,
+            color: '#55BF3B' // green
+        }]
+    },
+    series: [{
+        name: 'Pitch',
+        data: [Pitch],
+        tooltip: {
+            valueSuffix: ''
+        }
+    }]
+};
+
+$('#gen_guage3').highcharts(chartData2);
+
+//GRPM
+ var GRPM = <?php echo $live_status['GRPM'];?>;
+var chartData3 ={
+
+    chart: {
+        type: 'gauge'
+    },
+
+    title: {
+        text: ''
+    },
+
+    pane: {
+        startAngle: -90,
+        endAngle: 90, 
+        background: null
+    },
+
+    // the value axis
+    yAxis: {
+        min: 1000,
+        max: 5000,
+
+        minorTickInterval: 'auto',
+        minorTickWidth: 1,
+        minorTickLength: 10,
+        minorTickPosition: 'inside',
+        minorTickColor: '#666',
+
+        tickPixelInterval: 30,
+        tickWidth: 2,
+        tickPosition: 'inside',
+        tickLength: 10,
+        tickColor: '#666',
+        labels: {
+            step: 2,
+            rotation: 'auto'
+        },
+        
+        plotBands: [{
+            from: 1000,
+            to: 5000,
+            color: '#55BF3B' // green
+        }]
+    },
+    series: [{
+        name: 'GRPM',
+        data: [GRPM],
+        tooltip: {
+            valueSuffix: ''
+        }
+    }]
+};
+$('#gen_guage4').highcharts(chartData3);
+
+ //Rotor
+  var Rotor = <?php echo $live_status['RRPM'];?>;
+var chartData4 ={
+
+    chart: {
+        type: 'gauge'
+    },
+
+    title: {
+        text: ''
+    },
+
+    pane: {
+        startAngle: -90,
+        endAngle: 90, 
+        background: null
+    },
+
+    // the value axis
+    yAxis: {
+        min: 5,
+        max: 50,
+
+        minorTickInterval: 'auto',
+        minorTickWidth: 1,
+        minorTickLength: 10,
+        minorTickPosition: 'inside',
+        minorTickColor: '#666',
+
+        tickPixelInterval: 30,
+        tickWidth: 2,
+        tickPosition: 'inside',
+        tickLength: 10,
+        tickColor: '#666',
+        labels: {
+            step: 2,
+            rotation: 'auto'
+        },
+        
+        plotBands: [{
+            from: 0,
+            to: 120,
+            color: '#55BF3B' // green
+        }]
+    },
+    series: [{
+        name: 'Rotor',
+        data: [Rotor],
+        tooltip: {
+            valueSuffix: ''
+        }
+    }]
+};
+$('#gen_guage5').highcharts(chartData4);
 
 
 const dataSource = {
@@ -349,8 +554,9 @@ const dataSource = {
     "caption": "",
     "yaxisname": "Power(kw)",
     "xaxisname": "WindSpeed(m/s)",
-    "yAxisMaxValue": "750",
-    "yAxisMinValue": "-250",
+    "yAxisMaxValue": "500",
+    "yAxisMinValue": "3.1",
+    "yAxisValuesStep":"4.07",
     "subcaption": "",
     "showhovereffect": "1",
     "numbersuffix": "",
@@ -360,32 +566,7 @@ const dataSource = {
   },
   "categories": [
     {
-      "category": [
-        {
-          "label": "-5"
-        },
-        {
-          "label": "0"
-        },
-        {
-          "label": "5"
-        },
-        {
-          "label": "10"
-        },
-        {
-          "label": "15"
-        },
-        {
-          "label": "20"
-        },
-        {
-          "label": "25"
-        },
-        {
-          "label": "30"
-        }
-      ]
+      "category": [{"label":"4"},{"label":"4.1"},{"label":"4.2"},{"label":"4.3"},{"label":"4.4"},{"label":"4.5"},{"label":"4.6"},{"label":"4.7"},{"label":"4.8"},{"label":"4.9"},{"label":"5"},{"label":"5.1"},{"label":"5.2"},{"label":"5.3"},{"label":"5.4"},{"label":"5.5"},{"label":"5.6"},{"label":"5.7"},{"label":"5.8"},{"label":"5.9"},{"label":"6"},{"label":"6.1"},{"label":"6.2"},{"label":"6.3"},{"label":"6.4"},{"label":"6.5"},{"label":"6.6"},{"label":"6.7"},{"label":"6.8"},{"label":"6.9"},{"label":"7"},{"label":"7.1"},{"label":"7.2"},{"label":"7.3"},{"label":"7.4"},{"label":"7.5"},{"label":"7.6"},{"label":"7.7"},{"label":"7.8"},{"label":"7.9"},{"label":"8"},{"label":"8.1"},{"label":"8.2"},{"label":"8.3"},{"label":"8.4"},{"label":"8.5"},{"label":"8.6"},{"label":"8.7"},{"label":"8.8"},{"label":"8.9"},{"label":"9"},{"label":"9.1"},{"label":"9.2"},{"label":"9.3"},{"label":"9.4"},{"label":"9.5"},{"label":"9.6"},{"label":"9.7"},{"label":"9.8"},{"label":"9.9"},{"label":"10"},{"label":"10.1"},{"label":"10.2"},{"label":"10.3"},{"label":"10.4"},{"label":"10.5"},{"label":"10.6"},{"label":"10.7"},{"label":"10.8"},{"label":"10.9"},{"label":"11"},{"label":"11.1"},{"label":"11.2"},{"label":"11.3"},{"label":"11.4"},{"label":"11.5"},{"label":"11.6"},{"label":"11.7"},{"label":"11.8"},{"label":"11.9"},{"label":"12"},{"label":"12.1"},{"label":"12.2"},{"label":"12.3"},{"label":"12.4"},{"label":"12.5"},{"label":"12.6"},{"label":"12.7"},{"label":"12.8"},{"label":"12.9"},{"label":"13"},{"label":"13.1"},{"label":"13.2"},{"label":"13.3"},{"label":"13.4"},{"label":"13.5"},{"label":"13.6"},{"label":"13.7"},{"label":"13.8"},{"label":"13.9"},{"label":"14"},{"label":"14.1"},{"label":"14.2"},{"label":"14.3"},{"label":"14.4"},{"label":"14.5"},{"label":"14.6"},{"label":"14.7"},{"label":"14.8"},{"label":"14.9"},{"label":"15"},{"label":"15.1"},{"label":"15.2"},{"label":"15.3"},{"label":"15.4"},{"label":"15.5"},{"label":"15.6"},{"label":"15.7"},{"label":"15.8"},{"label":"15.9"},{"label":"16"},{"label":"16.1"},{"label":"16.2"},{"label":"16.3"},{"label":"16.4"},{"label":"16.5"},{"label":"16.6"},{"label":"16.7"},{"label":"16.8"},{"label":"16.9"},{"label":"17"},{"label":"17.1"},{"label":"17.2"},{"label":"17.3"},{"label":"17.4"},{"label":"17.5"},{"label":"17.6"},{"label":"17.7"},{"label":"17.8"},{"label":"17.9"},{"label":"18"},{"label":"18.1"},{"label":"18.2"},{"label":"18.3"},{"label":"18.4"},{"label":"18.5"},{"label":"18.6"},{"label":"18.7"},{"label":"18.8"},{"label":"18.9"},{"label":"19"},{"label":"19.1"},{"label":"19.2"},{"label":"19.3"},{"label":"19.4"},{"label":"19.5"},{"label":"19.6"},{"label":"19.7"},{"label":"19.8"},{"label":"19.9"},{"label":"20"},{"label":"20.1"},{"label":"20.2"},{"label":"20.3"},{"label":"20.4"},{"label":"20.5"},{"label":"20.6"},{"label":"20.7"},{"label":"20.8"},{"label":"20.9"},{"label":"21"},{"label":"21.1"},{"label":"21.2"},{"label":"21.3"},{"label":"21.4"},{"label":"21.5"},{"label":"21.6"},{"label":"21.7"},{"label":"21.8"},{"label":"21.9"},{"label":"22"},{"label":"22.1"},{"label":"22.2"},{"label":"22.3"},{"label":"22.4"},{"label":"22.5"},{"label":"22.6"},{"label":"22.7"},{"label":"22.8"},{"label":"22.9"},{"label":"23"},{"label":"23.1"},{"label":"23.2"},{"label":"23.3"},{"label":"23.4"},{"label":"23.5"},{"label":"23.6"},{"label":"23.7"},{"label":"23.8"},{"label":"23.9"},{"label":"24"},{"label":"24.1"},{"label":"24.2"},{"label":"24.3"},{"label":"24.4"},{"label":"24.5"},{"label":"24.6"},{"label":"24.7"},{"label":"24.8"},{"label":"24.9"},{"label":"25"}]
     }
   ],
   "dataset": [
