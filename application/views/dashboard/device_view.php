@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="card-header"><?php echo $regions['Device_Name'];?></div>
                         <div class="card-body">
                             <div class="float-left">
-                                <img src="<?php echo base_url();?>assets/images/device/blue.png" class="img-fluid" style=" position: absolute;width: 35%;height: 60%;">
+                                <img src="<?php echo base_url();?>assets/images/device/blue.png" class="img-fluid" style=" position: absolute;width: 35%;height: 45%;">
                             </div>
                                 <div class="float-right">
                                     <p>Device Name : <?php echo $regions['Device_Name'];?></p>
@@ -124,7 +124,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <!-- /.col-->
                     <div class="col-md-4">
-                        <div class="card">
+                        <div class="card" style="height: 358px;">
                             <div class="card-header">Event Log</div>
                             <div class="card-body">
                                 <table class="table table-responsive-sm table-hover table-outline mb-0">
@@ -135,46 +135,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php foreach ($event_log as $key => $value) {?>
                                         <tr>
+
                                             <td>
-                                                19-Nov-18
+                                                <?php echo $value['Date_S'];?>
                                             </td>
                                             <td class="text-center">
-                                                13:08:49 Nac.vent.2
+                                                <?php echo $value['Time_S']. ' '. $value['Description'];?>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                19-Nov-18
-                                            </td>
-                                            <td class="text-center">
-                                                13:08:49 Nac.vent.2
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                19-Nov-18
-                                            </td>
-                                            <td class="text-center">
-                                                13:08:49 Nac.vent.2
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                19-Nov-18
-                                            </td>
-                                            <td class="text-center">
-                                                13:08:49 Nac.vent.2
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                19-Nov-18
-                                            </td>
-                                            <td class="text-center">
-                                                13:08:49 Nac.vent.2
-                                            </td>
-                                        </tr>
+                                    <?php }?>
                                     </tbody>
                                 </table>
                             </div>
@@ -548,7 +519,8 @@ var chartData4 ={
 };
 $('#gen_guage5').highcharts(chartData4);
 
-
+var power_curve = <?php echo json_encode($power_curve[0]);?>;
+console.log(power_curve);
 const dataSource = {
   "chart": {
     "caption": "",
@@ -570,82 +542,8 @@ const dataSource = {
     }
   ],
   "dataset": [
-    {
-      "seriesname": "WindSpeed",
-      "data": [
-        {
-          "value": "62"
-        },
-        {
-          "value": "64"
-        },
-        {
-          "value": "64"
-        },
-        {
-          "value": "66"
-        }
+    power_curve
       ]
-    },
-    {
-      "seriesname": "Capacity",
-      "data": [
-        {
-          "value": ""
-        },
-        {
-          "value": ""
-        },
-        {
-          "value": "64"
-        },
-        {
-          "value": "160"
-        },
-        {
-          "value": ""
-        },
-        {
-          "value": "500"
-        },
-        {
-          "value": "500"
-        },
-        {
-          "value": "500"
-        }
-      ]
-    },
-    {
-      "seriesname": "Device3",
-      "data": [
-        {
-          "value": ""
-        },
-        {
-          "value": ""
-        },
-        {
-          "value": "75"
-        },
-        {
-          "value": "170"
-        },
-        {
-          "value": ""
-        },
-        {
-          "value": "150"
-        },
-        {
-          "value": "412"
-        },
-        {
-          "value": "320"
-        }
-      ]
-    }
-  ]
 };
 
 FusionCharts.ready(function() {
