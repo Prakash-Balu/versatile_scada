@@ -25,9 +25,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <p>HTSC No : 2284</p>
                                     <p>Capacity : <?php echo $regions['capacity'];?></p>
                                     <p>Feeder Name : <?php echo $regions['Connect_Feeder'];?></p>
-                                    <p>Status : <?php echo $live_status['Status'];?></p>
-                                    <p>Date : <?php echo $live_status['Date'];?></p><!-- 2018-11-19 -->
-                                    <p>Time : <?php echo $live_status['Time'];?></p><!-- 11:57:52-->
+                                    <p>Status : <?php echo !empty($live_status['Status'])?$live_status['Status']: '';?></p>
+                                    <p>Date : <?php echo !empty($live_status['Date'])?$live_status['Date']: '';?></p><!-- 2018-11-19 -->
+                                    <p>Time : <?php echo !empty($live_status['Time'])?$live_status['Time']:'';?></p><!-- 11:57:52-->
                                 </div>
                             </div>
                         </div>
@@ -36,7 +36,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="col-md-5">
                         <div class="card">
                             <div class="card-header">Live Status</div>
-                            <div class="card-body">
+                            <div class="card-body" style="<?php echo empty($live_status)? 'height: 367px;' : '';?>">
+                            <?php if(empty($live_status)) {?>
+                            <h4 class="text-center">No records found</h4>
+                            <?php }?>
+                            <?php if(!empty($live_status)) {?>
                                 <div class="row">
                                     <div class="col-md-4 text-center">
                                         <h6>Generation</h6>
@@ -61,6 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <div id="gen_guage5" style="max-width: 150px; height: 140px;"></div>
                                     </div>
                                 </div>
+                            <?php }?>
                             </div>
                         </div>
                     </div>
@@ -135,6 +140,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <?php if(empty($event_log)) { ?>
+                                     <tr>
+                                     <td colspan="2" class="text-center">No records found</td>
+                                     </tr>
+                                    <?php }?>
                                         <?php foreach ($event_log as $key => $value) {?>
                                         <tr>
 
@@ -155,7 +165,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="col-md-8">
                         <div class="card">
                             <div class="card-header">Temperature</div>
-                            <div class="card-body">
+                            <div class="card-body" style="<?php echo empty($live_status)? 'height: 310px;' : '';?>">
+                            <?php if(empty($live_status)) { ?>
+                                     <h4 class="text-center">No records found</h4>
+                                    <?php }?>
+                                    <?php if(!empty($live_status)) { ?>
+                                    
                                 <div class="row">
                                     <div class="col-md-6 p-b-90">
                                         <div class="progress-group mb-4">
@@ -208,6 +223,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                 </div>
+                                <?php }?>
                             </div>
                         </div>
                     </div>
@@ -241,6 +257,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php  $this->load->view('layout/footer'); ?>
 
 <script type="text/javascript">
+<?php if(!empty($live_status)) {?>
     var chartData ={
 
     chart: {
@@ -518,7 +535,8 @@ var chartData4 ={
     }]
 };
 $('#gen_guage5').highcharts(chartData4);
-
+<?php }?>
+<?php if(!empty($power_curve)) {?>
 var power_curve = <?php echo json_encode($power_curve[0]);?>;
 console.log(power_curve);
 const dataSource = {
@@ -556,5 +574,17 @@ FusionCharts.ready(function() {
       dataSource
    }).render();
 });
+<?php } else {?>
+FusionCharts.ready(function() {
+   var myChart = new FusionCharts({
+       dataEmptyMessage:'No Data to display',
+      type: "msline",
+      renderAt: "power-curve",
+      width: "100%",
+      height: "100%",
+      dataFormat: "json"
+   }).render();
+});
+<?php }?>
 
 </script>

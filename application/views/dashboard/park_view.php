@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-// echo "<pre>"; print_r($parkview); exit;
+ //echo "<pre>"; print_r($parkview); exit;
 ?>
 <style>
 .table .thead-green th {
@@ -41,6 +41,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
+    <?php 
+                  if(empty($regions )) {
+                    
+                  ?>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body" >
+            <h4 class="text-center">No records found</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+          <?php }?>
             <?php 
                   foreach ($regions as $key => $value) {
                     
@@ -102,8 +116,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       foreach ($regionDeviceData as $key1 => $value1) {
                         if( $key == $key1  ) {
                           foreach ($value1 as $key2 => $value2) {
-							  $device_name = !empty($value2['Device_Name'])?$value2['Device_Name']:0;
-							  $IMEI = !empty($value2['IMEI'])?$value2['IMEI']:0;
+                $device_name = !empty($value2['Device_Name'])?$value2['Device_Name']:0;
+                $IMEI = !empty($value2['IMEI'])?$value2['IMEI']:0;
                     ?>
                                     <tr>
                                         <td>
