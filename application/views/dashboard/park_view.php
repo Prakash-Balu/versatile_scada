@@ -41,7 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
-            <?php 
+            <?php if(!empty($regions)) {
                   foreach ($regions as $key => $value) {
                     
                   ?>
@@ -265,6 +265,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php
                   
                 }
+				} else{ echo "<h4 class='text-center'> No Record Available</h4>";}
               ?>
         </div>
     </div>

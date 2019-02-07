@@ -40,7 +40,7 @@ class Dashboard extends CI_Controller {
 			foreach($type_list as $list)
 			{
 				$val	=	$this->Common_model->get_device_details( $list->Format_Type, $list->IMEI );
-				$date = '2018-08-14';//date('Y-m-d');//current date
+				$date = date('Y-m-d');//current date '2018-08-14';//
 				$search = array('start_date'=>$date,'end_date'=>$date);
 				$val1	=	$this->Common_model->get_device_data_Info( $list->Format_Type, $list->IMEI,$search );
 				
@@ -127,7 +127,7 @@ class Dashboard extends CI_Controller {
 			{
 			foreach($region_list as $list)
 			{
-				$date = '2018-08-14'; //date('Y-m-d');//current date
+				$date = date('Y-m-d');//current date' 2018-08-14'; //
 				$search = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
 				$search1 = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date,'limit'=>5);
 				$device_info = (array)$this->Common_model->get_device_data_details( $list['Format_Type'], $list['IMEI'], $search );
@@ -179,12 +179,12 @@ class Dashboard extends CI_Controller {
 	function device_view() 
 	{
 		$device_info=$top_data=$footer_data=$footer =$device_data=array();
-		
+		$avg_speed=$event_log=$power_curve=$list=array();
 		if(!empty($_REQUEST['d'] ))
 		{
 			$list = $this->Common_model->get_device_list_by_given_imei( $_REQUEST['d']);
 			$avg_speed=$event_log=array();
-			$date = '2018-08-14'; //date('Y-m-d');//current date
+			$date = date('Y-m-d');//current date '2018-08-14'; //
 			$search = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
 			$search1 = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date,'limit'=>5);
 			$device_info = (array)$this->Common_model->get_device_data_details( $list['Format_Type'], $list['IMEI'], $search );
@@ -229,8 +229,8 @@ class Dashboard extends CI_Controller {
 				}
 			}
 			
-			$sdate = '2018-08-01'; //date('Y-m-01');//current month start date
-			$edate = '2018-08-31'; //date('Y-m-d');//current date
+			$sdate = date('Y-m-01');//current month start date '2018-08-01'; //
+			$edate = date('Y-m-d');//current date '2018-08-31'; //
 			$search_avg = array('order' =>'ASC','start_date'=>$sdate,'end_date'=>$edate);
 			$speed_list	=	$this->Common_model->get_date_wise_device_data_Info( $list['Format_Type'], $list['IMEI'],$search_avg );
 
