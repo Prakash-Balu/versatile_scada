@@ -41,21 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
-    <?php 
-                  if(empty($regions )) {
-                    
-                  ?>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-body" >
-            <h4 class="text-center">No records found</h4>
-          </div>
-        </div>
-      </div>
-    </div>
-          <?php }?>
-            <?php 
+            <?php if(!empty($regions)) {
                   foreach ($regions as $key => $value) {
                     
                   ?>
@@ -277,8 +263,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div> -->
             <!-- /.row-->
             <?php
-                  
-                }
+          }
+        } else{ echo "<h4 class='text-center'> No Record Available</h4>";}
               ?>
         </div>
     </div>
