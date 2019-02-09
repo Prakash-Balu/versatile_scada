@@ -131,11 +131,11 @@ foreach($region_list as $list)
                 <i class="nav-icon icon-cursor"></i> Analytics</a>
               <ul class="nav-dropdown-items">
                 <li class="nav-item">
-                  <a class="nav-link" href="<?php echo base_url().'dashboard/temp_analysis';?>">
+                  <a class="nav-link" target="_blank" href="<?php echo base_url().'dashboard/temp_analysis';?>">
                     <i class="fa fa-area-chart"></i> Temperature</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="<?php echo base_url().'dashboard/powercurve_analysis';?>">
+                  <a class="nav-link" target="_blank" href="<?php echo base_url().'dashboard/powercurve_analysis';?>">
                     <i class="fa fa-area-chart"></i> Power Curve</a>
                 </li>
                 <li class="nav-item">
@@ -145,7 +145,7 @@ foreach($region_list as $list)
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" target="_blank" href="<?php echo base_url().'dashboard/reports';?>">
                 <i class="nav-icon icon-pencil"></i>Reports</a>
             </li>
             <li class="divider"></li>

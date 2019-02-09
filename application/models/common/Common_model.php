@@ -42,7 +42,7 @@ Class Common_model extends CI_Model {
 			$avgWindSpeed = $powerSpeed=$pat_gen_list=$pat_gen_first=$pat_gen_last=array();
 			foreach($type_list as $list)
 			{
-				$date = '2018-08-14'; //date('Y-m-d'); //current date
+				$date = date('Y-m-d'); //current date'2018-08-14'; //
 				$search_info = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
 				$device_list	=	$this->get_device_data_details( $list->Format_Type, $list->IMEI, $search_info );
 				
@@ -53,7 +53,7 @@ Class Common_model extends CI_Model {
 						$avgWindSpeed[] = (float)$device_list->Windspeed;
 						$count =$count+1;
 				}
-				$date = '2018-08-14'; //date('Y-m-d');//current date
+
 				$search = array('order' =>'ASC','start_date'=>$date,'end_date'=>$date);
 				$search1 = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
 				$pat_gen_first	=	$this->get_device_data_details( $list->Format_Type, '',$search);
@@ -279,7 +279,7 @@ Class Common_model extends CI_Model {
 			$avgWindSpeed = $powerSpeed=$pat_gen_list=$pat_gen_first=$pat_gen_last=array();
 			foreach($type_list as $list)
 			{
-				$date = '2018-08-14';//date('Y-m-d');
+				$date =  date('Y-m-d'); //'2018-08-14';
 				$search_info = array('start_date'=>$date,'end_date'=>$date);
 				$device_list	=	$this->get_device_data_Info( $list->Format_Type, $list->IMEI, $search_info );
 				

@@ -228,18 +228,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </div>
                     <!-- /.col-->
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="card">
                             <div class="card-header">Daily Generation Chart with Avg Wind Speed Comparison</div>
                             <div class="card-body">
-                                <div class="chart-wrapper">
+                                <!-- <div class="chart-wrapper">
                                     <canvas id="canvas-2" style="height: 300px;"></canvas>
-                                </div>
+                                </div> -->
+                                <!-- <div class="col-md-12 col-sm-12 col-xs-12"> -->
+                                    <div id="avg_wind_speed" style="height:350px;">
+                                        <h4 class="text-center"> No Records found</h4>
+                                    </div>
+                                <!-- </div> -->
                             </div>
                         </div>
                     </div>
                     <!-- /.col-->
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <div class="card">
                             <div class="card-header">Power Curve</div>
                             <div class="card-body">
@@ -585,6 +590,81 @@ FusionCharts.ready(function() {
       dataFormat: "json"
    }).render();
 });
+<?php }?>
+
+
+<?php if(!empty($avg_speed)) {?>
+
+if ($('#avg_wind_speed').length) {
+var avgSpeedJson = <?php echo json_encode($avg_speed );?>;
+var theme = {
+    color: [
+        '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
+        '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
+    ]
+};
+
+console.log(avgSpeedJson);
+var avgspeedLabel = [];
+var avgspeedValue = [];
+$.each(avgSpeedJson, function( key, value ) {
+  // alert( index + ": " + value );
+  avgspeedLabel.push(key);
+  avgspeedValue.push(parseInt(value));
+});
+    var echartBar = echarts.init(document.getElementById('avg_wind_speed'), theme);
+
+    echartBar.setOption({
+        title: {
+            text: 'Compare Sales Strategy'
+            // subtext: 'Graph Sub-text'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['purchases']
+        },
+        toolbox: {
+            show: false
+        },
+        calculable: false,
+        xAxis: [{
+            type: 'category',
+            // data: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100', '110', '120']
+            data:avgspeedLabel
+        }],
+        yAxis: [{
+            type: 'value',
+            //  data: ['100', '200', '500', '1000', '1500', '2000', '2500', '3000', '4000', '5000', '6000', '7000']
+        }],
+        series: [{
+            // name: 'purchases',
+            type: 'bar',
+            data: avgspeedValue,
+            /* markPoint: {
+             data: [{
+               name: 'sales',
+               value: 182.2,
+               xAxis: 7,
+               yAxis: 183,
+             }, {
+               name: 'purchases',
+               value: 2.3,
+               xAxis: 11,
+               yAxis: 3
+             }]
+             },
+             markLine: {
+             data: [{
+               type: 'average',
+               name: '???'
+             }]
+             }*/
+        }]
+    });
+
+}
 <?php }?>
 
 </script>
