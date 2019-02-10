@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <img src="<?php echo base_url();?>assets/images/box/<?php echo $live_status['color'].'.png'?>" class="img-fluid" style=" position: absolute;height: 60%;">
+                                    <img src="<?php echo base_url();?>assets/images/box/<?php echo !empty($live_status['color'])?$live_status['color']:'gray'.'.png'?>" class="img-fluid" style=" position: absolute;height: 60%;">
                                 </div>
                                     <div class="col-sm-8">
                                         <p>Device Name :
