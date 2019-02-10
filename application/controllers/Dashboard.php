@@ -183,19 +183,46 @@ class Dashboard extends CI_Controller {
 		if(!empty($_REQUEST['d'] ))
 		{
 			$list = $this->Common_model->get_device_list_by_given_imei( $_REQUEST['d']);
+			$green_array = array('Run', 'RUN', 'M/C Running', 'M/C Running');
+            $blue_array = array('GRIDDROP', 'griddrop', 'Grid Drop', 'Grid Drop');
+            $red_array = array_merge($green_array,$blue_array);
+			
 			$avg_speed=$event_log=array();
 			$date =  date('Y-m-d');//current date'2018-08-14';
-			$search = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
-			$search1 = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date,'limit'=>5);
+			$search = array('order' =>'DESC'); //,'start_date'=>$date,'end_date'=>$date
+			$search1 = array('order' =>'DESC', 'limit'=>5);//,'start_date'=>$date,'end_date'=>$date,
 			$device_info = (array)$this->Common_model->get_device_data_details( $list['Format_Type'], $list['IMEI'], $search );
 			$error_info = (array)$this->Common_model->get_error_data_Info( $list['Format_Type'], $list['IMEI'], $search1 );
+
+			$search2 = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
+			$current_status = (array)$this->Common_model->get_device_data_details( $list['Format_Type'], $list['IMEI'], $search2 );
+			
+			$color = 'gray';
+			if(!empty($current_status))
+			{
+				/** get current time from DB and then check device date is less then 1 hour for current time */
+				$query = $this->db2->query('select (NOW() - INTERVAL 2 HOUR) as curr_time', TRUE);
+				$curr_time = strtotime($query->row()->curr_time);
+
+				$device_time = strtotime($current_status['Date_S'].' '.$current_status['Time_S']);
+				/** less then 1 hour for current time then it's gray color*/
+				
+				if(in_array($current_status['Status'],$green_array))
+				{
+					$color = 'green';
+				}elseif(in_array($current_status['Status'],$blue_array)){
+					$color = 'blue';
+				}elseif(in_array($current_status['Status'],$red_array)){
+					$color = 'red';
+				}
+			}
 			
 			if( !empty($device_info) ) {
 				$device_info['Device_Name']= $list['Device_Name'];
 				$device_info['LOC_No']= $list['LOC_No'];
 				$device_info['capacity']= $list['capacity'];
 				$device_info['Connect_Feeder']= $list['Connect_Feeder'];
-
+				$device_info['color'] = $color;
 			}
 			
 			if( !empty($error_info) ) {
