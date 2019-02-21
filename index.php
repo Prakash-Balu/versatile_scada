@@ -5,7 +5,7 @@ $protocol = 'https://';
 $protocol = 'http://';
 }
 
-if($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == $_SERVER['SERVER_NAME']){
+if($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == 'localhost:8080'){
 $url = $protocol.$_SERVER['HTTP_HOST'].'/scada/';
 define('BASE_URL',$url);
 }elseif($_SERVER['HTTP_HOST'] == $_SERVER['SERVER_NAME'] ){

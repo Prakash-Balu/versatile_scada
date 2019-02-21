@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <img src="<?php echo base_url();?>assets/images/box/<?php echo !empty($live_status['color'])?$live_status['color']:'gray'.'.png'?>" class="img-fluid" style=" position: absolute;height: 60%;">
+                                    <img src="<?php echo base_url();?>assets/images/box/<?php echo !empty($live_status['color'])?$live_status['color'].'.png':'gray.png';?>" class="img-fluid" style=" position: absolute;height: 60%;">
                                 </div>
                                     <div class="col-sm-8">
                                         <p>Device Name :
@@ -147,13 +147,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <!-- /.col-->
                     <div class="col-md-4">
-                        <div class="card" style="height: 358px;">
+                        <div class="card" style="height: 380px;">
                             <div class="card-header">Event Log</div>
                             <div class="card-body">
                                 <table class="table table-responsive-sm table-hover table-outline mb-0">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th class="text-center">Date</th>
+                                            <th class="text-center" style="width:40%;">Date</th>
                                             <th class="text-center">Data</th>
                                         </tr>
                                     </thead>
@@ -180,7 +180,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <!-- /.col-->
                     <div class="col-md-8">
-                        <div class="card">
+                        <div class="card" style="height: 380px;">
                             <div class="card-header">Temperature</div>
                             <div class="card-body" style="<?php echo empty($live_status)? 'height: 310px;' : '';?>">
                                 <?php if(empty($live_status)) { ?>
