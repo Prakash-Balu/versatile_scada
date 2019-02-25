@@ -54,11 +54,14 @@ class Dashboard extends CI_Controller {
 					$device_time = strtotime($val->Date_S.' '.$val->Time_S);
 					/** less then 1 hour for current time then it's gray color*/
 					
-					if($device_time > $curr_time)
+					/* if($device_time > $curr_time)
 					{
 						$gray[] = $val;
 					}
-					elseif(in_array($val->Status,$green_array))
+					else */
+					$gray[] = $val;
+					//echo'<pre>';print_r($val);
+						if(in_array($val->Status,$green_array))
 					{
 						$green[] = $val;
 					}elseif(in_array($val->Status,$blue_array)){
@@ -99,6 +102,8 @@ class Dashboard extends CI_Controller {
 				}
 				$total_count = $list->cnt;
 			}
+			
+			//exit;
 		
 			
 			$data['response']['green'] = array('count'=> count($green),'name'=>'WTG RUN','total'=>$total_count);
@@ -138,6 +143,7 @@ class Dashboard extends CI_Controller {
 					$device_info['LOC_No']= $list['LOC_No'];
 					$device_info['capacity']= $list['capacity'];
 					$device_info['Connect_Feeder']= $list['Connect_Feeder'];
+					$device_info['Format_Type'] = $list['Format_Type'];
 					$device_data[$list['Region']][$list['Device_Name']] = $device_info;
 					//$winspeed = $device_info['Windspeed'];
 					//$power = $device_info['Power'];
@@ -169,7 +175,7 @@ class Dashboard extends CI_Controller {
 				}
 			}
 		}
-		//echo '<pre>';print_r($footer);exit;
+		//echo '<pre>';print_r($device_data);exit;
 	 	$data['regions'] = $top_data;
 		$data['regionDeviceData'] = $device_data;
 		$data['footer_data'] = $footer;

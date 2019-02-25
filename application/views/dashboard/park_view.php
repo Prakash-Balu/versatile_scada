@@ -104,6 +104,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           foreach ($value1 as $key2 => $value2) {
                 $device_name = !empty($value2['Device_Name'])?$value2['Device_Name']:0;
                 $IMEI = !empty($value2['IMEI'])?$value2['IMEI']:0;
+        $powerMaxValue = 500;
+        if($value2['Format_Type'] == 1) {
+          $powerMaxValue = 600;
+        } elseif($value2['Format_Type'] == 2) {
+          $powerMaxValue = 300;
+        } elseif($value2['Format_Type'] == 3) {
+          $powerMaxValue = 900;
+        } elseif($value2['Format_Type'] == 7) {
+          $powerMaxValue = 900;
+        } elseif($value2['Format_Type'] == 8) {
+          $powerMaxValue = 300;
+        } elseif($value2['Format_Type'] == 10) {
+          $powerMaxValue = 300;
+        }
+        
                     ?>
                                     <tr>
                                         <td>
@@ -135,7 +150,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <td>
                                             <?php echo !empty($value2['capacity']) ? $value2['capacity']: 0;?>
                                         </td>
-                                        <td>
+                                        <td style="width: 12%;">
                                             <div class="progress-group">
                                                 <div class="progress-group-header align-items-end">
                                                     <div class="ml-auto font-weight-bold mr-2">
@@ -144,7 +159,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </div>
                                                 <div class="progress-group-bars">
                                                     <div class="progress progress-xs" style="height:15px;">
-                                                        <div class="progress-bar bg-info" role="progressbar" style="width: <?php echo !empty($value2['Power'])?$value2['Power']:0;?>%" aria-valuenow="<?php echo !empty($value2['Power'])?$value2['Power']:0;?>" aria-valuemin="0" aria-valuemax="1000"></div>
+                                                        <div class="progress-bar bg-info" role="progressbar" style="width: <?php echo !empty($value2['Power'])?$value2['Power']:0;?>%" aria-valuenow="<?php echo !empty($value2['Power'])?$value2['Power']:0;?>" aria-valuemin="0" aria-valuemax="<?php echo $powerMaxValue;?>"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -158,7 +173,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </div>
                                                 <div class="progress-group-bars">
                                                     <div class="progress progress-xs" style="height:15px;">
-                                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo (!empty($value2['Windspeed'])?$value2['Windspeed']:0)*10;?>%" aria-valuenow="<?php echo !empty($value2['Windspeed'])?$value2['Windspeed']:0;?>" aria-valuemin="0" aria-valuemax="10"></div>
+                                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo (!empty($value2['Windspeed'])?$value2['Windspeed']:0);?>%" aria-valuenow="<?php echo !empty($value2['Windspeed'])?$value2['Windspeed']:0;?>" aria-valuemin="0" aria-valuemax="30"></div>
                                                     </div>
                                                 </div>
                                             </div>
