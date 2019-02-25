@@ -23,6 +23,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 .temp-btn-margin {
     margin-right: 20px;
 }
+
+.raphael-group-22-creditgroup {
+    display: none;
+}
 </style>
 <main class="main">
     <!-- Breadcrumb-->

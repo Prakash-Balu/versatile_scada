@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
                             <!-- <canvas class="chart" id="card-chart<?php echo $index;?>" height="70"></canvas> -->
-                            <img class="img-fluid" src="<?php echo base_url();?>assets/images/box/<?php echo $key .'.png';?>" style="margin-top: -35px; margin-left: 108px;"/>
+                            <img class="img-fluid" src="<?php echo base_url();?>assets/images/box/<?php echo ($key=='green'? $key .'.gif': $key.'.png');?>" style="margin-top: -35px; margin-left: 108px;"/>
                         </div>
                     </div>
                 </div>

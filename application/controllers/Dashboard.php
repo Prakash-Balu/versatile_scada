@@ -197,7 +197,7 @@ class Dashboard extends CI_Controller {
 			$search2 = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
 			$current_status = (array)$this->Common_model->get_device_data_details( $list['Format_Type'], $list['IMEI'], $search2 );
 			
-			$color = 'gray';
+			$color = 'gray.png';
 			if(!empty($current_status))
 			{
 				/** get current time from DB and then check device date is less then 1 hour for current time */
@@ -209,11 +209,11 @@ class Dashboard extends CI_Controller {
 				
 				if(in_array($current_status['Status'],$green_array))
 				{
-					$color = 'green';
+					$color = 'green.gif';
 				}elseif(in_array($current_status['Status'],$blue_array)){
-					$color = 'blue';
+					$color = 'blue.png';
 				}elseif(in_array($current_status['Status'],$red_array)){
-					$color = 'red';
+					$color = 'red.png';
 				}
 			}
 			

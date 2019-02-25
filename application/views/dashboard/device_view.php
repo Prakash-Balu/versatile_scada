@@ -1,6 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<style type="text/css">
+    .highcharts-credits {
+        display: none;
+    }
+    .raphael-group-8-creditgroup {
+        display: none;
+    }
+</style>
 <main class="main">
     <!-- Breadcrumb-->
     <ol class="breadcrumb">
@@ -23,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <img src="<?php echo base_url();?>assets/images/box/<?php echo !empty($live_status['color'])?$live_status['color'].'.png':'gray.png';?>" class="img-fluid" style=" position: absolute;height: 60%;">
+                                    <img src="<?php echo base_url();?>assets/images/box/<?php echo !empty($live_status['color'])?$live_status['color']:'gray.png';?>" class="img-fluid" style=" position: absolute;height: 60%;">
                                 </div>
                                     <div class="col-sm-8">
                                         <p>Device Name :
@@ -198,6 +206,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <div class="progress-bar bg-primary" role="progressbar" title="<?php echo $live_status['Hydraulic_Temp'];?>" style="width: <?php echo $live_status['Hydraulic_Temp'];?>%" aria-valuenow="<?php echo $live_status['Hydraulic_Temp'];?>" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                                 <!-- <i class="fa fa-thermometer-half" aria-hidden="true"></i> -->
+                                                <p class="text-center"><?php echo $live_status['Hydraulic_Temp'];?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -210,6 +219,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <div class="progress progress-xs temp-thermo-bar-height">
                                                     <div class="progress-bar bg-primary" role="progressbar" title="<?php echo $live_status['Bearing_Temp'];?>" style="width: <?php echo $live_status['Bearing_Temp'];?>%" aria-valuenow="<?php echo $live_status['Bearing_Temp'];?>" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
+                                                <p class="text-center"><?php echo $live_status['Bearing_Temp'];?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -222,6 +232,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <div class="progress progress-xs temp-thermo-bar-height">
                                                     <div class="progress-bar bg-primary" role="progressbar" title="<?php echo $live_status['Gear_Temp'];?>" style="width: <?php echo $live_status['Gear_Temp'];?>%" aria-valuenow="<?php echo $live_status['Gear_Temp'];?>" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
+                                                <p class="text-center"><?php echo $live_status['Gear_Temp'];?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -234,6 +245,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <div class="progress progress-xs temp-thermo-bar-height">
                                                     <div class="progress-bar bg-primary" role="progressbar" title="<?php echo $live_status['Gen1_Temp'];?>" style="width: <?php echo $live_status['Gen1_Temp'];?>%" aria-valuenow="<?php echo $live_status['Gen1_Temp'];?>" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
+                                                <p class="text-center"><?php echo $live_status['Gen1_Temp'];?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -628,7 +640,7 @@ if ($('#avg_wind_speed').length) {
 
     echartBar.setOption({
         title: {
-            text: 'Compare Sales Strategy'
+            text: 'Compare Production Strategy'
             // subtext: 'Graph Sub-text'
         },
         tooltip: {

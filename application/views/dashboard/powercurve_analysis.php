@@ -24,6 +24,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   color: #fff;
   background-color: #517fa4;
 }
+.raphael-group-22-creditgroup {
+    display: none;
+}
 </style>
 <main class="main">
     <!-- Breadcrumb-->
