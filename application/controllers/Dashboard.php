@@ -54,14 +54,11 @@ class Dashboard extends CI_Controller {
 					$device_time = strtotime($val->Date_S.' '.$val->Time_S);
 					/** less then 1 hour for current time then it's gray color*/
 					
-					/* if($device_time > $curr_time)
+					if($device_time > $curr_time)
 					{
 						$gray[] = $val;
 					}
-					else */
-					$gray[] = $val;
-					//echo'<pre>';print_r($val);
-						if(in_array($val->Status,$green_array))
+					elseif(in_array($val->Status,$green_array))
 					{
 						$green[] = $val;
 					}elseif(in_array($val->Status,$blue_array)){
@@ -69,8 +66,11 @@ class Dashboard extends CI_Controller {
 					}elseif(in_array($val->Status,$red_array)){
 						$red[] = $val;
 					}
-					
+				} else {
+					$gray[] = $val;
 				}
+
+
 				$data['device_list'][trim($list->Device_Name)][] = $color;
 				if(!empty($val1))
 				{
@@ -116,6 +116,7 @@ class Dashboard extends CI_Controller {
 		// echo'<pre>';print_r($data['device_list']);exit;
 
 		$data['avgWindSpeed'] = $this->session->userdata('avgWindSpeed');
+		$data['avgWindSpeedTime'] = $this->session->userdata('avgWindSpeedTime');
 		$data['powerSpeed'] = $this->session->userdata('powerSpeed');
 		$data['patGen'] = $this->session->userdata('patGen');
 		$data['avgWindSpeedSum'] = $this->session->userdata('avgWindSpeedSum');

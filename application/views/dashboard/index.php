@@ -441,6 +441,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php  $this->load->view('layout/footer'); ?>
 <script type='text/javascript'>
 var avg_wind_speed = <?php echo json_encode($avgWindSpeed );?>;
+var avg_wind_speed_time = <?php echo json_encode($avgWindSpeedTime );?>;
 var power_speed = <?php echo json_encode($powerSpeed );?>;
 var pat_gen = <?php echo json_encode($patGen );?>;
 console.log(avg_wind_speed);
@@ -661,7 +662,7 @@ var cardChart1 = new Chart(ttc, {
 var avgWindSpeed = new Chart($('#avg-wind-speed'), {
     type: 'line',
     data: {
-        labels: avg_wind_speed,
+        labels: avg_wind_speed_time,
         datasets: [{
             label: 'AVG Wind Speed',
             backgroundColor: getStyle('--primary'),
@@ -714,7 +715,7 @@ var avgWindSpeed = new Chart($('#avg-wind-speed'), {
 var powerSpeed = new Chart($('#power-speed'), {
     type: 'line',
     data: {
-        labels: power_speed,
+        labels: avg_wind_speed_time,
         datasets: [{
             label: 'Real Power',
             backgroundColor: getStyle('--success'),

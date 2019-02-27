@@ -39,7 +39,7 @@ Class Common_model extends CI_Model {
 			$count=0;
 			$i=0;
 			$green=$blue=$red=$gray=array();
-			$avgWindSpeed = $powerSpeed=$pat_gen_list=$pat_gen_first=$pat_gen_last=array();
+			$avgWindSpeed = $avgWindSpeedTime = $powerSpeed=$pat_gen_list=$pat_gen_first=$pat_gen_last=array();
 			foreach($type_list as $list)
 			{
 				$date = date('Y-m-d'); //current date'2018-08-14'; //
@@ -51,6 +51,7 @@ Class Common_model extends CI_Model {
 					// echo "<pre>"; print_r($device_list); exit;
 						$powerSpeed[] = (float)$device_list->Power;
 						$avgWindSpeed[] = (float)$device_list->Windspeed;
+						$avgWindSpeedTime[] =$device_list->Time_S;
 						$count =$count+1;
 				}
 
@@ -66,6 +67,7 @@ Class Common_model extends CI_Model {
 			}
 			
 			$data['avgWindSpeed'] = $avgWindSpeed;
+			$data['avgWindSpeedTime'] = $avgWindSpeedTime;
 			$data['powerSpeed'] = $powerSpeed;
 			$data['patGen'] = $pat_gen_list;
 			$sum_avg = array_sum($avgWindSpeed);

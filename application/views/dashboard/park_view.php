@@ -5,29 +5,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <style>
 .table .thead-green th {
-  color: #fff;
-  background-color: #4dbd74;
-  border-color: #c8ced3;
+    color: #fff;
+    background-color: #4dbd74;
+    border-color: #c8ced3;
 }
+
 .table .thead-blue th {
-  color: #fff;
-  background-color: #20a8d8;
-  border-color: #c8ced3;
+    color: #fff;
+    background-color: #20a8d8;
+    border-color: #c8ced3;
 }
 
 .table .thead-airforce-blue th {
-  color: #fff;
-  background-color: #517fa4;
-  border-color: #c8ced3;
+    color: #fff;
+    background-color: #517fa4;
+    border-color: #c8ced3;
 }
 
 .table .thead-pompadour th {
-  color: #fff;
-  background-color: #581845;
-  border-color: #c8ced3;
+    color: #fff;
+    background-color: #581845;
+    border-color: #c8ced3;
 }
 
- /*#581845 - Pompadour*/
+/*#581845 - Pompadour*/
 /*#20a8d8*/
 </style>
 <main class="main">
@@ -49,7 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <?php echo $key;?>
+                            <?php echo $key.' - '.$regionDeviceData[$key][$value['device_list'][0]]['Time_S'];?>
                         </div>
                         <div class="card-body">
                             <!-- <table class="table table-responsive-sm table-hover table-outline mb-0">
@@ -122,7 +123,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     ?>
                                     <tr>
                                         <td>
-                                            <a target="_blank" href="<?php echo base_url().'dashboard/device_view?d='.$IMEI;?>"><?php echo $device_name;?></a>
+                                            <a target="_blank" href="<?php echo base_url().'dashboard/device_view?d='.$IMEI;?>">
+                                                <?php echo $device_name;?></a>
                                         </td>
                                         <td>
                                             <?php
@@ -145,7 +147,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <!-- <div class="progress progress-xs" style="height:15px;">
                                                 <div class="progress-bar bg-<?php echo $color;?>" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div> -->
-                                            <div class="mark text-center" style="color:#fff;background-color: <?php echo $color;?>"><?php echo $symbol;?></div>
+                                            <div class="mark text-center" style="color:#fff;background-color: <?php echo $color;?>">
+                                                <?php echo $symbol;?>
+                                            </div>
                                         </td>
                                         <td>
                                             <?php echo !empty($value2['capacity']) ? $value2['capacity']: 0;?>
@@ -205,7 +209,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </table>
                             <?php }?>
                             <br />
-                            <?php if(!empty($footer_data)) {?>
+                            <?php if(!empty($footer_data[$key])) {?>
                             <h4> Active Alarams </h4>
                             <table class="table table-responsive-sm table-hover table-outline mb-0">
                                 <thead class="thead-pompadour">
@@ -222,7 +226,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 if( $key == $k ) {
                                   $i=1;
                                   foreach ($val as $info) {
-                                    if($i==5)
+                                    if($i==6)
                                        break;
                           ?>
                                     <tr>
@@ -242,7 +246,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <?php $i++;} } }?>
                                 </tbody>
                             </table>
-                            <?php } ?>
+                            <?php } else { ?>
+                            <h4> Active Alarams </h4>
+                            <table class="table table-responsive-sm table-hover table-outline mb-0">
+                                <thead class="thead-pompadour">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Stop Time</th>
+                                        <th>Turbine Name</th>
+                                        <th>Error Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" colspan="4">
+                                            No Records found
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <?php }?>
                         </div>
                     </div>
                 </div>
