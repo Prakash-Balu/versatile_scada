@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
- //echo "<pre>"; print_r($parkview); exit;
+ //echo "<pre>"; print_r($regionDeviceData); exit;
 ?>
 <style>
 .table .thead-green th {
@@ -50,7 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <?php echo $key.' - '.$regionDeviceData[$key][$value['device_list'][0]]['Time_S'];?>
+                            <?php echo $key.' - '.date('d-m-Y', strtotime($regionDeviceData[$key][$value['device_list'][0]]['Date_S'])).' '.date('h:i:s a', strtotime($regionDeviceData[$key][$value['device_list'][0]]['Time_S']));?>
                         </div>
                         <div class="card-body">
                             <!-- <table class="table table-responsive-sm table-hover table-outline mb-0">
@@ -234,7 +234,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <?php echo $info['Date_S'];?>
                                         </td>
                                         <td>
-                                            <?php echo $info['Time_S'];?>
+                                            <?php echo date('h:i:s a', strtotime($info['Time_S']));?>
                                         </td>
                                         <td>
                                             <?php echo $info['Device_Name'];?>

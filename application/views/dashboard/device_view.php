@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <?php echo !empty($live_status['Date'])?$live_status['Date']: '';?>
                                         </p><!-- 2018-11-19 -->
                                         <p>Time :
-                                            <?php echo !empty($live_status['Time'])?$live_status['Time']:'';?>
+                                            <?php echo !empty($live_status['Time'])?date('h:i:s a', strtotime($live_status['Time'])):'';?>
                                         </p><!-- 11:57:52-->
                                     </div>
                                 </div>
@@ -155,7 +155,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <!-- /.col-->
                     <div class="col-md-4">
-                        <div class="card" style="height: 380px;">
+                        <div class="card" style="height: 465px;">
                             <div class="card-header">Event Log</div>
                             <div class="card-body">
                                 <table class="table table-responsive-sm table-hover table-outline mb-0">
@@ -177,7 +177,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <?php echo $value['Date_S'];?>
                                             </td>
                                             <td>
-                                                <?php echo $value['Time_S']. ' '. $value['Description'];?>
+                                                <?php echo date('h:i:s a', strtotime($value['Time_S'])). ' '. $value['Description'];?>
                                             </td>
                                         </tr>
                                         <?php }?>
@@ -188,7 +188,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <!-- /.col-->
                     <div class="col-md-8">
-                        <div class="card" style="height: 380px;">
+                        <div class="card" style="height: 465px;">
                             <div class="card-header">Temperature</div>
                             <div class="card-body" style="<?php echo empty($live_status)? 'height: 310px;' : '';?>">
                                 <?php if(empty($live_status)) { ?>

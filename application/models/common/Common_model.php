@@ -51,7 +51,8 @@ Class Common_model extends CI_Model {
 					// echo "<pre>"; print_r($device_list); exit;
 					$powerSpeed[] = (float)$device_list->Power;
 					$avgWindSpeed[] = (float)$device_list->Windspeed;
-					$avgWindSpeedTime[] =$device_list->Time_S;
+					// $avgWindSpeedTime[] =$device_list->Time_S;
+					$avgWindSpeedTime[] =date('h:i:s a', strtotime($device_list->Time_S));
 					$count =$count+1;
 
 					$search = array('order' =>'ASC','start_date'=>$date,'end_date'=>$date);
