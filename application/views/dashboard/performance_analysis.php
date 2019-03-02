@@ -178,8 +178,11 @@ function getPerformanceAnalysis() {
                     var pat_gen = [];
                     var color = [];
                     device_name.forEach(function(val, i){
-                        if( data.valid[val] !== undefined )
+                        if( data.valid[val] !== undefined ){
                             pat_gen.push(data.valid[val].value[0]);
+                        } else{
+                            pat_gen.push(0);
+                        }
                     });
 
                     var theme = {

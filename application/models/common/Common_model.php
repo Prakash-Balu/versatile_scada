@@ -49,20 +49,22 @@ Class Common_model extends CI_Model {
 				if(!empty($device_list))
 				{
 					// echo "<pre>"; print_r($device_list); exit;
-						$powerSpeed[] = (float)$device_list->Power;
-						$avgWindSpeed[] = (float)$device_list->Windspeed;
-						$avgWindSpeedTime[] =$device_list->Time_S;
-						$count =$count+1;
-				}
+					$powerSpeed[] = (float)$device_list->Power;
+					$avgWindSpeed[] = (float)$device_list->Windspeed;
+					$avgWindSpeedTime[] =$device_list->Time_S;
+					$count =$count+1;
 
-				$search = array('order' =>'ASC','start_date'=>$date,'end_date'=>$date);
-				$search1 = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
-				$pat_gen_first	=	$this->get_device_data_details( $list->Format_Type, '',$search);
-				$pat_gen_last	=	$this->get_device_data_details( $list->Format_Type, '',$search1 );
-				
-				if(!empty($pat_gen_first) && !empty($pat_gen_last) ) 
-				{
-					$pat_gen_list[] =	$pat_gen_last->PAT_Gen1-$pat_gen_first->PAT_Gen1;
+					$search = array('order' =>'ASC','start_date'=>$date,'end_date'=>$date);
+					$search1 = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
+					$pat_gen_first	=	$this->get_device_data_details( $list->Format_Type, '',$search);
+					$pat_gen_last	=	$this->get_device_data_details( $list->Format_Type, '',$search1 );
+					
+					if(!empty($pat_gen_first) && !empty($pat_gen_last) ) 
+					{
+						$pat_gen_list[] =	$pat_gen_last->PAT_Gen1-$pat_gen_first->PAT_Gen1;
+					}
+				} else {
+					$pat_gen_list[] = 0;
 				}
 			}
 			
