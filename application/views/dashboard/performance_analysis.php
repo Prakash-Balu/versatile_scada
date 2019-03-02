@@ -32,14 +32,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <li class="breadcrumb-item">
             <a href="#">Admin</a>
         </li>
-        <li class="breadcrumb-item active">Power Curve</li>
+        <li class="breadcrumb-item active">Performance Analysis</li>
     </ol>
     <div class="container-fluid">
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">Location Power Curve</div>
+                        <div class="card-header">Generation Performance Analysis</div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
@@ -84,26 +84,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    
-                                            <div class="card">
-                                        <div class="card-header airforce-blue" id="temp0"></div>
+                                    <div class="card">
+                                        <div class="card-header airforce-blue" id="perAna">Performance Chart</div>
                                         <div class="card-body">
-                                            <div id="power-curve0" style="height: 400px;"></div>
+                                            <div id="export_gad" style="height:350px;"></div>
                                         </div>
                                     </div>
-                                        
-                                    <!-- <div class="card">
-                                        <div class="card-header" id="temp"></div>
-                                        <div class="card-body">
-                                            <div id="power-curve" style="height: 400px;"></div>
-                                        </div>
-                                    </div> -->
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center">
-                                        <input type="button" class="btn btn-default" onclick="getPowerCurve();" value="Submit" />
+                                        <input type="button" class="btn btn-default" onclick="getPerformanceAnalysis();" value="Submit" />
                                     </div>
                                 </div>
                             </div>
@@ -119,8 +111,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php  $this->load->view('layout/footer'); ?>
 <script type="text/javascript">
 $('.start_date').datepicker({
-    format:'M-yyyy',
-     viewMode: "months",
+    format: 'M-yyyy',
+    viewMode: "months",
     orientation: "bottom",
     autoclose: true
 });
@@ -130,30 +122,31 @@ $('.end_date').datepicker({
     autoclose: true
 });
 
- var count =0;
+var count = 0;
+
 function getDeviceList() {
-  
-        $('.check').each(function(i){
-            if( $(this).hasClass('active') ) {
-                count++;
-                if(count >2) {
-                    this.checked = false;
+
+    $('.check').each(function(i) {
+        if ($(this).hasClass('active')) {
+            count++;
+            if (count > 2) {
+                this.checked = false;
                 //    if( $(this).hasClass('active') ) {
-                        $(this).removeClass('active');
-               // }
-                    alert('Please check two device only');
-                    count = count-1;
-                    return false;
-                }
-                
-            
+                $(this).removeClass('active');
+                // }
+                alert('Please check two device only');
+                count = count - 1;
+                return false;
             }
-        }); 
+
+
+        }
+    });
 }
 
 
 
-function getPowerCurve() {
+function getPerformanceAnalysis() {
     var date_val = $('#start_date').val();
 
     // var deviceBtn = $('.searchable-container label');
@@ -164,94 +157,87 @@ function getPowerCurve() {
         return false;
     }
 
-     var device_name = [];
-        $(':checkbox:checked').each(function(i){
-          device_name[i] = $(this).val();
-        });
-        console.log(device_name);
-
-    if (device_name == '') {
-        alert('Please select device name');
-        return false;
-    }
+    var device_name = [];
+    $.each($("input[name='device_name[]']"), function(key, data) {
+        device_name.push(data.value);
+    });
+    console.log(device_name);
 
     $body = $("body");
     $body.addClass("loading");
-    $("#graph_area_temp").empty();
-    // $("#temp").html('WTG Loc No: ' + deviceName);
+    var theme = {
+        color: [
+            '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
+            '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
+        ]
+    };
     $.ajax({
-        type: 'POST',
-        url: "<?php echo base_url(); ?>ajax/ajax_power_curve",
-        dataType: 'json',
-        data: { 'device_name': device_name, 'date': date_val},
-        success: function(data) {
+            type: 'POST',
+            url: "<?php echo base_url(); ?>ajax/ajax_perform_analysis",
+            dataType: 'json',
+            data: { 'device_name': device_name, 'date': date_val },
+            success: function(data) {
 
-            if (data) {
-                $body.removeClass("loading");
-                console.log(data);
-                device_name.forEach(function(val, i){
-                    $("#temp"+i).html('WTG Loc No: ' + val);
-                    const dataSource = {
-                    "chart": {
-                        "caption": "",
-                        "yaxisname": "Power",
-                        "xaxisname": date_val,
-                        "yAxisMaxValue": "100",
-                        "yAxisMinValue": "0",
-                        "subcaption": "",
-                        "showhovereffect": "1",
-                        "numbersuffix": "",
-                        "drawcrossline": "1",
-                        // "plottooltext": "<b>$dataValue</b> on $seriesName",
-                        "theme": "fusion"
-                    },
-                    "categories": [{
-                        "category": [{
-                                "label": "0"
-                            },
-                            {
-                                "label": "5"
-                            },
-                            {
-                                "label": "10"
-                            },
-                            {
-                                "label": "15"
-                            },
-                            {
-                                "label": "20"
-                            },
-                            {
-                                "label": "25"
-                            },
-                            {
-                                "label": "30"
-                            }
-                        ]
-                    }],
-                    "dataset": data[val]
-                };
+                if (data) {
+                    $body.removeClass("loading");
 
-                FusionCharts.ready(function() {
-                    var myChart = new FusionCharts({
-                        type: "msline",
-                        renderAt: "power-curve" + i,
-                        width: "100%",
-                        height: "100%",
-                        dataFormat: "json",
-                        dataSource
-                    }).render();
-                });
-                });
-                
-                // }
-            } else if (data.session == 'expired') {
-                alert('session expired');
-                windows.reload();
-            } else {
-                alert(data.invalid);
+                    if ($('#export_gad').length) {
+
+                        var echartBar = echarts.init(document.getElementById('export_gad'), theme);
+
+                        echartBar.setOption({
+                            title: {
+                                text: 'Export GAD'
+                                // subtext: 'Graph Sub-text'
+                            },
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            legend: {
+                                data: ['purchases']
+                            },
+                            toolbox: {
+                                show: false
+                            },
+                            calculable: false,
+                            xAxis: [{
+                                type: 'category',
+                                // data: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100', '110', '120']
+                                data: device_name
+                            }],
+                            yAxis: [{
+                                type: 'value',
+                                //  data: ['100', '200', '500', '1000', '1500', '2000', '2500', '3000', '4000', '5000', '6000', '7000']
+                            }],
+                            series: [{
+                                // name: 'purchases',
+                                type: 'bar',
+                                data: pat_gen,
+                                /* markPoint: {
+                                 data: [{
+                                   name: 'sales',
+                                   value: 182.2,
+                                   xAxis: 7,
+                                   yAxis: 183,
+                                 }, {
+                                   name: 'purchases',
+                                   value: 2.3,
+                                   xAxis: 11,
+                                   yAxis: 3
+                                 }]
+                                 },
+                                 markLine: {
+                                 data: [{
+                                   type: 'average',
+                                   name: '???'
+                                 }]
+                                 }*/
+                            }]
+                        });
+
+                    }
+                }
             }
-        }
     });
 
 }

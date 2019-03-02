@@ -139,7 +139,7 @@ foreach($region_list as $list)
                     <i class="fa fa-area-chart"></i> Power Curve</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" target="_blank" href="<?php echo base_url().'dashboard/performance_analysis';?>">
                     <i class="fa fa-area-chart"></i> Performance</a>
                 </li>
               </ul>
