@@ -126,25 +126,21 @@ var count = 0;
 
 function getDeviceList() {
 
-    $('.check').each(function(i) {
-        if ($(this).hasClass('active')) {
-            count++;
-            if (count > 2) {
-                this.checked = false;
-                //    if( $(this).hasClass('active') ) {
-                $(this).removeClass('active');
-                // }
-                alert('Please check two device only');
-                count = count - 1;
-                return false;
-            }
-
-
-        }
-    });
+    // $('.check').each(function(i) {
+    //     if ($(this).hasClass('active')) {
+    //         count++;
+    //         if (count > 2) {
+    //             this.checked = false;
+    //             //    if( $(this).hasClass('active') ) {
+    //             $(this).removeClass('active');
+    //             // }
+    //             alert('Please check two device only');
+    //             count = count - 1;
+    //             return false;
+    //         }
+    //     }
+    // });
 }
-
-
 
 function getPerformanceAnalysis() {
     var date_val = $('#start_date').val();
@@ -158,19 +154,19 @@ function getPerformanceAnalysis() {
     }
 
     var device_name = [];
-    $.each($("input[name='device_name[]']"), function(key, data) {
-        device_name.push(data.value);
-    });
-    console.log(device_name);
+        $(':checkbox:checked').each(function(i){
+          device_name[i] = $(this).val();
+        });
+        console.log(device_name);
+
+    if (device_name == '') {
+        alert('Please select device name');
+        return false;
+    }
 
     $body = $("body");
     $body.addClass("loading");
-    var theme = {
-        color: [
-            '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
-            '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
-        ]
-    };
+    
     $.ajax({
             type: 'POST',
             url: "<?php echo base_url(); ?>ajax/ajax_perform_analysis",
@@ -178,7 +174,20 @@ function getPerformanceAnalysis() {
             data: { 'device_name': device_name, 'date': date_val },
             success: function(data) {
 
-                if (data) {
+                if (data.valid.length !=0) {
+                    var pat_gen = [];
+                    var color = [];
+                    device_name.forEach(function(val, i){
+                        if( data.valid[val] !== undefined )
+                            pat_gen.push(data.valid[val].value[0]);
+                    });
+
+                    var theme = {
+                        color: [
+                            '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
+                            '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
+                        ]
+                    };
                     $body.removeClass("loading");
 
                     if ($('#export_gad').length) {
@@ -236,6 +245,12 @@ function getPerformanceAnalysis() {
                         });
 
                     }
+                } else if(data.valid.length ==0) {
+                    $body.removeClass("loading");
+                    document.getElementById('export_gad').innerHTML ='<p class="text-center">No Records Found</p>';
+                } else if( data.invalid ) {
+                    $body.removeClass("loading");
+                    alert('Invalid Data');
                 }
             }
     });
