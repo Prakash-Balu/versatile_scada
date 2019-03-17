@@ -247,7 +247,8 @@ class Dashboard extends CI_Controller {
 			
 			$search_info = array('order' =>'ASC','start_date'=>$date,'end_date'=>$date);
 			$val	=	$this->Common_model->get_device_data_Info( $list['Format_Type'], $list['IMEI'],$search_info );
-			$power_curve=array();
+			$power_curve=$power_curve1=array();
+
 			if(!empty($val))
 			{
 				$j=0;
@@ -255,10 +256,11 @@ class Dashboard extends CI_Controller {
 				$power_curve[1] = array('seriesname'=>'power');
 				foreach($val as $val_list)
 				{
-					$windspeed = isset($val_list['Windspeed'])?$val_list['Windspeed']:'';
-					$power = isset($val_list['Power'])?$val_list['Power']:'';
+					$windspeed = isset($val_list['Windspeed'])?number_format($val_list['Windspeed'], 2):0;
+					$power = isset($val_list['Power'])?number_format($val_list['Power'],2):0;
 					$power_curve[0]['data'][$j]['value'] = $windspeed;
 					$power_curve[1]['data'][$j]['value'] = $power;
+					$power_curve1[] = "[$windspeed, $power]";
 					$j++;
 				}
 			}
@@ -286,6 +288,7 @@ class Dashboard extends CI_Controller {
 		$data['live_status'] = $device_info;
 		$data['event_log'] = $event_log;
 		$data['power_curve'] = $power_curve;
+		$data['power_curve1'] = $power_curve1;
 		$data['avg_speed'] = $avg_speed;
 		// echo '<pre>';print_r($data);exit;
 		$this->load->view('dashboard/device_view',$data);
