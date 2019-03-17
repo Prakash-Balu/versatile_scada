@@ -90,29 +90,33 @@ class Ajax extends CI_Controller {
 				$date = date('Y-m-d', strtotime($formvalues['date']));
 				$search = array('order' =>'ASC','start_date'=>$date,'end_date'=>$date);
 				$val	=	$this->Common_model->get_device_data_Info( $list->Format_Type, $list->IMEI,$search );
-
+				$powercurve =array();
 				if(!empty($val))
 				{
 					$j=0;
 					$random_color = str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
-					$data[$list->Device_Name][0] = array('seriesname'=>'windspeed');
-					$data[$list->Device_Name][1] = array('seriesname'=>'power');
+					//$data[$list->Device_Name][0] = array('seriesname'=>'windspeed');
+					//$data[$list->Device_Name][1] = array('seriesname'=>'power');
+					$data['powercurve'][$list->Device_Name] = array();
 					$color = '#'.$random_color.$random_color.$random_color;
 					foreach($val as $val_list)
 					{
-						$windspeed = isset($val_list['Windspeed'])?$val_list['Windspeed']:'';
+						$windspeed = isset($val_list['Windspeed'])?number_format($val_list['Windspeed'], 2):0;
 
 						//$data[$list->Device_Name]['windSpeed'][] = $windspeed;
-						$power = isset($val_list['Power'])?$val_list['Power']:'';
+						$power = isset($val_list['Power'])?number_format($val_list['Power'],2):0;
 						// $data[$list->Device_Name]['power'][] = $power;
 
-						$data[$list->Device_Name][0]['data'][$j]['value'] = $windspeed;
-						$data[$list->Device_Name][1]['data'][$j]['value'] = $power;
+						//$data[$list->Device_Name][0]['data'][$j]['value'] = $windspeed;
+						//$data[$list->Device_Name][1]['data'][$j]['value'] = $power;
+						$data['powercurve'][$list->Device_Name][] = "[$windspeed, $power]";
 						$j++;
 					}
 				}
 				$i++;
 			}
+
+			
 			$message	=	$data;
 		}else{
 			$message	=	array('invalid'=>validation_errors());
