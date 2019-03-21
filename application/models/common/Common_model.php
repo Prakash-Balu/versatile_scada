@@ -39,18 +39,24 @@ Class Common_model extends CI_Model {
 			$count=0;
 			$i=0;
 			$green=$blue=$red=$gray=array();
-			$avgWindSpeed = $avgWindSpeedTime = $powerSpeed=$pat_gen_list=$pat_gen_first=$pat_gen_last=array();
+			$avgWindSpeed = $avgWindSpeedTime = $powerSpeed=$pat_gen_list=$pat_gen_first=$pat_gen_last=$avg_wind_speed=array();
 			foreach($type_list as $list)
 			{
 				$date = date('Y-m-d'); //current date'2018-08-14'; //
 				$search_info = array('order' =>'DESC','start_date'=>$date,'end_date'=>$date);
 				$device_list	=	$this->get_device_data_details( $list->Format_Type, $list->IMEI, $search_info );
+				$device_sum_list=	$this->get_sum_device_data_details( $list->Format_Type, $list->IMEI, $search_info );
+				if(!empty($device_sum_list)){
+					foreach($device_sum_list as $value){
+						$avgWindSpeed[$value->hour][] = $value->Windspeed;
+					}
+				}
 				
 				if(!empty($device_list))
 				{
 					// echo "<pre>"; print_r($device_list); exit;
 					$powerSpeed[] = (float)$device_list->Power;
-					$avgWindSpeed[] = (float)$device_list->Windspeed;
+					//$avgWindSpeed[] = (float)$device_list->Windspeed;
 					// $avgWindSpeedTime[] =$device_list->Time_S;
 					$avgWindSpeedTime[] =date('h:i:s a', strtotime($device_list->Time_S));
 					$count =$count+1;
@@ -68,11 +74,18 @@ Class Common_model extends CI_Model {
 					$pat_gen_list[] = 0;
 				}
 			}
+			/** Calculate avg win speed for 24 hrs current day**/
+			if(!empty($avgWindSpeed)){
+				for ($x = 1; $x <= 24; $x++) {
+				 $avg_wind_speed[$x] = (isset($avgWindSpeed[$x])?(array_sum($avgWindSpeed[$x])/count($avgWindSpeed[$x])):0);
+				}
+			}
 			
-			$data['avgWindSpeed'] = $avgWindSpeed;
+			$data['avgWindSpeed'] = $avg_wind_speed;
 			$data['avgWindSpeedTime'] = $avgWindSpeedTime;
 			$data['powerSpeed'] = $powerSpeed;
 			$data['patGen'] = $pat_gen_list;
+			
 			$sum_avg = array_sum($avgWindSpeed);
 			$sum_power = array_sum($powerSpeed);
 			$sum_gen = array_sum($pat_gen_list);
@@ -82,6 +95,25 @@ Class Common_model extends CI_Model {
 			$this->session->set_userdata($data);
 		}
 		return $data;
+	}
+	
+	function get_sum_device_data_details( $type , $imei, $search=array()) {
+		//skip for format type 1
+		($type == 1? $type = "" : $type = "_f".$type);
+		$this->db2->select('HOUR(Time_S) as hour,Date_S as date, sum(Windspeed) as Windspeed')->from('device_data'.$type);
+		if(!empty($imei))
+		{
+			$this->db2->where('IMEI',$imei);
+		}
+
+		if(!empty($search['start_date']) && !empty($search['end_date']))
+		{
+			$this->db2->where("DATE_FORMAT(Date_S,'%y-%m-%d') BETWEEN DATE('".$search['start_date']."') AND DATE('".$search['end_date']."') ");
+		}
+		$this->db2->group_by('Date_S,HOUR(Time_S)');
+		$query = $this->db2->get();
+		//echo $this->db2->last_query();exit;
+        return $query->result();
 	}
 	
 	function get_device_details($type, $imei)
