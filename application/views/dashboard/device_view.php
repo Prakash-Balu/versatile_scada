@@ -263,7 +263,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <canvas id="canvas-2" style="height: 300px;"></canvas>
                                 </div> -->
                                 <!-- <div class="col-md-12 col-sm-12 col-xs-12"> -->
-                                <div id="avg_wind_speed" style="height:350px;">
+                                <div id="avg_wind_speed" style="height:400px;">
                                     <h4 class="text-center"> No Records found</h4>
                                 </div>
                                 <!-- </div> -->
@@ -276,7 +276,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="card-header">Power Curve</div>
                             <div class="card-body">
                                 <!-- <div id="power-curve" style="height: 400px;"></div> -->
-                                <div id="PowerCurve" style="width:575px; height: 470px;"></div>
+                                <div id="PowerCurve" style="width:575px; height: 400px;"></div>
                             </div>
                         </div>
                     </div>
@@ -692,6 +692,7 @@ if ($('#avg_wind_speed').length) {
 }
 <?php }?>
 
+<?php if( !empty($power_curve1)) {?>
 Highcharts.chart('PowerCurve', {
             chart: {
                 type: 'scatter',
@@ -769,4 +770,7 @@ Highcharts.chart('PowerCurve', {
                
             }]
         });
+<?php } else {?>
+    document.getElementById('PowerCurve').innerHTML ='<h4 class="text-center"> No Records found</h4>';
+<?php }?>
 </script>
