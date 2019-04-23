@@ -46,7 +46,7 @@ foreach($region_list as $list)
       gtag('config', 'UA-118965717-5');
     </script>
   </head>
-  <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+  <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show" style="background-color: #fff;">
     <header class="app-header navbar">
       <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
         <span class="navbar-toggler-icon"></span>

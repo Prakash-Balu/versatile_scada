@@ -440,18 +440,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </aside>
 <?php  $this->load->view('layout/footer'); ?>
 <script type='text/javascript'>
-var avg_wind_speed = <?php echo json_encode($avgWindSpeed );?>;
-var avg_wind_speed_time = <?php echo json_encode($avgWindSpeedTime );?>;
+var avg_wind_speed1 = <?php echo json_encode($avgWindSpeed );?>;
+//var avg_wind_speed_time = <?php //echo json_encode($avgWindSpeedTime );?>;
 var power_speed = <?php echo json_encode($powerSpeed );?>;
 var pat_gen = <?php echo json_encode($patGen );?>;
-console.log(avg_wind_speed);
-console.log(power_speed);
+
 var theme = {
     color: [
         '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
         '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
     ]
 };
+var avg_wind_speed = [];
+var avg_wind_speed_time =[];
+
+for(var [time, avg] of Object.entries(avg_wind_speed1)){
+    avg_wind_speed.push(avg);
+    avg_wind_speed_time.push(time);
+}
+console.log(avg_wind_speed);
+console.log(power_speed);
+
 
     var device_name = [];
     $.each($("input[name='device_name[]']"), function(key, data) {
@@ -694,7 +703,7 @@ var avgWindSpeed = new Chart($('#avg-wind-speed'), {
                 ticks: {
                     display: false,
                     // min: 0,
-                    max: 20
+                    //max: 20
                 }
             }]
         },

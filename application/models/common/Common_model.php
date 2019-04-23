@@ -86,10 +86,10 @@ Class Common_model extends CI_Model {
 			$data['powerSpeed'] = $powerSpeed;
 			$data['patGen'] = $pat_gen_list;
 			
-			$sum_avg = array_sum($avgWindSpeed);
+			$sum_avg = array_sum($avg_wind_speed);
 			$sum_power = array_sum($powerSpeed);
 			$sum_gen = array_sum($pat_gen_list);
-			$data['avgWindSpeedSum'] = !empty($sum_avg)?number_format(($sum_avg/$count),2):0;
+			$data['avgWindSpeedSum'] = !empty($sum_avg)?number_format(($sum_avg/24),2):0;
 			$data['powerSpeedSum'] = !empty($sum_power)?number_format(($sum_power/1000),2):0;
 			$data['patGenSum'] = !empty($sum_gen)?number_format($sum_gen,2):0;
 			$this->session->set_userdata($data);
