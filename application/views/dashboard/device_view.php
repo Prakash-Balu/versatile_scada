@@ -154,8 +154,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </div>
                     <!-- /.col-->
-                    <div class="col-md-4">
-                        <div class="card" style="height: 465px;">
+                    <div class="col-md-6">
+                        <div class="card" style="height: 400px;">
                             <div class="card-header">Event Log</div>
                             <div class="card-body">
                                 <table class="table table-responsive-sm table-hover table-outline mb-0">
@@ -187,8 +187,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </div>
                     <!-- /.col-->
-                    <div class="col-md-8">
-                        <div class="card" style="height: 465px;">
+                    <div class="col-md-6">
+                        <div class="card" style="height: 400px;">
                             <div class="card-header">Temperature</div>
                             <div class="card-body" style="<?php echo empty($live_status)? 'height: 310px;' : '';?>">
                                 <?php if(empty($live_status)) { ?>

@@ -68,11 +68,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="card" style="height: 595px;">
+                    <div class="card" style="height: 320px;">
                         <div class="card-header">Performance Trending Chart - Today</div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12" style="height: 490px; overflow-y: scroll;">
+                                <div class="col-sm-12" style="height: 240px; overflow-y: scroll;">
                                   <?php foreach($device_list as $deviceName=>$deviceArrVal){ ?>
                                     <div class="progress-group mb-4">
                                         <div class="progress-group-prepend">
