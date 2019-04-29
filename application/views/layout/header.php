@@ -159,7 +159,7 @@ foreach($region_list as $list)
             <div class="progress progress-xs">
             <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <small class="text-muted"><?php echo $this->session->userdata('avgWindSpeedSum').'m/s';?></small>
+            <p class="" style="font-size: 15px;color: #fff;"><b><?php echo $this->session->userdata('avgWindSpeedSum').'m/s';?></b></p>
             </li>
 
             <li class="nav-item px-3 d-compact-none d-minimized-none">
@@ -171,7 +171,7 @@ foreach($region_list as $list)
               <div class="progress progress-xs">
               <div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
-              <small class="text-muted"><?php echo $this->session->userdata('powerSpeedSum').'MW';?></small>
+              <p class="" style="font-size: 15px;color: #fff;"><b><?php echo $this->session->userdata('powerSpeedSum').'MW';?></b></p>
             </li>
 
             <li class="nav-item px-3 mb-3 d-compact-none d-minimized-none">
@@ -183,7 +183,7 @@ foreach($region_list as $list)
               <div class="progress progress-xs">
               <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
-              <small class="text-muted"><?php echo $this->session->userdata('patGenSum').'Kwh';?></small>
+              <p class="" style="font-size: 15px;color: #fff;"><b><?php echo $this->session->userdata('patGenSum').'Kwh';?></b></p>
             </li>
             <!--<li class="nav-item">
               <a class="nav-link" href="charts.html">

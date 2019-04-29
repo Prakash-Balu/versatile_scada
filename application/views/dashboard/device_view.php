@@ -422,8 +422,8 @@ var chartData2 = {
 
     // the value axis
     yAxis: {
-        min: 5,
-        max: 20,
+        min: -10,
+        max: 80,
 
         minorTickInterval: 'auto',
         minorTickWidth: 1,

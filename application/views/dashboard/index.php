@@ -141,11 +141,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </div>
                 </div>
-                <div class="card" style="height:284px">
+                <div class="card" style="height:370px">
                     <div class="card-header">Temperature Trending - Notification</div>
                     <div class="card-body">
-                        <div class="chart-wrapper mt-3 mx-3" style="height:200px;">
-                            <canvas class="chart" id="temp_trending_chart" height="200"></canvas>
+                        <div class="chart-wrapper mt-3 mx-3" style="height:320px;">
+                            <div>
+                                <p><b>Total Downtime Today :</b> <?php echo $notify['downTimeTtl'];?></p>
+                            </div>
+                            <div>
+                                <p><b>Total Open Alarms : </b><?php echo $notify['alarmCount'];?></p>
+                            </div>
+                            <div>
+                                <p><b>Unresolved more than 24 hrs : </b></p>
+                                <?php if(!empty($notify['unresDevList'])) {
+                                    ?>
+                                    <ul style="height: 60px;overflow-y: scroll;">
+                                    <?php foreach($notify['unresDevList'] as $unreslist) {?>
+                                      <li><?php echo $unreslist;?></li>
+                                      <?php }?>
+                                    </ul>
+                                <?php } else {?>
+                                    <p>No Device Found</p>
+                                <?php }?>
+                            </div>
+                            <div>
+                                <p><b>Recent Alarm name with device name : </b></p>
+                                <?php if(!empty($notify['recentAlarmDevList'])) {
+                                    ?>
+                                    <ul style="height: 60px;overflow-y: scroll;">
+                                    <?php foreach($notify['recentAlarmDevList'] as $deviceKey => $alarmName) {?>
+                                      <li><?php echo $deviceKey . '-'. $alarmName;?> </li>
+                                      <?php }?>
+                                    </ul>
+                                <?php } else {?>
+                                    <p>No Device Found</p>
+                                <?php }?>
+                            </div>
                         </div>
                     </div>
                 </div>

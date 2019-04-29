@@ -37,14 +37,26 @@ class Dashboard extends CI_Controller {
 			$i=0;
 			$green=$blue=$red=$gray=array();
 			$avgWindSpeed = $powerSpeed=$pat_gen_list=$pat_gen_first=$pat_gen_last=array();
+			$alarmCount = 0;
+			$unresDevList =array();
+			$recentAlarmDevList = array();
+			$deviceDownTime = array();
 			foreach($type_list as $list)
 			{
 				$val	=	$this->Common_model->get_device_details( $list->Format_Type, $list->IMEI );
 				$date = date('Y-m-d');//current date
 				$search = array('start_date'=>$date,'end_date'=>$date);
 				$val1	=	$this->Common_model->get_device_data_Info( $list->Format_Type, $list->IMEI,$search );
-				
+				$error_info = $this->Common_model->get_error_data_Info( $list->Format_Type, $list->IMEI,$search );
+				$search1 = array('order' =>'DESC','limit'=>1);
+				$error_info1 = $this->Common_model->get_error_data_Info( $list->Format_Type, $list->IMEI,$search1 );
+				$alarmCount += count($error_info);
 				$color = '';
+				
+				if(!empty($error_info1)) {
+					$recentAlarmDevList[$list->Device_Name] = $error_info1[0]['Status'];
+				}
+
 				if(!empty($val))
 				{
 					/** get current time from DB and then check device date is less then 1 hour for current time */
@@ -54,6 +66,16 @@ class Dashboard extends CI_Controller {
 					$device_time = strtotime($val->Date_S.' '.$val->Time_S);
 					/** less then 1 hour for current time then it's gray color*/
 					
+					$unresTime = $device_time + 86400;
+					if($unresTime > $curr_time) {
+						$unresDevList[] = $list->Device_Name;
+					}
+
+					$datetime1 = new DateTime("@$curr_time");
+				    $datetime2 = new DateTime("@$device_time");
+				    $interval = $datetime1->diff($datetime2);
+				    $deviceDownTime[] = $interval->format('%Hh');
+    				
 					if($device_time > $curr_time)
 					{
 						$gray[] = $val;
@@ -102,9 +124,15 @@ class Dashboard extends CI_Controller {
 				}
 				$total_count = $list->cnt;
 			}
-			
 			//exit;
-		
+			$downTime = 0;
+			$downTimeDeviceCnt =0;
+			if(!empty($deviceDownTime)) {
+				foreach($deviceDownTime as $time) {
+					$downTime += (int)str_replace('h','',$time);
+					$downTimeDeviceCnt++;
+				}
+			}
 			
 			$data['response']['green'] = array('count'=> count($green),'name'=>'WTG RUN','total'=>$total_count);
 			$data['response']['red']= array('count'=> count($red),'name'=>'WTG ERROR','total'=>$total_count);
@@ -113,8 +141,7 @@ class Dashboard extends CI_Controller {
 			
 		}
 
-		// echo'<pre>';print_r($data['device_list']);exit;
-
+		
 		$data['avgWindSpeed'] = $this->session->userdata('avgWindSpeed');
 		$data['avgWindSpeedTime'] = $this->session->userdata('avgWindSpeedTime');
 		$data['powerSpeed'] = $this->session->userdata('powerSpeed');
@@ -122,7 +149,11 @@ class Dashboard extends CI_Controller {
 		$data['avgWindSpeedSum'] = $this->session->userdata('avgWindSpeedSum');
 		$data['powerSpeedSum'] = $this->session->userdata('powerSpeedSum');
 		$data['patGenSum'] = $this->session->userdata('patGenSum');
-	
+		$data['notify']['downTimeTtl'] = (string)($downTime/$downTimeDeviceCnt ).' hrs';
+		$data['notify']['alarmCount'] = $alarmCount;
+		$data['notify']['unresDevList'] = $unresDevList;
+		$data['notify']['recentAlarmDevList'] = $recentAlarmDevList;
+	//echo "<pre>";print_r($data['notify']); exit;
 		$this->load->view('dashboard/index',$data);
 	}
 	
